@@ -16,7 +16,7 @@ This is a static-first Astro starter for content-led marketing sites. It ships s
 | `src/styles/global.css`           | Tailwind integration, build-time breakpoints, global styles, and CSS fallbacks                                              |
 | `public/brand/`                   | Public SVG logo and icon placeholders                                                                                       |
 | `tests/`                          | Unit configuration tests and browser smoke/accessibility tests                                                              |
-| `docs/`                           | Architecture, semantic DOM, handoff, content, design-system, integrations, and testing guidance                             |
+| `docs/`                           | Architecture, semantic DOM, client workflow/handoff, content, design-system, integrations, and testing guidance             |
 
 ## Route model
 

@@ -28,6 +28,7 @@
 ## Quality and documentation
 
 - Keep README and relevant `docs/` guides in sync with implementation changes; remove stale behavior descriptions instead of leaving historical notes.
+- Follow [`docs/client-project-workflow.md`](docs/client-project-workflow.md) when starting a client implementation; do not start production-page work before the client configuration and design-system milestone is complete.
 - Add or update deterministic tests for public routes, shared interactions, schemas, integrations, and token behavior.
 - Run `pnpm run verify` and relevant Playwright coverage before handing off changes.
 - Set `siteConfig.features.wireframe` to `false` before a production release.
