@@ -1,0 +1,415 @@
+---
+import {
+  resolveSemanticColors,
+  type SemanticColorToken,
+  siteConfig,
+} from '../../config/site.config';
+
+const typeTokens = [
+  { className: 'text-xs', value: '0.75rem / 12px' },
+  { className: 'text-sm', value: '0.875rem / 14px' },
+  { className: 'text-base', value: '1rem / 16px' },
+  { className: 'text-lg', value: '1.125rem / 18px' },
+  { className: 'text-xl', value: '1.25rem / 20px' },
+  { className: 'text-2xl', value: '1.5rem / 24px' },
+  { className: 'text-3xl', value: '1.875rem / 30px' },
+  { className: 'text-4xl', value: '2.25rem / 36px' },
+  { className: 'text-5xl', value: '3rem / 48px' },
+  { className: 'text-6xl', value: '3.75rem / 60px' },
+  { className: 'text-7xl', value: '4.5rem / 72px' },
+  { className: 'text-8xl', value: '6rem / 96px' },
+  { className: 'text-9xl', value: '8rem / 128px' },
+];
+const semanticColors = resolveSemanticColors(siteConfig.colors);
+const paletteGroups = Object.entries(siteConfig.colors.palettes);
+const semanticColorMappings = Object.entries(semanticColors).map(([name, value]) => {
+  const token = name as SemanticColorToken;
+  return {
+    name: token,
+    reference: siteConfig.colors.semantic[token]!,
+    value,
+    variable: `--color-${token}`,
+  };
+});
+const spacingTokens = [
+  'space-1',
+  'space-2',
+  'space-3',
+  'space-4',
+  'space-6',
+  'space-8',
+  'space-12',
+  'space-16',
+  'space-24',
+] as const;
+const sizeTokens = ['size-icon', 'size-control', 'radius-md', 'container-max'] as const;
+const shapeTokens = [
+  { token: 'radius-none', name: 'None', use: 'Data tables and square media' },
+  { token: 'radius-xs', name: 'Extra small', use: 'Inputs, menus, and compact containers' },
+  { token: 'radius-sm', name: 'Small', use: 'Chips and small controls' },
+  { token: 'radius-md', name: 'Medium', use: 'Cards and standard surfaces' },
+  { token: 'radius-lg', name: 'Large', use: 'Prominent actions and drawers' },
+  { token: 'radius-xl', name: 'Extra large', use: 'Feature panels and large surfaces' },
+  { token: 'radius-full', name: 'Full', use: 'Pills, avatars, and circular controls' },
+] as const;
+const breakpointTokens = [
+  {
+    name: 'Compact',
+    range: '< 600px',
+    utility: 'Unprefixed utilities',
+    token: 'Base layout',
+    use: 'Single-column and touch-first layout',
+  },
+  {
+    name: 'Medium',
+    range: '600px – 839px',
+    utility: 'sm:',
+    token: '--breakpoint-sm · 37.5rem',
+    use: 'Room for denser controls or a second column',
+  },
+  {
+    name: 'Expanded',
+    range: '840px – 1199px',
+    utility: 'md:',
+    token: '--breakpoint-md · 52.5rem',
+    use: 'Multi-column content and more generous spacing',
+  },
+  {
+    name: 'Large',
+    range: '1200px – 1599px',
+    utility: 'lg:',
+    token: '--breakpoint-lg · 75rem',
+    use: 'Wide desktop layouts and supporting content',
+  },
+  {
+    name: 'Extra large',
+    range: '≥ 1600px',
+    utility: 'xl:',
+    token: '--breakpoint-xl · 100rem',
+    use: 'Large desktop canvases; preserve readable line lengths',
+  },
+] as const;
+const elevationTokens = [
+  { token: 'shadow-0', level: '0dp', use: 'Base content and outlined surfaces' },
+  { token: 'shadow-1', level: '1dp', use: 'Resting cards and low-priority containers' },
+  { token: 'shadow-2', level: '2dp', use: 'Raised controls and selected surfaces' },
+  { token: 'shadow-3', level: '3dp', use: 'Lifted card state' },
+  { token: 'shadow-4', level: '4dp', use: 'Hovered interactive cards' },
+  { token: 'shadow-6', level: '6dp', use: 'Floating action or temporary focus' },
+  { token: 'shadow-8', level: '8dp', use: 'Menus and popovers' },
+  { token: 'shadow-12', level: '12dp', use: 'Prominent floating actions' },
+  { token: 'shadow-16', level: '16dp', use: 'Navigation drawers and side sheets' },
+  { token: 'shadow-24', level: '24dp', use: 'Modal dialogs and highest emphasis' },
+] as const;
+const brandElements = [
+  { name: 'Brand logo', path: siteConfig.brand.logo, previewClass: 'h-16 w-full' },
+  { name: 'Brand icon', path: siteConfig.brand.icon, previewClass: 'size-16' },
+];
+---
+
+<section class="section">
+  <div class="container">
+    <p class="text-sm font-semibold uppercase tracking-[0.16em] text-role-primary">
+      Internal reference
+    </p>
+    <h1 class="mt-4 text-5xl font-semibold tracking-tight sm:text-7xl">Design system</h1>
+    <p class="mt-5 max-w-2xl text-lg text-role-foreground/75">
+      A living preview of the client theme, typography, primitives, and interaction states. This
+      boilerplate page is intentionally excluded from search indexes.
+    </p>
+  </div>
+</section>
+
+<section class="section bg-role-surface">
+  <div class="container">
+    <h2 class="text-3xl font-semibold tracking-tight">Brand elements</h2>
+    <p class="mt-3 max-w-2xl text-role-foreground/75">
+      Logo and icon assets are configured once, then previewed as monochrome SVG masks without
+      exporting duplicate light and dark files.
+    </p>
+    <div class="mt-8 grid gap-6 lg:grid-cols-2">
+      {brandElements.map((element) => (
+        <article class="overflow-hidden rounded-md border border-role-foreground/10 bg-role-background shadow-[var(--shadow-1)]">
+          <div class="border-b border-role-foreground/10 px-5 py-4">
+            <h3 class="font-semibold">{element.name}</h3>
+            <code class="mt-1 block truncate text-xs text-role-foreground/75">{element.path}</code>
+          </div>
+          <div class="grid sm:grid-cols-2">
+            <div class="brand-preview-light flex min-h-36 items-center justify-center p-8">
+              <span
+                aria-hidden="true"
+                class:list={['brand-mark brand-mark-black', element.previewClass]}
+                style={`--brand-asset: url('${element.path}')`}
+              ></span>
+            </div>
+            <div class="brand-preview-dark flex min-h-36 items-center justify-center p-8">
+              <span
+                aria-hidden="true"
+                class:list={['brand-mark brand-mark-white', element.previewClass]}
+                style={`--brand-asset: url('${element.path}')`}
+              ></span>
+            </div>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<section class="section bg-role-surface">
+  <div class="container">
+    <h2 class="text-3xl font-semibold tracking-tight">Typography</h2>
+    <p class="mt-3 max-w-2xl text-role-foreground/75">
+      The full type scale uses the configured system-font token and can be replaced per client.
+    </p>
+    <div class="mt-6 rounded-md border border-role-foreground/10 bg-role-background p-4">
+      <p class="font-semibold">Font family</p>
+      <p class="mt-2 font-mono text-sm text-role-foreground/75">
+        --font-sans: {siteConfig.theme['font-sans']}
+      </p>
+    </div>
+    <div class="mt-8 grid gap-4 rounded-md border border-role-foreground/10 p-6">
+      {typeTokens.map(({ className, value }) => (
+        <div class="flex items-baseline justify-between gap-6 border-b border-role-foreground/10 pb-4 last:border-0">
+          <span class:list={[className, 'truncate font-semibold tracking-tight']}>Aa</span>
+          <span class="shrink-0 font-mono text-xs text-role-foreground/75">
+            {className} · {value}
+          </span>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <h2 class="text-3xl font-semibold tracking-tight">Colors</h2>
+    <p class="mt-3 max-w-2xl text-role-foreground/75">
+      Raw client palettes remain available for design work. Components consume the semantic roles
+      below, so a rebrand changes mappings rather than component markup.
+    </p>
+    <div class="mt-8 grid gap-6 xl:grid-cols-2">
+      {paletteGroups.map(([palette, shades]) => (
+        <article class="overflow-hidden rounded-md border border-role-foreground/10 bg-role-surface shadow-[var(--shadow-1)]">
+          <h3 class="border-b border-role-foreground/10 px-4 py-3 text-lg font-semibold capitalize">
+            {palette}
+          </h3>
+          <ul class="divide-y divide-role-foreground/10">
+            {Object.entries(shades).map(([shade, value]) => (
+              <li class="grid grid-cols-[2.5rem_1fr_auto] items-center gap-3 px-4 py-2.5">
+                <span
+                  aria-hidden="true"
+                  class="size-10 rounded-sm border border-role-foreground/15"
+                  style={`background: ${value}`}
+                ></span>
+                <code class="text-xs text-role-foreground/75">
+                  --palette-{palette}-{shade}
+                </code>
+                <code class="text-xs font-semibold">{value}</code>
+              </li>
+            ))}
+          </ul>
+        </article>
+      ))}
+    </div>
+    <h3 class="mt-12 text-xl font-semibold">Semantic roles</h3>
+    <p class="mt-2 text-role-foreground/75">
+      Use these roles in components through utilities such as <code>bg-role-primary</code>.
+    </p>
+    <dl class="mt-5 grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+      {semanticColorMappings.map((token) => (
+        <div class="rounded-md border border-role-foreground/10 bg-role-surface p-4">
+          <dt class="grid grid-cols-[2.5rem_1fr] items-center gap-3">
+            <span
+              aria-hidden="true"
+              class="size-10 rounded-sm border border-role-foreground/15"
+              style={`background: ${token.value}`}
+            ></span>
+            <span class="min-w-0 truncate text-xs text-role-foreground/75">
+              <code>{token.variable}</code>
+            </span>
+          </dt>
+          <dd class="mt-2 pl-[3.25rem] font-mono text-xs font-semibold">
+            {token.reference.palette}.{token.reference.shade} → {token.value}
+          </dd>
+        </div>
+      ))}
+    </dl>
+  </div>
+</section>
+
+<section class="section bg-role-muted">
+  <div class="container">
+    <h2 class="text-3xl font-semibold tracking-tight">Spacing and size tokens</h2>
+    <div class="mt-8 grid gap-10 lg:grid-cols-2">
+      <div>
+        <h3 class="text-xl font-semibold">Spacing</h3>
+        <div class="mt-5 space-y-4">
+          {spacingTokens.map((token) => (
+            <div class="grid grid-cols-[9rem_1fr] items-center gap-4">
+              <span class="font-mono text-xs text-role-foreground/75">
+                --{token} · {siteConfig.theme[token]}
+              </span>
+              <div class="h-4 rounded-sm bg-role-primary" style={`width: var(--${token})`}></div>
+            </div>
+          ))}
+        </div>
+      </div>
+      <div>
+        <h3 class="text-xl font-semibold">Sizes</h3>
+        <div class="mt-5 grid gap-4">
+          {sizeTokens.map((token) => (
+            <div class="rounded-md border border-role-foreground/15 bg-role-surface p-4">
+              <span class="font-mono text-xs text-role-foreground/75">
+                --{token} · {siteConfig.theme[token]}
+              </span>
+              <div
+                class="mt-3 rounded-sm bg-role-secondary"
+                style={
+                  token === 'radius-md'
+                    ? `height: var(--size-control); width: var(--size-control); border-radius: var(--${token})`
+                    : token === 'container-max'
+                      ? `height: var(--space-4); width: min(100%, var(--${token}))`
+                      : `height: var(--${token}); width: var(--${token})`
+                }
+              ></div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <h2 class="text-3xl font-semibold tracking-tight">Buttons</h2>
+    <div class="mt-8 flex flex-wrap items-center gap-3">
+      <a
+        class="rounded-md bg-role-primary px-5 py-3 font-semibold text-role-on-primary shadow-[var(--shadow-1)]"
+        href="#components"
+      >
+        Primary action
+      </a>
+      <a class="rounded-md border border-role-border px-5 py-3 font-semibold" href="#components">
+        Secondary action
+      </a>
+      <button
+        class="rounded-md bg-role-muted px-5 py-3 font-semibold text-role-foreground disabled:cursor-not-allowed disabled:opacity-50"
+        disabled
+        type="button"
+      >
+        Disabled
+      </button>
+    </div>
+  </div>
+</section>
+
+<section id="components" class="section bg-role-surface">
+  <div class="container grid gap-12 lg:grid-cols-2">
+    <div>
+      <h2 class="text-3xl font-semibold tracking-tight">Cards and other components</h2>
+      <article class="mt-8 rounded-md border border-role-foreground/10 bg-role-surface p-6 shadow-[var(--shadow-1)]">
+        <p class="text-sm font-semibold text-role-primary">Card label</p>
+        <h3 class="mt-2 text-xl font-semibold">Reusable card</h3>
+        <p class="mt-3 text-role-foreground/75">
+          Surface, spacing, border, and elevation all come from the shared token system.
+        </p>
+      </article>
+    </div>
+    <div class="self-end">
+      <label class="mb-1 block font-medium" for="preview-name">
+        Form label
+      </label>
+      <input
+        class="w-full rounded-md border border-role-border bg-role-surface px-3 py-2"
+        id="preview-name"
+        placeholder="Input placeholder"
+      />
+      <p class="mt-2 text-sm text-role-error">Example validation message</p>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <h2 class="text-3xl font-semibold tracking-tight">Elevation</h2>
+    <p class="mt-3 max-w-2xl text-role-foreground/75">
+      A two-layer shadow scale separates resting surfaces from temporary, high-priority UI. The
+      labels follow familiar Material elevation steps; the CSS values are tuned per client theme.
+    </p>
+    <div class="mt-8 grid gap-8 sm:grid-cols-2 xl:grid-cols-3">
+      {elevationTokens.map((elevation) => (
+        <article class="rounded-md border border-role-foreground/10 bg-role-background p-5">
+          <div
+            class="flex min-h-32 items-end rounded-md bg-role-surface p-5"
+            style={`box-shadow: var(--${elevation.token})`}
+          >
+            <p class="font-semibold">Elevation {elevation.level}</p>
+          </div>
+          <div class="mt-5 space-y-2">
+            <p class="text-sm text-role-foreground/75">{elevation.use}</p>
+            <code class="block text-xs font-semibold">--{elevation.token}</code>
+            <code class="block break-words text-xs text-role-foreground/75">
+              {siteConfig.theme[elevation.token]}
+            </code>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <h2 class="text-3xl font-semibold tracking-tight">Shape and border radius</h2>
+    <p class="mt-3 max-w-2xl text-role-foreground/75">
+      The scale moves from square to fully rounded. It follows the Material 3 shape vocabulary,
+      while every value remains a client-configurable CSS token.
+    </p>
+    <div class="mt-8 grid gap-6 sm:grid-cols-2 xl:grid-cols-4">
+      {shapeTokens.map((shape) => (
+        <article class="rounded-md border border-role-foreground/10 bg-role-surface p-5">
+          <div
+            class="flex h-28 items-center justify-center bg-role-muted p-4"
+            style={`border-radius: var(--${shape.token})`}
+          >
+            <span
+              class="block size-10 bg-role-primary"
+              style={`border-radius: var(--${shape.token})`}
+            ></span>
+          </div>
+          <div class="mt-5 space-y-2">
+            <p class="font-semibold">{shape.name}</p>
+            <p class="text-sm text-role-foreground/75">{shape.use}</p>
+            <code class="block text-xs font-semibold">--{shape.token}</code>
+            <code class="block text-xs text-role-foreground/75">
+              {siteConfig.theme[shape.token]}
+            </code>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<section class="section bg-role-surface">
+  <div class="container">
+    <h2 class="text-3xl font-semibold tracking-tight">Breakpoints</h2>
+    <p class="mt-3 max-w-2xl text-role-foreground/75">
+      Layout is mobile-first. These viewport ranges are Material-inspired size classes mapped to the
+      Tailwind responsive utilities used by this starter.
+    </p>
+    <div class="mt-8 grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
+      {breakpointTokens.map((breakpoint) => (
+        <article class="rounded-md border border-role-foreground/10 bg-role-background p-5">
+          <p class="font-semibold">{breakpoint.name}</p>
+          <p class="mt-2 font-mono text-sm text-role-primary">{breakpoint.range}</p>
+          <code class="mt-3 block text-xs font-semibold">{breakpoint.utility}</code>
+          <code class="mt-1 block text-xs text-role-foreground/75">{breakpoint.token}</code>
+          <p class="mt-4 text-sm text-role-foreground/75">{breakpoint.use}</p>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>

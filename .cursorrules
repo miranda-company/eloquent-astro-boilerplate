@@ -1,0 +1,27 @@
+# Semantic and optimization contract
+
+Before editing an Astro page, layout, or rendered-content component, read `docs/DOM_ARCHITECTURE.md`. These rules are mandatory.
+
+## Document structure
+
+- Keep the document shell in `BaseLayout.astro`: one `<header>`, one `<main id="contenido">`, and one `<footer>` per page. Do not add a second `<main>` or duplicate site landmarks in pages.
+- Use `<section>` only for a thematically grouped region with its own accessible heading. Use `<article>` for independently meaningful, distributable content such as a post, legal document, or repeated content card. Use `<aside>` only for complementary content. Use `<nav>` only for grouped navigation links, with an `aria-label` when more than one nav exists.
+- Use `<div>` only when no HTML element conveys the meaning: layout grouping, decorative wrapper, or a component implementation detail. Never use it as a replacement for a meaningful landmark, list, or definition structure.
+- Every public page has exactly one `<h1>`. Start its major sections at `<h2>` and descend one level at a time; do not choose headings for visual size. Content rendered inside a route that already renders an `<h1>` must not author another one.
+
+## Interaction and media
+
+- Use `<a>` only for navigation to a URL; use `<button type="button">` for in-page behavior. Use native `<form>`, `<label>`, `<input>`, `<textarea>`, `<select>`, and error/status semantics instead of simulated controls.
+- Use Astro's `<Image />` for raster or SVG images where possible. Every meaningful image needs useful `alt`; decorative images need `alt=""`. Supply intrinsic dimensions. Below-the-fold images use `loading="lazy"`; only above-the-fold/LCP media may be eager.
+
+## SEO, AEO, and GEO
+
+- Public routes must use `BaseLayout` and provide an accurate title, description, canonical path, social image when available, and `ogType="article"` for article-like content. Do not hand-write duplicate canonical or social metadata.
+- Structure facts as visible HTML: `<dl>` for term/value definitions, `<ul>` or `<ol>` for lists, and `<table>` with `<th scope>` for genuine tabular comparisons. Do not use a grid of `<div>` elements to imitate these structures.
+- For answer-oriented content, put the question in an `<h2>` (or appropriate sequential heading), followed immediately by a direct, concise `<p>` answer. Add explanation after that answer. Only mark up FAQs that are visibly present and genuinely answer the question.
+- Pass Schema.org JSON-LD through `structuredData` on `BaseLayout`; it must describe visible, primary page content exactly. Never add JSON-LD to `noindex` pages, invent ratings/reviews/offers, or use schema solely to influence rankings.
+
+## Required checks
+
+- Update tests when a shared landmark, heading, metadata behavior, media behavior, or route changes.
+- Run `pnpm run verify` and relevant `pnpm run test:e2e` coverage before handoff.

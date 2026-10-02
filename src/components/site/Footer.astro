@@ -1,0 +1,32 @@
+---
+import { siteConfig } from '../../config/site.config';
+---
+
+<footer class="border-t border-role-foreground/10 bg-role-surface">
+  <div class="container grid gap-6 py-10 text-sm md:grid-cols-2">
+    <address class="not-italic">
+      <p class="font-semibold">{siteConfig.name}</p>
+      <a href={`mailto:${siteConfig.contact.email}`}>{siteConfig.contact.email}</a>
+    </address>
+    <nav aria-label="Legal" class="md:text-right">
+      <ul class="flex list-none flex-wrap gap-x-3 gap-y-1 p-0 md:justify-end">
+        <li>
+          <a href="/aviso-legal/">Aviso legal</a>
+        </li>
+        <li>
+          <a href="/politica-de-privacidad/">Política de privacidad</a>
+        </li>
+        <li>
+          <a href="/politica-de-cookies/">Política de cookies</a>
+        </li>
+      </ul>
+      <button
+        class="mt-3 cursor-pointer border-0 bg-transparent p-0 underline"
+        type="button"
+        data-open-consent
+      >
+        Gestionar cookies
+      </button>
+    </nav>
+  </div>
+</footer>

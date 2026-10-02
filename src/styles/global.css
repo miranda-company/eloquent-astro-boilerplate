@@ -1,0 +1,153 @@
+@import 'tailwindcss';
+
+@theme {
+  --breakpoint-sm: 37.5rem;
+  --breakpoint-md: 52.5rem;
+  --breakpoint-lg: 75rem;
+  --breakpoint-xl: 100rem;
+  --breakpoint-2xl: initial;
+}
+
+@theme inline {
+  --color-role-background: var(--color-background);
+  --color-role-foreground: var(--color-foreground);
+  --color-role-primary: var(--color-primary);
+  --color-role-primary-hover: var(--color-primary-hover);
+  --color-role-on-primary: var(--color-on-primary);
+  --color-role-secondary: var(--color-secondary);
+  --color-role-on-secondary: var(--color-on-secondary);
+  --color-role-tertiary: var(--color-tertiary);
+  --color-role-quaternary: var(--color-quaternary);
+  --color-role-accent: var(--color-accent);
+  --color-role-muted: var(--color-muted);
+  --color-role-surface: var(--color-surface);
+  --color-role-border: var(--color-border);
+  --color-role-error: var(--color-error);
+  --color-role-on-error: var(--color-on-error);
+  --font-sans: var(--font-sans);
+  --radius-none: var(--radius-none);
+  --radius-xs: var(--radius-xs);
+  --radius-sm: var(--radius-sm);
+  --radius-md: var(--radius-md);
+  --radius-lg: var(--radius-lg);
+  --radius-xl: var(--radius-xl);
+  --radius-full: var(--radius-full);
+}
+
+:root {
+  --color-primary: #1f4d3d;
+  --color-secondary: #f2b544;
+  --color-on-secondary: #1c1c1a;
+  --color-accent: #7579df;
+  --color-background: #fcfbf7;
+  --color-foreground: #1c1c1a;
+  --color-muted: #e9e7e0;
+  --color-surface: #fff;
+  --color-border: #d4d1c9;
+  --color-on-primary: #fff;
+  --color-primary-hover: #173c31;
+  --color-error: #b42318;
+  --color-on-error: #fff;
+  --font-sans: ui-sans-serif, system-ui, sans-serif;
+  --radius-none: 0;
+  --radius-xs: 0.25rem;
+  --radius-sm: 0.5rem;
+  --radius-md: 0.75rem;
+  --radius-lg: 1rem;
+  --radius-xl: 1.5rem;
+  --radius-full: 9999px;
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --space-24: 6rem;
+  --size-icon: 1.5rem;
+  --size-control: 2.75rem;
+  --space-section: clamp(4rem, 9vw, 8rem);
+  --container-max: 1440px;
+  --shadow-0: none;
+  --shadow-1: 0 1px 2px rgb(0 0 0 / 8%), 0 1px 3px rgb(0 0 0 / 6%);
+  --shadow-2: 0 1px 3px rgb(0 0 0 / 10%), 0 2px 4px rgb(0 0 0 / 8%);
+  --shadow-3: 0 2px 4px rgb(0 0 0 / 10%), 0 3px 6px rgb(0 0 0 / 8%);
+  --shadow-4: 0 2px 6px rgb(0 0 0 / 12%), 0 4px 8px rgb(0 0 0 / 9%);
+  --shadow-6: 0 3px 8px rgb(0 0 0 / 14%), 0 6px 12px rgb(0 0 0 / 10%);
+  --shadow-8: 0 4px 10px rgb(0 0 0 / 14%), 0 8px 16px rgb(0 0 0 / 10%);
+  --shadow-12: 0 6px 16px rgb(0 0 0 / 16%), 0 12px 24px rgb(0 0 0 / 12%);
+  --shadow-16: 0 8px 20px rgb(0 0 0 / 18%), 0 16px 32px rgb(0 0 0 / 14%);
+  --shadow-24: 0 12px 28px rgb(0 0 0 / 20%), 0 24px 48px rgb(0 0 0 / 16%);
+  --motion-fast: 160ms;
+}
+
+* {
+  box-sizing: border-box;
+}
+html {
+  scroll-behavior: smooth;
+}
+body {
+  margin: 0;
+  min-width: 20rem;
+  background: var(--color-background);
+  color: var(--color-foreground);
+  font-family: var(--font-sans);
+  line-height: 1.5;
+}
+:focus-visible {
+  outline: 3px solid var(--color-secondary);
+  outline-offset: 3px;
+}
+.skip-link {
+  position: fixed;
+  top: 0.75rem;
+  left: 0.75rem;
+  z-index: 50;
+  transform: translateY(-200%);
+  padding: 0.75rem 1rem;
+  border-radius: var(--radius-md);
+  background: var(--color-foreground);
+  color: var(--color-background);
+}
+.skip-link:focus {
+  transform: translateY(0);
+}
+.container {
+  width: min(calc(100% - 2rem), var(--container-max));
+  margin-inline: auto;
+}
+.section {
+  padding-block: var(--space-section);
+}
+.brand-mark {
+  display: block;
+  -webkit-mask: var(--brand-asset) center / contain no-repeat;
+  mask: var(--brand-asset) center / contain no-repeat;
+}
+.brand-mark-black {
+  background: var(--palette-black-base);
+}
+.brand-mark-white {
+  background: var(--palette-white-base);
+}
+.brand-preview-light {
+  background: var(--palette-white-base);
+}
+.brand-preview-dark {
+  background: var(--palette-black-base);
+}
+.wire .container,
+.wire section {
+  outline: 1px dashed rgb(220 38 38 / 80%);
+  outline-offset: -1px;
+}
+.prose > * + * {
+  margin-top: 1rem;
+}
+.prose h2 {
+  margin-top: 2rem;
+  font-size: 1.5rem;
+  font-weight: 700;
+}

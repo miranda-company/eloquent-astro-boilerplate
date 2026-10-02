@@ -1,0 +1,48 @@
+{
+  "name": "astro-agency-boilerplate",
+  "version": "0.1.0",
+  "private": true,
+  "description": "A static-first, white-label Astro starter for agency websites.",
+  "type": "module",
+  "packageManager": "pnpm@10.34.3",
+  "engines": {
+    "node": ">=24.0.0",
+    "pnpm": ">=10.34.3"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "esbuild"
+    ]
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "check": "astro check",
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "test": "vitest run",
+    "test:e2e": "playwright test",
+    "verify": "pnpm run format:check && pnpm run lint && pnpm run check && pnpm run test && pnpm run build"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.10",
+    "@astrojs/mdx": "^8.0.2",
+    "@astrojs/sitemap": "^3.7.4",
+    "@axe-core/playwright": "^4.13.0",
+    "@playwright/test": "^1.63.0",
+    "@tailwindcss/vite": "^4.3.3",
+    "astro": "^7.3.5",
+    "eslint": "^10.11.0",
+    "eslint-plugin-astro": "^1.7.0",
+    "http-server": "^14.1.1",
+    "prettier": "^3.9.9",
+    "prettier-plugin-astro": "^1.1.0",
+    "tailwindcss": "^4.3.3",
+    "typescript": "^6.0.3",
+    "typescript-eslint": "^8.71.0",
+    "vitest": "^5.0.3",
+    "zod": "^4.6.5"
+  }
+}

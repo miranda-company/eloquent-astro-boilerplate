@@ -1,0 +1,89 @@
+---
+import { siteConfig } from '../../config/site.config';
+
+const gaId = import.meta.env.PUBLIC_GA_MEASUREMENT_ID;
+const gtmId = import.meta.env.PUBLIC_GTM_CONTAINER_ID;
+const enabled =
+  siteConfig.features.analytics && siteConfig.features.consentBanner && Boolean(gaId || gtmId);
+---
+
+{siteConfig.features.consentBanner && (
+  <aside
+    id="consent-banner"
+    class="fixed inset-x-4 bottom-4 z-40 mx-auto hidden max-w-xl rounded-md bg-role-foreground p-5 text-role-background shadow-[var(--shadow-2)]"
+    aria-label="Preferencias de cookies"
+    data-enabled={enabled ? 'true' : 'false'}
+    data-ga-id={gaId}
+    data-gtm-id={gtmId}
+  >
+    <p class="font-semibold">Tu privacidad</p>
+    <p class="mt-1 text-sm">
+      Usamos cookies opcionales para medir el uso del sitio. Puedes aceptarlas o rechazarlas.
+    </p>
+    <div class="mt-4 flex flex-wrap gap-3">
+      <button
+        class="rounded-md bg-role-secondary px-4 py-2 font-semibold text-role-foreground"
+        type="button"
+        data-consent="accepted"
+      >
+        Aceptar
+      </button>
+      <button
+        class="rounded-md border border-role-background/50 px-4 py-2"
+        type="button"
+        data-consent="rejected"
+      >
+        Rechazar
+      </button>
+    </div>
+  </aside>
+)}
+{siteConfig.features.consentBanner && <script>
+  const key = 'site-cookie-consent';
+  const banner = document.querySelector<HTMLElement>('#consent-banner');
+  const loadAnalytics = () => {
+    if (
+      !banner ||
+      banner.dataset.enabled !== 'true' ||
+      document.querySelector('[data-analytics-loader]')
+    )
+      return;
+    const gaId = banner.dataset.gaId;
+    const gtmId = banner.dataset.gtmId;
+    const script = document.createElement('script');
+    script.async = true;
+    script.dataset.analyticsLoader = 'true';
+    const analyticsWindow = window as typeof window & {
+      dataLayer?: unknown[];
+      gtag?: (...args: unknown[]) => void;
+    };
+    if (gtmId) {
+      script.src = `https://www.googletagmanager.com/gtm.js?id=${encodeURIComponent(gtmId)}`;
+      analyticsWindow.dataLayer = analyticsWindow.dataLayer || [];
+      analyticsWindow.dataLayer.push({ 'gtm.start': Date.now(), event: 'gtm.js' });
+    } else if (gaId) {
+      script.src = `https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(gaId)}`;
+      analyticsWindow.dataLayer = analyticsWindow.dataLayer || [];
+      analyticsWindow.gtag = (...args) => analyticsWindow.dataLayer?.push(args);
+      analyticsWindow.gtag('js', new Date());
+      analyticsWindow.gtag('config', gaId);
+    }
+    document.head.append(script);
+  };
+  const state = localStorage.getItem(key);
+  if (state === 'accepted') loadAnalytics();
+  else if (!state && banner) banner.classList.remove('hidden');
+  document.querySelectorAll<HTMLElement>('[data-consent]').forEach((button) =>
+    button.addEventListener('click', () => {
+      const value = button.dataset.consent || 'rejected';
+      localStorage.setItem(key, value);
+      banner?.classList.add('hidden');
+      if (value === 'accepted') loadAnalytics();
+    }),
+  );
+  document
+    .querySelectorAll<HTMLElement>('[data-open-consent]')
+    .forEach((button) =>
+      button.addEventListener('click', () => banner?.classList.remove('hidden')),
+    );
+</script>}
