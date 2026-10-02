@@ -22,6 +22,7 @@
 
 - Update Content Collection schemas before creating a new content type or frontmatter field.
 - Keep client configuration out of Markdown and MDX frontmatter.
+- Read `docs/client-brief.md` when it exists in a client project; treat approved decisions there as the source of truth and report `TBD` items instead of guessing.
 - Optional integrations must emit no external request when unconfigured. Optional tracking must never load before consent.
 - Preserve a usable non-JavaScript form submission path when changing the contact-form integration.
 

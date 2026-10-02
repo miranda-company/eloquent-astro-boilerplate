@@ -1,4 +1,4 @@
-# Client setup brief
+# Client technical brief
 
 > Duplicate this file into a private client repository as `docs/client-brief.md`. Complete the fields before asking a coding agent to configure the boilerplate. Use `TBD` for an unresolved decision; do not guess or invent client requirements.
 
