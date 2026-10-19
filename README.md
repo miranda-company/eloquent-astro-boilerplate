@@ -7,10 +7,10 @@ A static-first, white-label Astro starter for Spanish marketing sites. It combin
 - Astro static output with strict TypeScript and local Content Collections.
 - Typed client configuration in `src/config/site.config.ts`.
 - Manual raw palettes mapped to stable semantic colour roles.
-- Configurable type, spacing, sizing, wrapper, radius, and elevation tokens.
+- Configurable font families plus shared typography, spacing, sizing, wrapper, radius, and elevation tokens.
 - A no-index design-system preview for tokens, components, brand assets, elevation, shape, and breakpoints.
 - Spanish starter content and a configurable legal-page layout with a table of contents, optional status notice, and optional summary facts.
-- Optional consent-gated analytics and provider-agnostic native contact form support.
+- Optional integrations are disabled by default: enable approved feature flags and provide environment variables before consent-gated analytics or the provider-agnostic native contact form can run.
 - GSAP and ScrollTrigger available for isolated, reduced-motion-aware component animations.
 - ESLint, Prettier, Vitest, Playwright, axe accessibility checks, and GitHub Actions CI.
 

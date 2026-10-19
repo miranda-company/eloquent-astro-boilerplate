@@ -21,7 +21,15 @@ Do not begin production-page implementation before stages 1 and 2 are complete. 
 
 Create a new repository from `eloquent-astro-boilerplate`; do not develop a client site directly in the boilerplate repository. Keep the client repository private until the client approves its visibility.
 
-Clone it and install the pinned dependencies:
+In GitHub:
+
+1. Open [`miranda-company/eloquent-astro-boilerplate`](https://github.com/miranda-company/eloquent-astro-boilerplate).
+2. Select **Use this template**, then **Create a new repository**. If the button is unavailable, ask a repository administrator to enable template use or create the client repository from the boilerplate for you; do not fork it or copy files manually.
+3. Select the approved GitHub owner (normally the agency organisation), enter the client repository name, and choose **Private**.
+4. Select **Create repository**. Do not initialise it with a README, `.gitignore`, or licence: the boilerplate already supplies those files.
+5. On the new repository page, select **Code**, copy the HTTPS clone URL, and use it in the commands below.
+
+Clone the newly created client repository and install the pinned dependencies:
 
 ```sh
 git clone <client-repository-url>
