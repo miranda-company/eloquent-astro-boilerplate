@@ -30,7 +30,7 @@ Edit `src/config/site.config.ts` first.
 
 1. Replace the Spanish sample entries in `src/content/pages/es/`.
 2. Keep every frontmatter field valid. The build validates collection entries.
-3. Configure `siteConfig.legal.pages` for the required legal routes and labels. The footer uses this configuration; do not duplicate those links in the component. When consent is enabled, its adjacent “Gestionar cookies” item is an action button that reopens preferences, not a configured legal route.
+3. Configure `siteConfig.legal.pages` for the required legal routes and labels. The footer uses this configuration; do not duplicate those links in the component. When consent is enabled, its adjacent “Gestionar cookies” control is an action button that reopens preferences, not a configured legal route.
 4. Replace `Aviso legal`, `Política de privacidad`, and `Política de cookies` with client-approved legal copy before launch. Keep the `legal.navigation` entries and MDX section IDs aligned, add only verified summary facts, and remove the approval notice once the text is signed off.
 5. Keep unfinished pages as `draft: true` so they do not generate public routes.
 

@@ -8,25 +8,25 @@ import { siteConfig } from '../../config/site.config';
       <p class="font-semibold">{siteConfig.name}</p>
       <a href={`mailto:${siteConfig.contact.email}`}>{siteConfig.contact.email}</a>
     </address>
-    <nav aria-label={siteConfig.legal.navigationLabel} class="md:text-right">
-      <ul class="flex list-none flex-wrap gap-x-3 gap-y-1 p-0 md:justify-end">
-        {siteConfig.legal.pages.map((page) => (
-          <li>
-            <a href={page.href}>{page.label}</a>
-          </li>
-        ))}
-        {siteConfig.features.consentBanner && (
-          <li>
-            <button
-              class="cursor-pointer border-0 bg-transparent p-0 underline"
-              type="button"
-              data-open-consent
-            >
-              Gestionar cookies
-            </button>
-          </li>
-        )}
-      </ul>
-    </nav>
+    <div class="flex flex-wrap items-center gap-x-3 gap-y-1 md:justify-end">
+      <nav aria-label={siteConfig.legal.navigationLabel}>
+        <ul class="flex list-none flex-wrap gap-x-3 gap-y-1 p-0">
+          {siteConfig.legal.pages.map((page) => (
+            <li>
+              <a href={page.href}>{page.label}</a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+      {siteConfig.features.consentBanner && (
+        <button
+          class="cursor-pointer border-0 bg-transparent p-0 underline"
+          type="button"
+          data-open-consent
+        >
+          Gestionar cookies
+        </button>
+      )}
+    </div>
   </div>
 </footer>

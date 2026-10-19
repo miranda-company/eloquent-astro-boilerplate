@@ -4,7 +4,7 @@ This document is the repository contract for public HTML. It applies to people a
 
 ## Page contract
 
-`BaseLayout.astro` is the only document shell. It renders the skip link, site `<header>`, one `<main id="contenido">`, site `<footer>`, consent UI, and document metadata. Pages and content components render _inside_ that main landmark; they must not introduce another `<main>`.
+`BaseLayout.astro` is the only document shell. It renders the skip link, site `<header>`, one `<main id="contenido">`, site `<footer>`, optional consent UI, and document metadata. Pages and content components render _inside_ that main landmark; they must not introduce another `<main>`.
 
 Every public page must have:
 
@@ -86,6 +86,12 @@ An `<a href="…">` changes location. A `<button type="button">` performs an in-
 
 Use native form controls with visible `<label>` elements. Keep a form submission usable without JavaScript. Client enhancement must expose pending, success, and error states through an appropriate live/status region without replacing the native form semantics.
 
+Optional integrations begin disabled. Consent UI and its footer action render only when `siteConfig.features.consentBanner` is enabled; configured legal documents remain navigation links, while the consent action stays outside the legal `<nav>`. A form enhancement renders only when its feature flag and provider endpoint are configured; its static HTML `POST` remains the fallback.
+
+## Motion
+
+Before adding GSAP or ScrollTrigger, read [animation](animation.md). Motion is a component-scoped enhancement: import the shared helper only from the owning browser script, use `createMotionContext()` for reduced-motion gating and cleanup, and leave the final readable content state available in static HTML and CSS. Motion must not change landmark structure, focus order, heading hierarchy, link destinations, button behavior, or the meaning of the content.
+
 ## Layout and class naming
 
 Use a `<section>` for a meaningful content region, then place its content in `.wrapper` when it needs the shared page layout. `.wrapper` is the layout block: `wrapper-max` controls its maximum inner content width, while the mobile, tablet, and desktop gutter tokens control horizontal padding independently. The defaults are `16px` below `600px`, `32px` from `600px`, and `48px` from `1200px`.
@@ -137,6 +143,7 @@ Before merging a public-page change, confirm:
 - [ ] One `h1`, a sequential heading outline, and no duplicate main landmark.
 - [ ] Sections, articles, navigation, lists, definitions, tables, and contact data use their native elements.
 - [ ] Links navigate and buttons act; forms retain native labels and a non-JavaScript path.
+- [ ] Optional consent, form, and motion enhancements remain absent or dormant until configured and preserve the static reading experience.
 - [ ] Metadata is supplied via `BaseLayout`; image dimensions and alt text are correct.
 - [ ] JSON-LD, if any, accurately reflects visible content and the page is indexable.
 - [ ] `pnpm run verify` and relevant `pnpm run test:e2e` tests pass.

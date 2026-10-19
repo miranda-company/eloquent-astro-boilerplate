@@ -23,7 +23,7 @@ These values are public by design. Never place API keys, secrets, provider priva
 3. A GA or GTM identifier is configured.
 4. The visitor accepts, or previously accepted, optional cookies.
 
-When identifiers are absent, the generated page includes no analytics request. Configure either GA or GTM unless a reviewed implementation explicitly requires both. The untouched starter keeps analytics and consent disabled. When consent is enabled, the footer exposes “Gestionar cookies” as a button in the legal-navigation list; it lets visitors reopen the consent choices without pretending to navigate to another document.
+When identifiers are absent, the generated page includes no analytics request. Configure either GA or GTM unless a reviewed implementation explicitly requires both. The untouched starter keeps analytics and consent disabled. When consent is enabled, the footer exposes “Gestionar cookies” beside the legal navigation as a button; it lets visitors reopen the consent choices without pretending to navigate to another document.
 
 ## Contact form
 

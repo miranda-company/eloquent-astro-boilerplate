@@ -41,7 +41,7 @@ Read [DOM architecture](DOM_ARCHITECTURE.md) before adding content-bearing compo
 
 Astro Content Collections load `src/content/pages/**/*.{md,mdx}`. The Zod schema validates frontmatter at check and build time. A page is public only when it is not a draft and supplies a `slug`; `es/home` is reserved for the sample homepage content.
 
-Legal pages remain local MDX content. `LegalPageLayout.astro` owns their single `h1`, page metadata handoff, optional review notice, optional definition-list summary, responsive table of contents, and prose column. The content entry owns its approved legal copy and the stable IDs used by the contents navigation. Footer destinations come from `siteConfig.legal.pages` so the same links are not duplicated in a component. The consent-preferences button is a separate in-page action, but lives in that same footer list for an aligned, wrapping navigation row.
+Legal pages remain local MDX content. `LegalPageLayout.astro` owns their single `h1`, page metadata handoff, optional review notice, optional definition-list summary, responsive table of contents, and prose column. The content entry owns its approved legal copy and the stable IDs used by the contents navigation. Footer destinations come from `siteConfig.legal.pages` so the same links are not duplicated in a component. When enabled, the consent-preferences button is a separate in-page action placed beside the legal navigation in a shared wrapping layout.
 
 ## Client JavaScript boundary
 
