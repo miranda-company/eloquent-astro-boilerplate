@@ -8,7 +8,7 @@ Edit `src/config/site.config.ts` first.
 
 - Set `name`, canonical `url`, contact details, social links, navigation, and SEO defaults. Add `seo.defaultOgImage` only when an approved default social image is available.
 - Set `brand.logo` and `brand.icon` to the public asset paths, and record each SVG's intrinsic `logoWidth`, `logoHeight`, `iconWidth`, and `iconHeight`.
-- Review feature flags. `analytics`, `contactForm`, and `consentBanner` are disabled in the untouched starter and control optional behavior only after approval; `designSystemHomepage` keeps the temporary root preview out of the sitemap; `wireframe` is for temporary layout review only.
+- Review feature flags. `analytics`, `contactForm`, and `consentBanner` are disabled in the untouched starter and control optional behavior only after approval. `stickyHeader` and `backToTop` are enabled by default; turn either off when the approved client design does not need it. `designSystemHomepage` keeps the temporary root preview out of the sitemap; `wireframe` is for temporary layout review only.
 - Keep feature flags explicit. A flag is not a substitute for required environment configuration.
 
 ## 2. Add assets and fonts
@@ -18,6 +18,7 @@ Edit `src/config/site.config.ts` first.
 3. Keep original source assets in the agency asset library, not in the public build. When you prepare responsive variants, add deliberate `srcset` and `sizes` values in the native `<img>` or `<picture>` markup.
 4. Update `theme.font-sans` and add the approved font-loading implementation if the client uses a custom font.
 5. Confirm the header logo, monochrome brand preview, and fallback typography render correctly.
+6. Confirm the sticky header, back-to-top link, and in-page hash links work at the approved breakpoints. The back-to-top control must remain behind the cookie banner while consent is pending.
 
 ## 3. Configure colours and tokens
 

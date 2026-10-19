@@ -17,6 +17,9 @@ test('design-system homepage is noindex, keyboard-accessible, and has no default
   await expect(page.locator('body > header')).toHaveCount(1);
   await expect(page.locator('body > main#contenido')).toHaveCount(1);
   await expect(page.locator('body > footer')).toHaveCount(1);
+  await expect(page.locator('html')).toHaveClass(/site--sticky-header/);
+  await expect(page.locator('body')).toHaveAttribute('id', 'top');
+  await expect(page.locator('.back-to-top')).toHaveAttribute('href', '#top');
   await expect(page.locator('body > header nav')).toHaveCount(0);
   await expect(page.locator('.wrapper').first()).toHaveCSS('padding-left', '48px');
   await expect(page.locator('.container')).toHaveCount(0);
@@ -78,6 +81,7 @@ test('design-system homepage is noindex, keyboard-accessible, and has no default
   await expect(page.getByText('primary.500 → #1f4d3d', { exact: true })).toBeVisible();
   await expect(page.getByText('--space-24 · 6rem', { exact: true })).toBeVisible();
   await expect(page.getByText('--size-control · 2.75rem', { exact: true })).toBeVisible();
+  await expect(page.getByText('--size-header · 4rem', { exact: true })).toBeVisible();
   await expect(page.getByText('--wrapper-max · 1440px', { exact: true })).toBeVisible();
   await expect(page.getByText('--wrapper-gutter-mobile · 1rem', { exact: true })).toBeVisible();
   await expect(page.getByText('--wrapper-gutter-tablet · 2rem', { exact: true })).toBeVisible();
@@ -92,6 +96,9 @@ test('design-system homepage is noindex, keyboard-accessible, and has no default
   await expect(page.getByText('--breakpoint-xl · 100rem', { exact: true })).toBeVisible();
   await expect(page.getByText('Elevation 24dp', { exact: true })).toBeVisible();
   await expect(page.getByText('--shadow-24', { exact: true })).toBeVisible();
+  await page.evaluate(() => window.scrollTo(0, 700));
+  await expect(page.locator('.site-header')).toHaveClass(/site-header--sticky/);
+  await expect(page.locator('.back-to-top')).toHaveClass(/back-to-top--visible/);
   expect(thirdPartyRequests).toEqual([]);
 });
 

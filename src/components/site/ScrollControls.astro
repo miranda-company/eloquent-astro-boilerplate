@@ -1,0 +1,41 @@
+---
+import { siteConfig } from '../../config/site.config';
+
+const { stickyHeader, backToTop } = siteConfig.features;
+---
+
+{backToTop && (
+  <a class="back-to-top" href="#top" aria-label="Volver arriba">
+    <span aria-hidden="true">↑</span>
+  </a>
+)}
+
+{(stickyHeader || backToTop) && <script define:vars={{ stickyHeader, backToTop }}>
+  const stickyHeaderThreshold = 240;
+  const backToTopThreshold = 640;
+  const header = document.querySelector('.site-header');
+  const backToTopLink = document.querySelector('.back-to-top');
+
+  backToTopLink?.classList.add('back-to-top--enhanced');
+
+  let framePending = false;
+  const syncScrollControls = () => {
+    const isPastStickyThreshold = window.scrollY >= stickyHeaderThreshold;
+    const isPastBackToTopThreshold = window.scrollY >= backToTopThreshold;
+
+    if (stickyHeader) header?.classList.toggle('site-header--sticky', isPastStickyThreshold);
+    if (backToTop)
+      backToTopLink?.classList.toggle('back-to-top--visible', isPastBackToTopThreshold);
+
+    framePending = false;
+  };
+
+  const requestSync = () => {
+    if (framePending) return;
+    framePending = true;
+    window.requestAnimationFrame(syncScrollControls);
+  };
+
+  window.addEventListener('scroll', requestSync, { passive: true });
+  requestSync();
+</script>}

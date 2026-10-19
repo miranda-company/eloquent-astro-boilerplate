@@ -22,6 +22,7 @@ type ThemeToken =
   | 'space-section'
   | 'size-icon'
   | 'size-control'
+  | 'size-header'
   | 'wrapper-max'
   | 'wrapper-gutter-mobile'
   | 'wrapper-gutter-tablet'
@@ -91,6 +92,8 @@ export interface SiteConfig {
     analytics: boolean;
     contactForm: boolean;
     consentBanner: boolean;
+    stickyHeader: boolean;
+    backToTop: boolean;
     designSystemHomepage: boolean;
     wireframe: boolean;
   };
@@ -142,6 +145,8 @@ export const siteConfig: SiteConfig = {
     analytics: false,
     contactForm: false,
     consentBanner: false,
+    stickyHeader: true,
+    backToTop: true,
     designSystemHomepage: true,
     wireframe: true,
   },
@@ -255,6 +260,7 @@ export const siteConfig: SiteConfig = {
     'space-section': 'clamp(4rem, 9vw, 8rem)',
     'size-icon': '1.5rem',
     'size-control': '2.75rem',
+    'size-header': '4rem',
     'wrapper-max': '1440px',
     'wrapper-gutter-mobile': '1rem',
     'wrapper-gutter-tablet': '2rem',

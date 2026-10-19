@@ -42,7 +42,7 @@ The `theme` object contains the client-editable non-colour tokens:
 
 - `font-sans` is the system-font stack. Replace it and load an approved webfont locally or through the approved provider when a client needs one.
 - `space-1` through `space-24` form the shared spacing scale. `space-section` controls responsive vertical section rhythm.
-- `size-icon` and `size-control` define common control dimensions.
+- `size-icon`, `size-control`, and `size-header` define common icon, control, and header dimensions.
 - `wrapper-max` is the maximum inner content width, currently `1440px`.
 - `wrapper-gutter-mobile`, `wrapper-gutter-tablet`, and `wrapper-gutter-desktop` are the shared horizontal padding values. They default to `1rem` (`16px`), `2rem` (`32px`), and `3rem` (`48px`) respectively, independently from the maximum content width.
 
@@ -90,12 +90,16 @@ Provide single-colour SVGs with an opaque vector shape and no embedded raster im
 
 ## Component conventions
 
-The component set is intentionally small: base and legal layouts, header, footer, consent manager, contact form, marketing homepage, design-system preview, and the component-scoped animation helper. Compose existing primitives before adding a generic component.
+The component set is intentionally small: base and legal layouts, header, footer, scroll controls, consent manager, contact form, marketing homepage, design-system preview, and the component-scoped animation helper. Compose existing primitives before adding a generic component.
 
 - Keep interactive controls keyboard-accessible and preserve visible focus styles.
 - Use semantic colours, shared radius, spacing, and elevation tokens.
 - Avoid a Material component library; Material principles inform hierarchy and interaction, not the visual identity.
 - Keep optional client JavaScript scoped to the component that needs it.
+
+### Scroll controls
+
+`ScrollControls.astro` provides the default scroll behavior: `stickyHeader` and `backToTop` are enabled in `siteConfig.features`, while each can be disabled per client. The header becomes sticky after scrolling `240px`; the semantic back-to-top link appears after `640px`. Without JavaScript, the header remains static and the visible `#top` link remains usable. The control uses `size-control`, `size-icon`, `radius-full`, and `shadow-6`; it sits below the consent banner when one is active.
 
 ### Class naming
 

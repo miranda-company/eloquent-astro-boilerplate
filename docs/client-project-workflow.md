@@ -124,7 +124,7 @@ Edit `src/config/site.config.ts` first.
 2. Add the client email, optional phone number, social links, and initial Spanish navigation items.
 3. Set the default title and description. Use accurate, client-approved wording rather than generic marketing claims.
 4. Add `seo.defaultOgImage` only after a default social image is designed, exported, and available as a public site asset. Individual pages may later override it through `BaseLayout`.
-5. Review feature flags. Keep `analytics`, `contactForm`, and `consentBanner` disabled until their provider and privacy requirements are approved. Keep `wireframe` enabled only while reviewing layouts.
+5. Review feature flags. Keep `analytics`, `contactForm`, and `consentBanner` disabled until their provider and privacy requirements are approved. Confirm whether the default enabled `stickyHeader` and `backToTop` controls suit the approved design. Keep `wireframe` enabled only while reviewing layouts.
 6. Configure `legal.pages` with the approved legal routes and labels. Keep its links aligned with the required legal content entries; the footer reads this configuration rather than maintaining a separate link list.
 
 ### 2. Replace brand assets

@@ -62,6 +62,8 @@ describe('site configuration', () => {
     expect(siteConfig.features.analytics).toBe(false);
     expect(siteConfig.features.contactForm).toBe(false);
     expect(siteConfig.features.consentBanner).toBe(false);
+    expect(siteConfig.features.stickyHeader).toBe(true);
+    expect(siteConfig.features.backToTop).toBe(true);
   });
 
   it('configures the shared legal navigation in one place', () => {

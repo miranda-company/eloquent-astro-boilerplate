@@ -28,6 +28,7 @@
 - Read `docs/client-brief.md` when it exists in a client project; treat approved decisions there as the source of truth and report `TBD` items instead of guessing.
 - Optional integrations must emit no external request when unconfigured. Optional tracking must never load before consent.
 - Preserve a usable non-JavaScript form submission path when changing the contact-form integration.
+- Keep the configured sticky header and back-to-top link as progressive enhancements: the header remains usable without JavaScript and the link must retain its `#top` destination.
 
 ## Quality and documentation
 

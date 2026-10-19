@@ -3,6 +3,7 @@ import ConsentManager from '../components/site/ConsentManager.astro';
 import Footer from '../components/site/Footer.astro';
 import Header from '../components/site/Header.astro';
 import JsonLd from '../components/seo/JsonLd.astro';
+import ScrollControls from '../components/site/ScrollControls.astro';
 import { resolveSemanticColors, siteConfig } from '../config/site.config';
 import '../styles/global.css';
 
@@ -37,7 +38,11 @@ const themeStyle = [
 ---
 
 <!doctype html>
-<html lang={siteConfig.defaultLocale} style={themeStyle}>
+<html
+  lang={siteConfig.defaultLocale}
+  class:list={{ 'site--sticky-header': siteConfig.features.stickyHeader }}
+  style={themeStyle}
+>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
@@ -57,13 +62,14 @@ const themeStyle = [
     <title>{title}</title>
     {structuredData && !noindex && <JsonLd data={structuredData} />}
   </head>
-  <body class:list={['site', { 'site--wireframe': siteConfig.features.wireframe }]}>
+  <body id="top" class:list={['site', { 'site--wireframe': siteConfig.features.wireframe }]}>
     <a class="skip-link" href="#contenido">
       Saltar al contenido
     </a>
     <Header showNavigation={showNavigation} />
     <main id="contenido" tabindex="-1">
       <slot />
+      <ScrollControls />
     </main>
     <Footer />
     <ConsentManager />

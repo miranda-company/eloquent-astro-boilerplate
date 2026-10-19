@@ -88,6 +88,8 @@ Use native form controls with visible `<label>` elements. Keep a form submission
 
 Optional integrations begin disabled. Consent UI and its footer action render only when `siteConfig.features.consentBanner` is enabled; configured legal documents remain navigation links, while the consent action stays outside the legal `<nav>`. A form enhancement renders only when its feature flag and provider endpoint are configured; its static HTML `POST` remains the fallback.
 
+`ScrollControls.astro` owns the optional sticky-header and back-to-top enhancements. The header stays present and usable without JavaScript. The control is an `<a href="#top">`, not a button, so it still returns a visitor to the top of the document without JavaScript. When JavaScript is available, a passive, animation-frame-throttled listener applies the `site-header--sticky` and `back-to-top--visible` BEM modifiers. Keep the `#top` target, visible focus state, and reduced-motion-safe scrolling behavior intact.
+
 ## Motion
 
 Before adding GSAP or ScrollTrigger, read [animation](animation.md). Motion is a component-scoped enhancement: import the shared helper only from the owning browser script, use `createMotionContext()` for reduced-motion gating and cleanup, and leave the final readable content state available in static HTML and CSS. Motion must not change landmark structure, focus order, heading hierarchy, link destinations, button behavior, or the meaning of the content.
@@ -145,6 +147,7 @@ Before merging a public-page change, confirm:
 - [ ] One `h1`, a sequential heading outline, and no duplicate main landmark.
 - [ ] Sections, articles, navigation, lists, definitions, tables, and contact data use their native elements.
 - [ ] Links navigate and buttons act; forms retain native labels and a non-JavaScript path.
+- [ ] Sticky-header and back-to-top enhancements retain their usable static header and `#top` link fallback.
 - [ ] Optional consent, form, and motion enhancements remain absent or dormant until configured and preserve the static reading experience.
 - [ ] Metadata is supplied via `BaseLayout`; image dimensions and alt text are correct.
 - [ ] JSON-LD, if any, accurately reflects visible content and the page is indexable.

@@ -11,6 +11,7 @@ A static-first, white-label Astro starter for Spanish marketing sites. It combin
 - A no-index design-system preview for tokens, components, brand assets, elevation, shape, and breakpoints.
 - Spanish starter content and a configurable legal-page layout with a table of contents, optional status notice, and optional summary facts.
 - A pre-optimised asset workflow: native responsive image markup with agency-prepared files copied unchanged from `public/images/`.
+- Configurable sticky-header and back-to-top controls with semantic, no-JavaScript fallbacks.
 - Optional integrations are disabled by default: enable approved feature flags and provide environment variables before consent-gated analytics or the provider-agnostic native contact form can run.
 - GSAP and ScrollTrigger available for isolated, reduced-motion-aware component animations.
 - ESLint, Prettier, Vitest, Playwright, axe accessibility checks, and GitHub Actions CI.
