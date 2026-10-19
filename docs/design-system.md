@@ -6,12 +6,12 @@ The internal design-system preview is the root page while this boilerplate is be
 
 ## Source of truth
 
-| Concern                                                                                                          | Source                                          | Why it belongs there                                        |
-| ---------------------------------------------------------------------------------------------------------------- | ----------------------------------------------- | ----------------------------------------------------------- |
-| Client identity, raw palettes, semantic colour mappings, typography, spacing, size, radius, and elevation values | `src/config/site.config.ts`                     | Typed, client-specific runtime configuration                |
-| Responsive breakpoints and global CSS fallback values                                                            | `src/styles/global.css`                         | Tailwind generates media queries at build time              |
-| Reusable markup and component composition                                                                        | `src/components/`                               | Components consume semantic roles rather than client values |
-| Visual reference                                                                                                 | `src/components/site/DesignSystemPreview.astro` | Renders the configured system for review                    |
+| Concern                                                                                                                   | Source                                          | Why it belongs there                                        |
+| ------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------- | ----------------------------------------------------------- |
+| Client identity, raw palettes, semantic colour mappings, typography, spacing, size, wrapper, radius, and elevation values | `src/config/site.config.ts`                     | Typed, client-specific runtime configuration                |
+| Responsive breakpoints and global CSS fallback values                                                                     | `src/styles/global.css`                         | Tailwind generates media queries at build time              |
+| Reusable markup and component composition                                                                                 | `src/components/`                               | Components consume semantic roles rather than client values |
+| Visual reference                                                                                                          | `src/components/site/DesignSystemPreview.astro` | Renders the configured system for review                    |
 
 `BaseLayout.astro` resolves semantic colour references and emits the configured CSS custom properties on the document root. `global.css` provides the fallback values and connects semantic variables to Tailwind utilities.
 
@@ -42,9 +42,10 @@ The `theme` object contains the client-editable non-colour tokens:
 - `font-sans` is the system-font stack. Replace it and load an approved webfont locally or through the approved provider when a client needs one.
 - `space-1` through `space-24` form the shared spacing scale. `space-section` controls responsive vertical section rhythm.
 - `size-icon` and `size-control` define common control dimensions.
-- `container-max` is the maximum content width, currently `1440px`.
+- `wrapper-max` is the maximum inner content width, currently `1440px`.
+- `wrapper-gutter-mobile`, `wrapper-gutter-tablet`, and `wrapper-gutter-desktop` are the shared horizontal padding values. They default to `1rem` (`16px`), `2rem` (`32px`), and `3rem` (`48px`) respectively, independently from the maximum content width.
 
-Prefer `.container` and `.section` for page structure. Use the shared spacing values before introducing a one-off gap, margin, or width. The preview displays each configured value so designers and developers can verify the scale together.
+Use `.wrapper` and `.section` for page structure. A wrapper keeps its inner content within `wrapper-max` while applying the mobile gutter below `600px`, tablet gutter from `600px` to `1199px`, and desktop gutter from `1200px` upward. Changing a gutter token does not change the maximum content width. Use the shared spacing values before introducing a one-off gap, margin, or width. The preview displays each configured value so designers and developers can verify the scale together.
 
 ## Shape
 
@@ -89,9 +90,25 @@ The component set is intentionally small: layout, header, footer, consent manage
 - Avoid a Material component library; Material principles inform hierarchy and interaction, not the visual identity.
 - Keep optional client JavaScript scoped to the component that needs it.
 
+### Class naming
+
+Authored CSS classes follow BEM (Block, Element, Modifier):
+
+```html
+<div class="brand">
+  <span class="brand__mark brand__mark--black"></span>
+</div>
+```
+
+- A **block** is an independent component or layout primitive: `.wrapper`, `.section`, `.brand`.
+- An **element** belongs to its block: `.brand__mark`.
+- A **modifier** changes a block or element variant: `.brand__mark--black`, `.site--wireframe`.
+
+Tailwind classes remain styling utilities and do not need BEM names. Combine them with authored BEM classes when both structural naming and utility styling are useful. Name component state with a BEM modifier rather than an unscoped state class.
+
 ## Wireframe mode
 
-Set `siteConfig.features.wireframe` to `true` to outline every `.container` and `section` with a dashed red line. It is a local layout-review aid. Set it to `false` before a production release.
+Set `siteConfig.features.wireframe` to `true` to add the `.site--wireframe` modifier and outline every `.wrapper` and `section` with a dashed red line. It is a local layout-review aid. Set it to `false` before a production release.
 
 ## Review checklist
 

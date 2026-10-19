@@ -22,7 +22,10 @@ type ThemeToken =
   | 'space-section'
   | 'size-icon'
   | 'size-control'
-  | 'container-max'
+  | 'wrapper-max'
+  | 'wrapper-gutter-mobile'
+  | 'wrapper-gutter-tablet'
+  | 'wrapper-gutter-desktop'
   | 'shadow-0'
   | 'shadow-1'
   | 'shadow-2'
@@ -238,7 +241,10 @@ export const siteConfig: SiteConfig = {
     'space-section': 'clamp(4rem, 9vw, 8rem)',
     'size-icon': '1.5rem',
     'size-control': '2.75rem',
-    'container-max': '1440px',
+    'wrapper-max': '1440px',
+    'wrapper-gutter-mobile': '1rem',
+    'wrapper-gutter-tablet': '2rem',
+    'wrapper-gutter-desktop': '3rem',
     'shadow-0': 'none',
     'shadow-1': '0 1px 2px rgb(0 0 0 / 8%), 0 1px 3px rgb(0 0 0 / 6%)',
     'shadow-2': '0 1px 3px rgb(0 0 0 / 10%), 0 2px 4px rgb(0 0 0 / 8%)',

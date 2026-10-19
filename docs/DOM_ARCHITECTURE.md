@@ -84,6 +84,12 @@ An `<a href="…">` changes location. A `<button type="button">` performs an in-
 
 Use native form controls with visible `<label>` elements. Keep a form submission usable without JavaScript. Client enhancement must expose pending, success, and error states through an appropriate live/status region without replacing the native form semantics.
 
+## Layout and class naming
+
+Use a `<section>` for a meaningful content region, then place its content in `.wrapper` when it needs the shared page layout. `.wrapper` is the layout block: `wrapper-max` controls its maximum inner content width, while the mobile, tablet, and desktop gutter tokens control horizontal padding independently. The defaults are `16px` below `600px`, `32px` from `600px`, and `48px` from `1200px`.
+
+Authored CSS class names use BEM: `block`, `block__element`, and `block--modifier`. For example, `.brand__mark--black` is the black variant of the `brand__mark` element. Tailwind utility classes are intentionally exempt; they describe local styling rather than a reusable component API.
+
 ## Images and assets
 
 Prefer Astro's `<Image />` for rendered assets. Give every meaningful image concise alternative text that communicates its purpose; give decorative images `alt=""`. Always provide intrinsic width and height. Use `loading="lazy"` for below-the-fold content; reserve eager loading for visible, high-priority media such as a header mark or LCP image.

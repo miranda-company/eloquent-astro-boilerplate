@@ -131,7 +131,7 @@ Edit `src/config/site.config.ts` first.
 2. Map the required semantic roles in `colors.semantic`: `background`, `foreground`, `muted`, `surface`, `border`, `primary`, `on-primary`, `primary-hover`, `secondary`, `on-secondary`, `accent`, `error`, and `on-error`.
 3. Add `tertiary` or `quaternary` only when the brand requires them. Do not create empty or duplicate palettes.
 4. Set `theme.font-sans`, then configure approved font loading if the client uses a custom font. Keep a system-font fallback.
-5. Adjust the spacing, size, container, radius, and elevation tokens only when the approved design system calls for it. The default content container maximum is `1440px` through `container-max`.
+5. Adjust the spacing, size, wrapper, radius, and elevation tokens only when the approved design system calls for it. `wrapper-max` controls the `1440px` default inner content width; the independent responsive gutters default to `16px` on mobile, `32px` on tablet, and `48px` on desktop.
 6. Do not move breakpoints into `site.config.ts`; they compile at build time from `src/styles/global.css`.
 
 ### 4. Review the internal design system
@@ -140,7 +140,7 @@ Use the root preview to review the complete system with the designer/client:
 
 - Brand logo and icon on the two monochrome surfaces
 - Full palette inventory and semantic mappings
-- Font values, type scale, spacing, sizes, container, elevation, radius, and breakpoints
+- Font values, type scale, spacing, sizes, wrapper width/gutter, elevation, radius, and breakpoints
 - Buttons, cards, forms, states, focus styles, and contrast
 - Compact, medium, expanded, large, and extra-large layouts
 

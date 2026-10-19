@@ -27,7 +27,7 @@ At client kickoff, move the preview to `/design-system` and restore `/` as the m
 
 ## Configuration flow
 
-`site.config.ts` is the typed home for client decisions that are safe to expose in static output. `BaseLayout.astro` resolves configured semantic colours and writes them as CSS custom properties. Components consume stable semantic Tailwind roles such as `bg-role-primary` instead of client hex values.
+`site.config.ts` is the typed home for client decisions that are safe to expose in static output. `BaseLayout.astro` resolves configured semantic colours and writes them as CSS custom properties. Components consume stable semantic Tailwind roles such as `bg-role-primary` instead of client hex values. It also defines the independent `wrapper-max` and mobile/tablet/desktop gutter tokens; `.wrapper` selects the correct gutter in `global.css` at the existing breakpoints.
 
 Breakpoints are intentionally excluded from `site.config.ts`: Tailwind compiles them into media queries at build time. Their source of truth is `global.css`.
 

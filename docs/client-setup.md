@@ -23,7 +23,7 @@ Edit `src/config/site.config.ts` first.
 1. Enter the complete supplied palette manually in `siteConfig.colors.palettes`.
 2. Map the required UI roles in `siteConfig.colors.semantic`.
 3. Add `tertiary` or `quaternary` only when the approved system needs those roles; do not create filler palettes.
-4. Review typography, spacing, size, radius, elevation, and container values in `theme`.
+4. Review typography, spacing, size, wrapper maximum/gutters, radius, and elevation values in `theme`. Keep `wrapper-max` independent from `wrapper-gutter-mobile` (`16px`), `wrapper-gutter-tablet` (`32px`), and `wrapper-gutter-desktop` (`48px`).
 5. Use the internal preview to validate token values and semantic colour mappings. See [design-system.md](design-system.md) for the complete rules.
 
 ## 4. Add content and legal copy

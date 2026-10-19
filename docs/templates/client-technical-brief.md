@@ -43,16 +43,16 @@
 
 ## Brand and design system
 
-| Item                                | Answer                                                   |
-| ----------------------------------- | -------------------------------------------------------- |
-| Logo SVG path/source                | `[Path or URL]`                                          |
-| Icon SVG path/source                | `[Path or URL]`                                          |
-| Logo intrinsic dimensions           | `[width × height]`                                       |
-| Icon intrinsic dimensions           | `[width × height]`                                       |
-| Font family and source/licence      | `[System font / details]`                                |
-| Colour palette source               | `[Figma URL / file path]`                                |
-| Optional tertiary/quaternary roles? | `No / list roles and purpose`                            |
-| Token exceptions                    | `[None / spacing, radius, elevation, container changes]` |
+| Item                                | Answer                                                              |
+| ----------------------------------- | ------------------------------------------------------------------- |
+| Logo SVG path/source                | `[Path or URL]`                                                     |
+| Icon SVG path/source                | `[Path or URL]`                                                     |
+| Logo intrinsic dimensions           | `[width × height]`                                                  |
+| Icon intrinsic dimensions           | `[width × height]`                                                  |
+| Font family and source/licence      | `[System font / details]`                                           |
+| Colour palette source               | `[Figma URL / file path]`                                           |
+| Optional tertiary/quaternary roles? | `No / list roles and purpose`                                       |
+| Token exceptions                    | `[None / spacing, wrapper width/gutter, radius, elevation changes]` |
 
 **Design-system approval status:** `Not started / In review / Approved`
 

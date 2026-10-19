@@ -14,7 +14,7 @@ const { Content } = await render(page);
 ---
 
 <BaseLayout title={page.data.title} description={page.data.description}>
-  <article class="container prose section max-w-3xl">
+  <article class="wrapper prose section max-w-3xl">
     <h1 class="text-4xl font-semibold tracking-tight">{page.data.title}</h1>
     <Content />
   </article>

@@ -24,6 +24,13 @@ describe('site configuration', () => {
     expect(Object.values(siteConfig.theme).every(Boolean)).toBe(true);
   });
 
+  it('keeps wrapper width and gutter tokens independently configurable', () => {
+    expect(siteConfig.theme['wrapper-max']).toBe('1440px');
+    expect(siteConfig.theme['wrapper-gutter-mobile']).toBe('1rem');
+    expect(siteConfig.theme['wrapper-gutter-tablet']).toBe('2rem');
+    expect(siteConfig.theme['wrapper-gutter-desktop']).toBe('3rem');
+  });
+
   it('resolves semantic roles from the configured manual palettes', () => {
     const colors = resolveSemanticColors(siteConfig.colors);
 

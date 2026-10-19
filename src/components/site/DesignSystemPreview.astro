@@ -42,7 +42,15 @@ const spacingTokens = [
   'space-16',
   'space-24',
 ] as const;
-const sizeTokens = ['size-icon', 'size-control', 'radius-md', 'container-max'] as const;
+const sizeTokens = [
+  'size-icon',
+  'size-control',
+  'radius-md',
+  'wrapper-max',
+  'wrapper-gutter-mobile',
+  'wrapper-gutter-tablet',
+  'wrapper-gutter-desktop',
+] as const;
 const shapeTokens = [
   { token: 'radius-none', name: 'None', use: 'Data tables and square media' },
   { token: 'radius-xs', name: 'Extra small', use: 'Inputs, menus, and compact containers' },
@@ -108,7 +116,7 @@ const brandElements = [
 ---
 
 <section class="section">
-  <div class="container">
+  <div class="wrapper">
     <p class="text-sm font-semibold uppercase tracking-[0.16em] text-role-primary">
       Internal reference
     </p>
@@ -121,7 +129,7 @@ const brandElements = [
 </section>
 
 <section class="section bg-role-surface">
-  <div class="container">
+  <div class="wrapper">
     <h2 class="text-3xl font-semibold tracking-tight">Brand elements</h2>
     <p class="mt-3 max-w-2xl text-role-foreground/75">
       Logo and icon assets are configured once, then previewed as monochrome SVG masks without
@@ -135,17 +143,17 @@ const brandElements = [
             <code class="mt-1 block truncate text-xs text-role-foreground/75">{element.path}</code>
           </div>
           <div class="grid sm:grid-cols-2">
-            <div class="brand-preview-light flex min-h-36 items-center justify-center p-8">
+            <div class="brand__preview--light flex min-h-36 items-center justify-center p-8">
               <span
                 aria-hidden="true"
-                class:list={['brand-mark brand-mark-black', element.previewClass]}
+                class:list={['brand__mark brand__mark--black', element.previewClass]}
                 style={`--brand-asset: url('${element.path}')`}
               ></span>
             </div>
-            <div class="brand-preview-dark flex min-h-36 items-center justify-center p-8">
+            <div class="brand__preview--dark flex min-h-36 items-center justify-center p-8">
               <span
                 aria-hidden="true"
-                class:list={['brand-mark brand-mark-white', element.previewClass]}
+                class:list={['brand__mark brand__mark--white', element.previewClass]}
                 style={`--brand-asset: url('${element.path}')`}
               ></span>
             </div>
@@ -157,7 +165,7 @@ const brandElements = [
 </section>
 
 <section class="section bg-role-surface">
-  <div class="container">
+  <div class="wrapper">
     <h2 class="text-3xl font-semibold tracking-tight">Typography</h2>
     <p class="mt-3 max-w-2xl text-role-foreground/75">
       The full type scale uses the configured system-font token and can be replaced per client.
@@ -182,7 +190,7 @@ const brandElements = [
 </section>
 
 <section class="section">
-  <div class="container">
+  <div class="wrapper">
     <h2 class="text-3xl font-semibold tracking-tight">Colors</h2>
     <p class="mt-3 max-w-2xl text-role-foreground/75">
       Raw client palettes remain available for design work. Components consume the semantic roles
@@ -239,7 +247,7 @@ const brandElements = [
 </section>
 
 <section class="section bg-role-muted">
-  <div class="container">
+  <div class="wrapper">
     <h2 class="text-3xl font-semibold tracking-tight">Spacing and size tokens</h2>
     <div class="mt-8 grid gap-10 lg:grid-cols-2">
       <div>
@@ -268,7 +276,7 @@ const brandElements = [
                 style={
                   token === 'radius-md'
                     ? `height: var(--size-control); width: var(--size-control); border-radius: var(--${token})`
-                    : token === 'container-max'
+                    : token === 'wrapper-max'
                       ? `height: var(--space-4); width: min(100%, var(--${token}))`
                       : `height: var(--${token}); width: var(--${token})`
                 }
@@ -282,7 +290,7 @@ const brandElements = [
 </section>
 
 <section class="section">
-  <div class="container">
+  <div class="wrapper">
     <h2 class="text-3xl font-semibold tracking-tight">Buttons</h2>
     <div class="mt-8 flex flex-wrap items-center gap-3">
       <a
@@ -306,7 +314,7 @@ const brandElements = [
 </section>
 
 <section id="components" class="section bg-role-surface">
-  <div class="container grid gap-12 lg:grid-cols-2">
+  <div class="wrapper grid gap-12 lg:grid-cols-2">
     <div>
       <h2 class="text-3xl font-semibold tracking-tight">Cards and other components</h2>
       <article class="mt-8 rounded-md border border-role-foreground/10 bg-role-surface p-6 shadow-[var(--shadow-1)]">
@@ -332,7 +340,7 @@ const brandElements = [
 </section>
 
 <section class="section">
-  <div class="container">
+  <div class="wrapper">
     <h2 class="text-3xl font-semibold tracking-tight">Elevation</h2>
     <p class="mt-3 max-w-2xl text-role-foreground/75">
       A two-layer shadow scale separates resting surfaces from temporary, high-priority UI. The
@@ -361,7 +369,7 @@ const brandElements = [
 </section>
 
 <section class="section">
-  <div class="container">
+  <div class="wrapper">
     <h2 class="text-3xl font-semibold tracking-tight">Shape and border radius</h2>
     <p class="mt-3 max-w-2xl text-role-foreground/75">
       The scale moves from square to fully rounded. It follows the Material 3 shape vocabulary,
@@ -394,7 +402,7 @@ const brandElements = [
 </section>
 
 <section class="section bg-role-surface">
-  <div class="container">
+  <div class="wrapper">
     <h2 class="text-3xl font-semibold tracking-tight">Breakpoints</h2>
     <p class="mt-3 max-w-2xl text-role-foreground/75">
       Layout is mobile-first. These viewport ranges are Material-inspired size classes mapped to the

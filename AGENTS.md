@@ -14,6 +14,8 @@
 - Use semantic Tailwind roles and shared CSS tokens. Do not hard-code client colour, spacing, radius, or elevation values in components when a token fits.
 - Keep raw palettes out of ordinary component markup. Components consume semantic roles; raw values are for design inventory and approved exceptions.
 - Keep build-time breakpoints in `src/styles/global.css`, not `site.config.ts`.
+- Use `.wrapper` for shared horizontal layout. Keep `wrapper-max` separate from the responsive `wrapper-gutter-mobile`, `wrapper-gutter-tablet`, and `wrapper-gutter-desktop` theme tokens; their defaults are `16px`, `32px`, and `48px`.
+- Name authored CSS classes with BEM: `block`, `block__element`, and `block--modifier`. Tailwind utility classes remain utilities and are not renamed to BEM.
 - Update `docs/design-system.md` and the design-system preview when changing the token model, component conventions, or visual reference.
 - Follow the mandatory semantic, metadata, AEO/GEO, media, and JSON-LD rules in [`docs/DOM_ARCHITECTURE.md`](docs/DOM_ARCHITECTURE.md). Read it before changing a page, layout, or rendered-content component.
 - Keep canonical, social metadata, and optional JSON-LD in `BaseLayout.astro`; do not duplicate document-head metadata in routes or components.

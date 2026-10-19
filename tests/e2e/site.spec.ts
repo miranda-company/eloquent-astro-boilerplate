@@ -18,6 +18,8 @@ test('design-system homepage is noindex, keyboard-accessible, and has no default
   await expect(page.locator('body > main#contenido')).toHaveCount(1);
   await expect(page.locator('body > footer')).toHaveCount(1);
   await expect(page.locator('body > header nav')).toHaveCount(0);
+  await expect(page.locator('.wrapper').first()).toHaveCSS('padding-left', '48px');
+  await expect(page.locator('.container')).toHaveCount(0);
   await expect(page.getByRole('link', { name: 'Nombre del cliente' })).toHaveAttribute('href', '/');
   await expect(page.getByRole('img', { name: 'Nombre del cliente' })).toHaveAttribute(
     'src',
@@ -61,13 +63,13 @@ test('design-system homepage is noindex, keyboard-accessible, and has no default
   await expect(page.getByText('--font-sans:', { exact: false })).toBeVisible();
   await expect(page.getByText('/brand/brand-logo.svg', { exact: true })).toBeVisible();
   await expect(page.getByText('/brand/brand-icon.svg', { exact: true })).toBeVisible();
-  await expect(page.locator('.brand-mark')).toHaveCount(4);
-  await expect(page.locator('.brand-mark').first()).toHaveCSS('mask-image', /url\(/);
-  await expect(page.locator('.brand-preview-light').first()).toHaveCSS(
+  await expect(page.locator('.brand__mark')).toHaveCount(4);
+  await expect(page.locator('.brand__mark').first()).toHaveCSS('mask-image', /url\(/);
+  await expect(page.locator('.brand__preview--light').first()).toHaveCSS(
     'background-color',
     'rgb(255, 255, 255)',
   );
-  await expect(page.locator('.brand-preview-dark').first()).toHaveCSS(
+  await expect(page.locator('.brand__preview--dark').first()).toHaveCSS(
     'background-color',
     'rgb(0, 0, 0)',
   );
@@ -76,6 +78,14 @@ test('design-system homepage is noindex, keyboard-accessible, and has no default
   await expect(page.getByText('primary.500 → #1f4d3d', { exact: true })).toBeVisible();
   await expect(page.getByText('--space-24 · 6rem', { exact: true })).toBeVisible();
   await expect(page.getByText('--size-control · 2.75rem', { exact: true })).toBeVisible();
+  await expect(page.getByText('--wrapper-max · 1440px', { exact: true })).toBeVisible();
+  await expect(page.getByText('--wrapper-gutter-mobile · 1rem', { exact: true })).toBeVisible();
+  await expect(page.getByText('--wrapper-gutter-tablet · 2rem', { exact: true })).toBeVisible();
+  await expect(page.getByText('--wrapper-gutter-desktop · 3rem', { exact: true })).toBeVisible();
+  await page.setViewportSize({ width: 768, height: 900 });
+  await expect(page.locator('.wrapper').first()).toHaveCSS('padding-left', '32px');
+  await page.setViewportSize({ width: 390, height: 844 });
+  await expect(page.locator('.wrapper').first()).toHaveCSS('padding-left', '16px');
   await expect(page.getByText('text-9xl · 8rem / 128px', { exact: true })).toBeVisible();
   await expect(page.getByText('--radius-full', { exact: true })).toBeVisible();
   await expect(page.getByText('9999px', { exact: true })).toBeVisible();
