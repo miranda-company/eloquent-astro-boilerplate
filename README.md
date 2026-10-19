@@ -11,6 +11,7 @@ A static-first, white-label Astro starter for Spanish marketing sites. It combin
 - A no-index design-system preview for tokens, components, brand assets, elevation, shape, and breakpoints.
 - Spanish starter content and a configurable legal-page layout with a table of contents, optional status notice, and optional summary facts.
 - Optional consent-gated analytics and provider-agnostic native contact form support.
+- GSAP and ScrollTrigger available for isolated, reduced-motion-aware component animations.
 - ESLint, Prettier, Vitest, Playwright, axe accessibility checks, and GitHub Actions CI.
 
 ## Requirements
@@ -58,6 +59,7 @@ Then complete [the client setup checklist](docs/client-setup.md). Copy `.env.exa
 - [Design system](docs/design-system.md)
 - [Semantic DOM, SEO, AEO, and GEO](docs/DOM_ARCHITECTURE.md)
 - [Integrations and privacy](docs/integrations.md)
+- [Animation](docs/animation.md)
 - [Testing and contribution](docs/testing.md)
 
 ## Package-manager policy

@@ -87,9 +87,10 @@ Start from the [client technical brief template](templates/client-technical-brie
 | Brand system          | Logo/icon SVGs, font licences/files, full palette, component states, Figma link                        |
 | SEO                   | Canonical domain, page titles/descriptions, social-image approach, indexable routes, schema candidates |
 | Integrations          | Form provider, analytics/consent decision, CRM, email destination, privacy constraints                 |
+| Motion                | Animation intent, affected routes, reduced-motion behavior, performance budget, approved GSAP plugins  |
 | Delivery              | Hosting, DNS owner, deployment access, launch date, maintenance owner                                  |
 
-Resolve unknown requirements with the client before adding a dependency, server runtime, CMS, animation package, or third-party script.
+Resolve unknown requirements with the client before adding a dependency, server runtime, CMS, animation package, or third-party script. GSAP and ScrollTrigger are already available in this starter, but each client still needs an approved animation scope and accessibility acceptance criteria. Read [animation](animation.md) before implementing them.
 
 ### 5. Start agent work with explicit scope
 

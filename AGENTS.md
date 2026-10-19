@@ -4,7 +4,7 @@
 
 - Keep source code, schemas, configuration, and documentation in English. Keep starter-facing content and routes in Spanish unless internationalization is deliberately introduced.
 - Preserve static output. Add server rendering only after hosting, data, privacy, and caching requirements are explicit.
-- Prefer local content, static assets, and isolated client JavaScript. Do not add a client framework, global state store, scroll library, or transition library without a documented need.
+- Prefer local content, static assets, and isolated client JavaScript. GSAP and ScrollTrigger are supported only as component-scoped enhancements; read [`docs/animation.md`](docs/animation.md) before using them. Keep client frameworks, global state stores, scroll-jacking, and transition runtimes out of the starter unless a documented need changes the architecture.
 - Use pnpm only. Preserve `pnpm-lock.yaml`; do not add an npm lockfile or install dependencies with npm.
 
 ## Configuration and design system

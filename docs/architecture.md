@@ -45,7 +45,7 @@ Legal pages remain local MDX content. `LegalPageLayout.astro` owns their single 
 
 ## Client JavaScript boundary
 
-The starter does not include a client UI framework, global state store, scroll library, or transition library. The consent manager and contact form each own their small client script. New browser JavaScript should stay local to the component that requires it and should preserve a usable non-JavaScript path where possible.
+The starter does not include a client UI framework, global state store, scroll-jacking library, or transition runtime. GSAP and ScrollTrigger are available as an unreferenced component-scoped foundation; the default build emits neither until a component imports `src/scripts/animation/gsap.ts`. The consent manager and contact form each own their small client script. New browser JavaScript should stay local to the component that requires it and should preserve a usable non-JavaScript path where possible. Read [animation](animation.md) before adding motion.
 
 ## Static-hosting boundary
 

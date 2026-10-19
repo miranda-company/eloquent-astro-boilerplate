@@ -71,13 +71,14 @@ Only list schema for visible, indexable content that truthfully exists on the pa
 
 ## Features and integrations
 
-| Feature                   | Required?             | Approved provider / decision     | Configuration owner |
-| ------------------------- | --------------------- | -------------------------------- | ------------------- |
-| Contact form              | `Yes / No`            | `[Endpoint provider / TBD]`      | `[Name]`            |
-| Analytics                 | `Yes / No`            | `[GA / GTM / none]`              | `[Name]`            |
-| Cookie consent            | `Yes / No`            | `[Built-in / approved platform]` | `[Name]`            |
-| CMS                       | `No / TBD / provider` | `[Decision]`                     | `[Name]`            |
-| Other third-party service | `No / details`        | `[Decision]`                     | `[Name]`            |
+| Feature                   | Required?             | Approved provider / decision        | Configuration owner |
+| ------------------------- | --------------------- | ----------------------------------- | ------------------- |
+| Contact form              | `Yes / No`            | `[Endpoint provider / TBD]`         | `[Name]`            |
+| Analytics                 | `Yes / No`            | `[GA / GTM / none]`                 | `[Name]`            |
+| Cookie consent            | `Yes / No`            | `[Built-in / approved platform]`    | `[Name]`            |
+| Motion                    | `Yes / No`            | `[GSAP / ScrollTrigger / CSS only]` | `[Name]`            |
+| CMS                       | `No / TBD / provider` | `[Decision]`                        | `[Name]`            |
+| Other third-party service | `No / details`        | `[Decision]`                        | `[Name]`            |
 
 **Privacy or legal requirements:**
 
@@ -89,6 +90,7 @@ Never place private API keys, credentials, or secrets in the repository or a `PU
 
 - Hosting / deployment owner: `[Provider and owner]`
 - Required browser, accessibility, or performance requirement: `[None / details]`
+- Animation intent, affected routes, reduced-motion behavior, and performance budget: `[None / details]`
 - Approved additions beyond the boilerplate: `[None / list and reason]`
 - Explicit exclusions: `[For example: no CMS, no animation library, no client framework]`
 

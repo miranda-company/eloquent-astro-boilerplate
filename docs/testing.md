@@ -21,11 +21,11 @@ Playwright builds the site and serves `dist/`, so browser tests exercise the sta
 
 Browser coverage verifies the current design-system homepage, legal routes and their table-of-contents targets, skip link, header brand link, configured logo dimensions, shell landmarks, single-page `h1` structure, canonical/social metadata, noindex JSON-LD suppression, token previews, BEM brand classes, responsive wrapper gutters, consent controls, absence of default third-party analytics requests, and baseline accessibility through axe.
 
-Unit coverage verifies URL and locale configuration, brand asset paths, colour-resolution failures, required semantic mappings, optional palette roles, independent wrapper tokens, and wireframe feature configurability.
+Unit coverage verifies URL and locale configuration, brand asset paths, colour-resolution failures, required semantic mappings, optional palette roles, independent wrapper tokens, wireframe feature configurability, and the GSAP/ScrollTrigger animation foundation.
 
 ## Contribution rules
 
-Add or update tests when changing public routes, shared interactions, content schemas, integrations, semantic token behavior, client-visible feature flags, document landmarks, headings, metadata, or structured-data behavior. Keep tests deterministic: do not call live analytics, form providers, or third-party APIs.
+Add or update tests when changing public routes, shared interactions, content schemas, integrations, semantic token behavior, client-visible feature flags, document landmarks, headings, metadata, structured-data behavior, or motion. Keep tests deterministic: do not call live analytics, form providers, or third-party APIs. Motion tests must cover the final static state and reduced-motion behavior where a motion component is added.
 
 For visual changes, inspect the design-system preview at the relevant responsive widths. For any breakpoint change, review compact, medium, expanded, large, and extra-large layouts.
 
