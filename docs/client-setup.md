@@ -42,19 +42,32 @@ Copy `.env.example` to `.env` only when an integration is approved. Leave unrela
 - `PUBLIC_GA_MEASUREMENT_ID` enables Google Analytics after consent.
 - `PUBLIC_GTM_CONTAINER_ID` enables Google Tag Manager after consent.
 
+Enable the matching feature flag only after the provider and privacy requirements are approved: `contactForm` with `PUBLIC_FORM_ENDPOINT`, and both `analytics` and `consentBanner` with a GA or GTM identifier. Keep unrelated flags `false` and environment values empty.
+
 Read [integrations.md](integrations.md) before configuring a provider. In particular, enhanced form submission needs CORS support; the HTML form POST is the non-JavaScript fallback.
 
-## 6. Review responsive behavior
+## 6. Configure approved motion
+
+Use GSAP or ScrollTrigger only when the client brief defines the motion intent, affected routes, reduced-motion behavior, and performance budget.
+
+1. Read [animation.md](animation.md) before implementation.
+2. Import `src/scripts/animation/gsap.ts` only from the owning component or page script; do not add it to a global layout or site-wide script.
+3. Use `createMotionContext()` so animations respect reduced-motion preferences and clean up correctly.
+4. Keep meaningful content in its final readable state without JavaScript. Test normal, reduced-motion, keyboard, and no-JavaScript behavior.
+
+## 7. Review responsive behavior
 
 Breakpoints are build-time Tailwind tokens in `src/styles/global.css`, not values in `site.config.ts`. Do not duplicate them in client configuration. If the scale changes, review every responsive layout at compact, medium, expanded, large, and extra-large widths.
 
-## 7. Verify before handoff
+## 8. Verify before handoff
 
 1. Set `siteConfig.features.wireframe` to `false`.
 2. Run `pnpm run verify`.
 3. Run `pnpm run test:e2e`.
 4. Inspect the production output locally with `pnpm run preview`.
 5. Confirm the public homepage, legal routes, consent behavior, form fallback, metadata, sitemap, and `robots.txt`.
+6. Verify integrations in both states: with features disabled, confirm there is no consent UI, form-enhancement script, analytics loader, or third-party request; with an approved feature enabled, confirm its provider behavior and legal disclosures.
+7. For any GSAP or ScrollTrigger component, verify normal, reduced-motion, keyboard, and no-JavaScript states.
 
 ## Move the design-system preview at project kickoff
 
