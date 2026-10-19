@@ -9,9 +9,10 @@ The internal design-system preview is the root page while this boilerplate is be
 | Concern                                                                                                                   | Source                                          | Why it belongs there                                        |
 | ------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------- | ----------------------------------------------------------- |
 | Client identity, raw palettes, semantic colour mappings, typography, spacing, size, wrapper, radius, and elevation values | `src/config/site.config.ts`                     | Typed, client-specific runtime configuration                |
-| Responsive breakpoints and global CSS fallback values                                                                     | `src/styles/global.css`                         | Tailwind generates media queries at build time              |
+| Responsive breakpoints, global CSS fallback values, and shared motion timing                                              | `src/styles/global.css`                         | Tailwind generates media queries at build time              |
 | Reusable markup and component composition                                                                                 | `src/components/`                               | Components consume semantic roles rather than client values |
 | Visual reference                                                                                                          | `src/components/site/DesignSystemPreview.astro` | Renders the configured system for review                    |
+| Motion behavior and GSAP/ScrollTrigger usage                                                                              | `docs/animation.md`                             | Motion remains optional, local, and accessible              |
 
 `BaseLayout.astro` resolves semantic colour references and emits the configured CSS custom properties on the document root. `global.css` provides the fallback values and connects semantic variables to Tailwind utilities.
 
@@ -75,6 +76,12 @@ The starter is mobile-first:
 
 Change this scale only as a deliberate layout-system decision. Any breakpoint change requires responsive regression testing because it affects every prefixed Tailwind utility.
 
+## Motion
+
+`--motion-fast` currently lives in `src/styles/global.css` and provides the shared `160ms` timing used by lightweight CSS state changes. It is a global implementation token, not a client-editable `siteConfig.theme` value. Change it only as a deliberate system-wide decision and update this guide and affected interaction tests at the same time.
+
+GSAP and ScrollTrigger are available for approved component-level motion, but they are not part of the default bundle or the design-system preview. Read [animation](animation.md) before using them. Motion must preserve the static readable state, respect reduced-motion preferences, and avoid changing the document’s meaning or interaction semantics.
+
 ## Brand assets
 
 Set `siteConfig.brand.logo` and `siteConfig.brand.icon` to public SVG paths, and keep their `logoWidth`, `logoHeight`, `iconWidth`, and `iconHeight` values aligned with each file's intrinsic dimensions. The preview applies the assets as CSS masks and shows the standard monochrome treatments: black on white and white on black.
@@ -83,7 +90,7 @@ Provide single-colour SVGs with an opaque vector shape and no embedded raster im
 
 ## Component conventions
 
-The component set is intentionally small: layout, header, footer, consent manager, contact form, marketing homepage, and design-system preview. Compose existing primitives before adding a generic component.
+The component set is intentionally small: base and legal layouts, header, footer, consent manager, contact form, marketing homepage, design-system preview, and the component-scoped animation helper. Compose existing primitives before adding a generic component.
 
 - Keep interactive controls keyboard-accessible and preserve visible focus styles.
 - Use semantic colours, shared radius, spacing, and elevation tokens.
@@ -117,4 +124,5 @@ Before approving a client theme:
 1. Check semantic mappings and text/background contrast combinations.
 2. Confirm all brand assets, radius, spacing, and elevation values in the preview.
 3. Review the compact, medium, expanded, large, and extra-large layouts.
-4. Turn wireframe mode off and run `pnpm run verify` plus `pnpm run test:e2e`.
+4. If approved motion is present, verify normal and reduced-motion behavior without hiding meaningful static content.
+5. Turn wireframe mode off and run `pnpm run verify` plus `pnpm run test:e2e`.
