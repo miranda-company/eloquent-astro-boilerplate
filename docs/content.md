@@ -32,6 +32,7 @@ Optional fields:
 ```yaml
 slug: public-route-segment
 draft: false
+template: standard
 ```
 
 `slug` creates a public route through `[...slug].astro`. Set `draft: true` to keep an entry out of generated routes. The `es/home` entry is reserved for homepage content and is not routed through the catch-all page.
@@ -55,3 +56,32 @@ Before adding a new collection or content field:
 ## Legal content
 
 The three legal pages are placeholders, not legal advice. Replace them with client-approved copy before launch and verify the page descriptions, navigation links, and actual cookies/services match the approved text.
+
+Legal pages use `template: legal` and require a `legal` object in their frontmatter:
+
+```yaml
+template: legal
+legal:
+  intro: 'A concise, visible description of the document.'
+  updated: '10 de octubre de 2026' # Optional; publish only an approved date.
+  notice: # Optional; remove after approval.
+    title: 'Pendiente de validación jurídica'
+    text: 'Explain what remains to be approved.'
+  summary: # Optional; use only verified facts.
+    - label: 'Responsable'
+      value: 'Approved legal entity name'
+  navigation:
+    - id: responsable
+      label: 'Responsable del tratamiento'
+```
+
+Each `navigation.id` must match a stable section ID in the MDX body. Use the following semantic pattern, with one `h2` per legal section:
+
+```mdx
+<section id="responsable" aria-labelledby="responsable-title">
+  <h2 id="responsable-title">Responsable del tratamiento</h2>
+  <p>Start with a concise, factual answer or explanation.</p>
+</section>
+```
+
+The layout renders the document `h1`; never add an `h1` to a legal entry. Keep the table-of-contents list and section IDs aligned. Use a semantic `<table>` with a `<caption>` and column scopes for a cookie inventory. Keep `summary` facts and `updated` dates empty until they are verified rather than publishing placeholders as facts.

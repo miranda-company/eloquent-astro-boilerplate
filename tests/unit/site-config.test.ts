@@ -57,4 +57,10 @@ describe('site configuration', () => {
   it('defines a configurable wireframe mode', () => {
     expect(typeof siteConfig.features.wireframe).toBe('boolean');
   });
+
+  it('configures the shared legal navigation in one place', () => {
+    expect(siteConfig.legal.pages).toHaveLength(3);
+    expect(siteConfig.legal.pages.every((page) => page.href.startsWith('/'))).toBe(true);
+    expect(siteConfig.legal.tableOfContentsLabel).toBe('En esta página');
+  });
 });

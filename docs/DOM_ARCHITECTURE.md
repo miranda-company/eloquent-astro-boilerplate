@@ -31,6 +31,8 @@ The design-system preview is intentionally `noindex`; it must remain free of str
 
 Use `<address>` for an organisation's contact details. Use `<ul>` or `<ol>` for a list of peer items; each item belongs in an `<li>`. Use `<figure>` and `<figcaption>` when an image, chart, or illustration needs a visible caption.
 
+For legal documents, use `LegalPageLayout.astro` through `template: legal` content entries. It renders the document `<article>`, the one document `<h1>`, a complementary `<aside>` only for an optional approval/status notice, a `<dl>` only for verified legal facts, and an ordered in-page `<nav>`. Legal MDX supplies semantic `<section>` elements, each with a stable ID and an `h2`; the section ID must match its table-of-contents entry. This makes the document navigable and keeps its legal concepts explicitly connected for readers and machines.
+
 ## Headings and answer-oriented writing
 
 One `<h1>` is permitted per public document. Page sections start with `<h2>`; nested sections use `<h3>`, then `<h4>` only when the hierarchy actually needs it. Do not skip from an `h2` to an `h4`, and do not select a heading level for its typography. Use token classes to control appearance instead.

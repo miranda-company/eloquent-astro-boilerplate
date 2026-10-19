@@ -1,0 +1,86 @@
+---
+import { siteConfig } from '../config/site.config';
+import BaseLayout from './BaseLayout.astro';
+import '../styles/legal-page.css';
+
+interface NavigationItem {
+  id: string;
+  label: string;
+}
+
+interface SummaryItem {
+  label: string;
+  value: string;
+}
+
+interface Props {
+  title: string;
+  description: string;
+  intro: string;
+  updated?: string;
+  navigation: readonly NavigationItem[];
+  summary?: readonly SummaryItem[];
+  notice?: {
+    title: string;
+    text: string;
+  };
+}
+
+const { title, description, intro, updated, navigation, summary = [], notice } = Astro.props;
+---
+
+<BaseLayout title={title} description={description}>
+  <article class="legal-page">
+    <header class="legal-page__hero">
+      <div class="wrapper legal-page__hero-content">
+        <p class="legal-page__eyebrow">Información legal</p>
+        <h1>{title}</h1>
+        <p class="legal-page__intro">{intro}</p>
+        {updated && <p class="legal-page__updated">Última actualización: {updated}</p>}
+      </div>
+    </header>
+
+    {(notice || summary.length > 0) && (
+      <section class="legal-page__overview" aria-label={`Resumen de ${title}`}>
+        <div class="wrapper">
+          {notice && (
+            <aside class="legal-page__notice" aria-labelledby="legal-page-notice-title">
+              <h2 id="legal-page-notice-title">{notice.title}</h2>
+              <p>{notice.text}</p>
+            </aside>
+          )}
+          {summary.length > 0 && (
+            <dl class="legal-page__summary">
+              {summary.map((item) => (
+                <div class="legal-page__summary-item">
+                  <dt>{item.label}</dt>
+                  <dd>{item.value}</dd>
+                </div>
+              ))}
+            </dl>
+          )}
+        </div>
+      </section>
+    )}
+
+    <section class="legal-page__content" aria-label={`Contenido de ${title}`}>
+      <div class="wrapper legal-page__grid">
+        <aside class="legal-page__toc">
+          <nav aria-label={siteConfig.legal.tableOfContentsLabel}>
+            <p class="legal-page__eyebrow">{siteConfig.legal.tableOfContentsLabel}</p>
+            <ol>
+              {navigation.map((item) => (
+                <li>
+                  <a href={`#${item.id}`}>{item.label}</a>
+                </li>
+              ))}
+            </ol>
+          </nav>
+        </aside>
+        <div class="legal-page__article">
+          <slot />
+        </div>
+      </div>
+    </section>
+  </article>
+</BaseLayout>

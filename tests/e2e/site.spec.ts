@@ -102,7 +102,14 @@ for (const route of legalRoutes)
     await expect(page.locator('main h1')).toHaveCount(1);
     await expect(page.locator('article')).toHaveCount(1);
     await expect(page.locator('body > footer address')).toHaveCount(1);
-    await expect(page.locator('body > footer nav ul > li')).toHaveCount(3);
+    await expect(page.locator('body > footer nav ul > li')).toHaveCount(4);
+    await expect(page.locator('.legal-page__toc nav')).toHaveCount(1);
+    await expect(page.locator('.legal-page__toc a')).toHaveCount(4);
+    await expect(page.locator('.legal-page__article > section')).toHaveCount(4);
+    const targets = await page
+      .locator('.legal-page__toc a')
+      .evaluateAll((links) => links.map((link) => link.getAttribute('href')));
+    for (const target of targets) await expect(page.locator(target ?? '')).toHaveCount(1);
   });
 
 test('consent preference can be managed', async ({ page }) => {

@@ -95,6 +95,11 @@ export interface SiteConfig {
     wireframe: boolean;
   };
   navigation: Array<{ label: string; href: string }>;
+  legal: {
+    navigationLabel: string;
+    tableOfContentsLabel: string;
+    pages: Array<{ label: string; href: string }>;
+  };
   colors: ColorSystem;
   theme: Record<ThemeToken, string>;
 }
@@ -144,6 +149,15 @@ export const siteConfig: SiteConfig = {
     { label: 'Inicio', href: '/' },
     { label: 'Contacto', href: '/#contacto' },
   ],
+  legal: {
+    navigationLabel: 'Legal',
+    tableOfContentsLabel: 'En esta página',
+    pages: [
+      { label: 'Aviso legal', href: '/aviso-legal/' },
+      { label: 'Política de privacidad', href: '/politica-de-privacidad/' },
+      { label: 'Política de cookies', href: '/politica-de-cookies/' },
+    ],
+  },
   colors: {
     palettes: {
       primary: {

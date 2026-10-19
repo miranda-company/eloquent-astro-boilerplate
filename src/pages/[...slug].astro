@@ -1,6 +1,7 @@
 ---
 import { getCollection, render } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
+import LegalPageLayout from '../layouts/LegalPageLayout.astro';
 
 export async function getStaticPaths() {
   const pages = await getCollection(
@@ -13,9 +14,15 @@ const { page } = Astro.props;
 const { Content } = await render(page);
 ---
 
-<BaseLayout title={page.data.title} description={page.data.description}>
-  <article class="wrapper prose section max-w-3xl">
-    <h1 class="text-4xl font-semibold tracking-tight">{page.data.title}</h1>
+{page.data.template === 'legal' && page.data.legal ? (
+  <LegalPageLayout title={page.data.title} description={page.data.description} {...page.data.legal}>
     <Content />
-  </article>
-</BaseLayout>
+  </LegalPageLayout>
+) : (
+  <BaseLayout title={page.data.title} description={page.data.description}>
+    <article class="wrapper prose section max-w-3xl">
+      <h1 class="text-4xl font-semibold tracking-tight">{page.data.title}</h1>
+      <Content />
+    </article>
+  </BaseLayout>
+)}

@@ -9,7 +9,7 @@ A static-first, white-label Astro starter for Spanish marketing sites. It combin
 - Manual raw palettes mapped to stable semantic colour roles.
 - Configurable type, spacing, sizing, wrapper, radius, and elevation tokens.
 - A no-index design-system preview for tokens, components, brand assets, elevation, shape, and breakpoints.
-- Spanish starter content and legal-page placeholders.
+- Spanish starter content and a configurable legal-page layout with a table of contents, optional status notice, and optional summary facts.
 - Optional consent-gated analytics and provider-agnostic native contact form support.
 - ESLint, Prettier, Vitest, Playwright, axe accessibility checks, and GitHub Actions CI.
 
