@@ -14,9 +14,10 @@ Edit `src/config/site.config.ts` first.
 ## 2. Add assets and fonts
 
 1. Replace `public/brand/brand-logo.svg` and `public/brand/brand-icon.svg` with single-colour vector SVGs. Update `siteConfig.brand` if the names, paths, or intrinsic dimensions change.
-2. Put local raster images in `src/assets/` and render them with Astro image components where appropriate.
-3. Update `theme.font-sans` and add the approved font-loading implementation if the client uses a custom font.
-4. Confirm the header logo, monochrome brand preview, and fallback typography render correctly.
+2. Prepare final web-ready raster derivatives before adding them to the project: choose format, dimensions, crop, and compression. Store them in `public/images/`; Astro copies these assets unchanged.
+3. Keep original source assets in the agency asset library, not in the public build. When you prepare responsive variants, add deliberate `srcset` and `sizes` values in the native `<img>` or `<picture>` markup.
+4. Update `theme.font-sans` and add the approved font-loading implementation if the client uses a custom font.
+5. Confirm the header logo, monochrome brand preview, and fallback typography render correctly.
 
 ## 3. Configure colours and tokens
 

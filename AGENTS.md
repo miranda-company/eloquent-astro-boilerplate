@@ -11,6 +11,7 @@
 
 - Read `src/config/site.config.ts` before introducing client-wide identity, URLs, contacts, feature flags, palettes, or theme values.
 - Keep configured public SVG brand paths and their intrinsic dimensions together in `siteConfig.brand`. Put an approved default social image in `siteConfig.seo.defaultOgImage`, not in component markup.
+- Use final, manually optimised assets from `public/images/` with native responsive image markup. Keep source files in the agency asset library; do not use Astro image transformations in this starter.
 - Use semantic Tailwind roles and shared CSS tokens. Do not hard-code client colour, spacing, radius, or elevation values in components when a token fits.
 - Keep raw palettes out of ordinary component markup. Components consume semantic roles; raw values are for design inventory and approved exceptions.
 - Keep build-time breakpoints in `src/styles/global.css`, not `site.config.ts`.

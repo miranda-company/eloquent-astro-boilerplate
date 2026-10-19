@@ -12,7 +12,7 @@ Before editing an Astro page, layout, or rendered-content component, read `docs/
 ## Interaction and media
 
 - Use `<a>` only for navigation to a URL; use `<button type="button">` for in-page behavior. Use native `<form>`, `<label>`, `<input>`, `<textarea>`, `<select>`, and error/status semantics instead of simulated controls.
-- Use Astro's `<Image />` for raster or SVG images where possible. Every meaningful image needs useful `alt`; decorative images need `alt=""`. Supply intrinsic dimensions. Below-the-fold images use `loading="lazy"`; only above-the-fold/LCP media may be eager.
+- Use final, manually optimised assets from `public/images/` with native `<img>` or `<picture>` markup; Astro image transformations are not part of this starter. Every meaningful image needs useful `alt`; decorative images need `alt=""`. Supply intrinsic dimensions and `decoding="async"`; below-the-fold images use `loading="lazy"`, while only the one above-the-fold/LCP image may be eager and use `fetchpriority="high"` when warranted. Add deliberate `srcset` and `sizes` when responsive variants are supplied.
 - For GSAP or ScrollTrigger work, read `docs/animation.md`. Keep imports in the owning component or page script, use `createMotionContext()` for reduced-motion gating and cleanup, and leave static content fully usable before JavaScript runs.
 
 ## SEO, AEO, and GEO

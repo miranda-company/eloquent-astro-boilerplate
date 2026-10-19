@@ -100,9 +100,11 @@ Authored CSS class names use BEM: `block`, `block__element`, and `block--modifie
 
 ## Images and assets
 
-Prefer Astro's `<Image />` for rendered assets. Give every meaningful image concise alternative text that communicates its purpose; give decorative images `alt=""`. Always provide intrinsic width and height. Use `loading="lazy"` for below-the-fold content; reserve eager loading for visible, high-priority media such as a header mark or LCP image.
+The agency supplies final, web-optimised image derivatives. Store rendered site assets in `public/` (normally `public/images/`) and use native `<img>` or `<picture>` markup. Astro copies these files to the build unchanged; do not use Astro's image transformation components in this starter.
 
-For an asset in `src/assets`, import it and let Astro derive dimensions. Public-directory assets are string paths, so `width` and `height` are required. The configured SVG brand assets follow this public-asset pattern in `Header.astro`.
+Prepare each raster asset before it enters the repository: choose its final format, dimensions, crop, and compression. Commit web-ready derivatives only; retain originals in the agency asset library rather than shipping or committing them as public site files. When manually prepared responsive variants exist, supply deliberate `srcset` and `sizes` values with `<img>` or `<picture>`.
+
+Give every meaningful image concise alternative text that communicates its purpose; give decorative images `alt=""`. Always provide intrinsic `width` and `height`, use `decoding="async"`, and lazy-load below-the-fold media. Reserve eager loading and `fetchpriority="high"` for the one visible LCP image when warranted. The configured SVG brand assets follow this public-asset pattern in `Header.astro`.
 
 ## Metadata and JSON-LD
 
