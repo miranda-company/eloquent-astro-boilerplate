@@ -19,7 +19,7 @@ Playwright builds the site and serves `dist/`, so browser tests exercise the sta
 
 ## Existing coverage
 
-Browser coverage verifies the current design-system homepage, legal routes and their table-of-contents targets, skip link, header brand link, configured logo dimensions, shell landmarks, single-page `h1` structure, canonical/social metadata, noindex JSON-LD suppression, token previews, BEM brand classes, responsive wrapper gutters, consent controls, absence of default third-party analytics requests, and baseline accessibility through axe.
+Browser coverage verifies the current design-system homepage, legal routes and their table-of-contents targets, skip link, header brand link, configured logo dimensions, shell landmarks, single-page `h1` structure, canonical/social metadata, noindex JSON-LD suppression, token previews, BEM brand classes, responsive wrapper gutters, inactive optional integrations, absence of default third-party analytics requests, and baseline accessibility through axe.
 
 Unit coverage verifies URL and locale configuration, brand asset paths, colour-resolution failures, required semantic mappings, optional palette roles, independent wrapper tokens, wireframe feature configurability, and the GSAP/ScrollTrigger animation foundation.
 

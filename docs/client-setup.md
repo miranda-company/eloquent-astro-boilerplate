@@ -8,7 +8,7 @@ Edit `src/config/site.config.ts` first.
 
 - Set `name`, canonical `url`, contact details, social links, navigation, and SEO defaults. Add `seo.defaultOgImage` only when an approved default social image is available.
 - Set `brand.logo` and `brand.icon` to the public asset paths, and record each SVG's intrinsic `logoWidth`, `logoHeight`, `iconWidth`, and `iconHeight`.
-- Review feature flags. `analytics`, `contactForm`, and `consentBanner` control optional behavior; `designSystemHomepage` keeps the temporary root preview out of the sitemap; `wireframe` is for temporary layout review only.
+- Review feature flags. `analytics`, `contactForm`, and `consentBanner` are disabled in the untouched starter and control optional behavior only after approval; `designSystemHomepage` keeps the temporary root preview out of the sitemap; `wireframe` is for temporary layout review only.
 - Keep feature flags explicit. A flag is not a substitute for required environment configuration.
 
 ## 2. Add assets and fonts
@@ -30,7 +30,7 @@ Edit `src/config/site.config.ts` first.
 
 1. Replace the Spanish sample entries in `src/content/pages/es/`.
 2. Keep every frontmatter field valid. The build validates collection entries.
-3. Configure `siteConfig.legal.pages` for the required legal routes and labels. The footer uses this configuration; do not duplicate those links in the component. Its adjacent “Gestionar cookies” item is an action button that reopens consent preferences, not a configured legal route.
+3. Configure `siteConfig.legal.pages` for the required legal routes and labels. The footer uses this configuration; do not duplicate those links in the component. When consent is enabled, its adjacent “Gestionar cookies” item is an action button that reopens preferences, not a configured legal route.
 4. Replace `Aviso legal`, `Política de privacidad`, and `Política de cookies` with client-approved legal copy before launch. Keep the `legal.navigation` entries and MDX section IDs aligned, add only verified summary facts, and remove the approval notice once the text is signed off.
 5. Keep unfinished pages as `draft: true` so they do not generate public routes.
 

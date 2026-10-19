@@ -139,9 +139,9 @@ export const siteConfig: SiteConfig = {
     defaultDescription: 'Una descripción breve y clara del sitio web.',
   },
   features: {
-    analytics: true,
-    contactForm: true,
-    consentBanner: true,
+    analytics: false,
+    contactForm: false,
+    consentBanner: false,
     designSystemHomepage: true,
     wireframe: true,
   },

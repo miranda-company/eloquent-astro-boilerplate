@@ -58,6 +58,12 @@ describe('site configuration', () => {
     expect(typeof siteConfig.features.wireframe).toBe('boolean');
   });
 
+  it('keeps optional integrations disabled until a client approves them', () => {
+    expect(siteConfig.features.analytics).toBe(false);
+    expect(siteConfig.features.contactForm).toBe(false);
+    expect(siteConfig.features.consentBanner).toBe(false);
+  });
+
   it('configures the shared legal navigation in one place', () => {
     expect(siteConfig.legal.pages).toHaveLength(3);
     expect(siteConfig.legal.pages.every((page) => page.href.startsWith('/'))).toBe(true);

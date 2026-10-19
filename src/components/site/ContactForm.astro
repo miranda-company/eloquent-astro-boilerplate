@@ -67,7 +67,7 @@ const enabled = siteConfig.features.contactForm && Boolean(endpoint);
     )}
   </div>
 </section>
-<script>
+{enabled && <script>
   document.querySelectorAll<HTMLFormElement>('[data-contact-form]').forEach((form) =>
     form.addEventListener('submit', async (event) => {
       event.preventDefault();
@@ -96,4 +96,4 @@ const enabled = siteConfig.features.contactForm && Boolean(endpoint);
       }
     }),
   );
-</script>
+</script>}

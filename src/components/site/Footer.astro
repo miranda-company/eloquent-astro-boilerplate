@@ -15,15 +15,17 @@ import { siteConfig } from '../../config/site.config';
             <a href={page.href}>{page.label}</a>
           </li>
         ))}
-        <li>
-          <button
-            class="cursor-pointer border-0 bg-transparent p-0 underline"
-            type="button"
-            data-open-consent
-          >
-            Gestionar cookies
-          </button>
-        </li>
+        {siteConfig.features.consentBanner && (
+          <li>
+            <button
+              class="cursor-pointer border-0 bg-transparent p-0 underline"
+              type="button"
+              data-open-consent
+            >
+              Gestionar cookies
+            </button>
+          </li>
+        )}
       </ul>
     </nav>
   </div>

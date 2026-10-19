@@ -102,7 +102,7 @@ for (const route of legalRoutes)
     await expect(page.locator('main h1')).toHaveCount(1);
     await expect(page.locator('article')).toHaveCount(1);
     await expect(page.locator('body > footer address')).toHaveCount(1);
-    await expect(page.locator('body > footer nav ul > li')).toHaveCount(4);
+    await expect(page.locator('body > footer nav ul > li')).toHaveCount(3);
     await expect(page.locator('.legal-page__toc nav')).toHaveCount(1);
     await expect(page.locator('.legal-page__toc a')).toHaveCount(4);
     await expect(page.locator('.legal-page__article > section')).toHaveCount(4);
@@ -112,13 +112,11 @@ for (const route of legalRoutes)
     for (const target of targets) await expect(page.locator(target ?? '')).toHaveCount(1);
   });
 
-test('consent preference can be managed', async ({ page }) => {
+test('default optional integrations stay inactive', async ({ page }) => {
   await page.goto('/');
-  await expect(page.getByRole('button', { name: 'Rechazar' })).toBeVisible();
-  await page.getByRole('button', { name: 'Rechazar' }).click();
-  await expect(page.getByRole('button', { name: 'Rechazar' })).toBeHidden();
-  await page.getByRole('button', { name: 'Gestionar cookies' }).click();
-  await expect(page.getByRole('button', { name: 'Aceptar' })).toBeVisible();
+  await expect(page.locator('#consent-banner')).toHaveCount(0);
+  await expect(page.getByRole('button', { name: 'Gestionar cookies' })).toHaveCount(0);
+  await expect(page.locator('[data-analytics-loader]')).toHaveCount(0);
 });
 
 test('homepage has no critical accessibility violations', async ({ page }) => {
