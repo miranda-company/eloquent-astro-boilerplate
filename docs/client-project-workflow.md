@@ -117,6 +117,7 @@ Edit `src/config/site.config.ts` first.
 3. Set the default title and description. Use accurate, client-approved wording rather than generic marketing claims.
 4. Add `seo.defaultOgImage` only after a default social image is designed, exported, and available as a public site asset. Individual pages may later override it through `BaseLayout`.
 5. Review feature flags. Keep `analytics`, `contactForm`, and `consentBanner` disabled until their provider and privacy requirements are approved. Keep `wireframe` enabled only while reviewing layouts.
+6. Configure `legal.pages` with the approved legal routes and labels. Keep its links aligned with the required legal content entries; the footer reads this configuration rather than maintaining a separate link list.
 
 ### 2. Replace brand assets
 
@@ -161,7 +162,20 @@ Set public identifiers only:
 - `PUBLIC_GA_MEASUREMENT_ID` for Google Analytics; or
 - `PUBLIC_GTM_CONTAINER_ID` for Google Tag Manager.
 
+Enable only the matching feature flag after its provider and privacy requirements are approved: `contactForm` for the form, and both `analytics` and `consentBanner` for consent-gated analytics. Keep unrelated flags `false` and their environment values empty.
+
 Never put secrets in a `PUBLIC_` variable. Read [integrations and privacy](integrations.md) before enabling a provider. Verify the form provider supports CORS for enhanced submissions and that legal/cookie copy describes the services actually used.
+
+### 6. Configure legal-page structure
+
+The three Spanish legal entries use `template: legal`. Before page implementation begins:
+
+1. Keep each `legal.navigation` item aligned with one stable MDX `<section id="…">`.
+2. Use the optional notice only while text is awaiting approval; remove it after legal sign-off.
+3. Add summary facts and an update date only when they are verified.
+4. Confirm that the configured footer routes, page descriptions, actual providers, and approved legal copy agree.
+
+Read [content authoring](content.md) for the legal frontmatter and semantic MDX pattern.
 
 ### Stage 2 exit criteria
 
@@ -171,6 +185,7 @@ Move to content and page work only when:
 - [ ] SVG assets and intrinsic dimensions are configured and visually verified.
 - [ ] The token system is approved in the internal preview.
 - [ ] Wireframe mode is off except during an active review.
+- [ ] Legal routes, footer labels, legal navigation IDs, and approved-copy status are aligned.
 - [ ] Approved integrations are configured; unapproved integrations remain disabled and empty.
 - [ ] `pnpm run verify` and `pnpm run test:e2e` pass.
 
@@ -196,14 +211,17 @@ Do not add a library to solve a one-off visual task. Prefer the existing token s
 2. Replace `/` with the public homepage and set `siteConfig.features.designSystemHomepage` to `false` so the homepage enters the sitemap.
 3. Replace all sample content and legal placeholders with client-approved copy.
 4. Verify canonical URLs, metadata, social images, robots, sitemap, consent behavior, form fallback, and production analytics behavior.
-5. Run the complete verification suite:
+5. Test integrations in both states:
+   - with features disabled, confirm there is no consent banner/control, contact-form enhancement script, analytics loader, or third-party request;
+   - with each approved feature enabled, confirm the consent flow, form fallback and enhancement, provider requests, and legal disclosures match the approved brief.
+6. Run the complete verification suite:
 
 ```sh
 pnpm run verify
 pnpm run test:e2e
 ```
 
-6. Review the production build locally with `pnpm run preview`, then deploy through the approved hosting workflow.
+7. Review the production build locally with `pnpm run preview`, then deploy through the approved hosting workflow.
 
 ## Ongoing maintenance
 
