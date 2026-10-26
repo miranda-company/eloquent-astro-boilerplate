@@ -98,7 +98,7 @@ Before adding GSAP or ScrollTrigger, read [animation](animation.md). Motion is a
 
 Use a `<section>` for a meaningful content region, then place its content in `.wrapper` when it needs the shared page layout. `.wrapper` is the layout block: `wrapper-max` controls its maximum inner content width, while the mobile, tablet, and desktop gutter tokens control horizontal padding independently. The defaults are `16px` below `600px`, `32px` from `600px`, and `48px` from `1200px`.
 
-Authored CSS class names use BEM: `block`, `block__element`, and `block--modifier`. For example, `.brand__mark--black` is the black variant of the `brand__mark` element. Tailwind utility classes are intentionally exempt; they describe local styling rather than a reusable component API.
+Authored CSS class names use BEM: `block`, `block__element`, and `block--modifier`. For example, `.brand__mark--black` is the black variant of the `brand__mark` element. Keep styling in component-scoped or shared authored CSS, and use semantic custom properties for client-configurable values.
 
 ## Images and assets
 

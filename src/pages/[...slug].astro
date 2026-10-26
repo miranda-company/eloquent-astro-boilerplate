@@ -20,8 +20,8 @@ const { Content } = await render(page);
   </LegalPageLayout>
 ) : (
   <BaseLayout title={page.data.title} description={page.data.description}>
-    <article class="wrapper prose section max-w-3xl">
-      <h1 class="text-4xl font-semibold tracking-tight">{page.data.title}</h1>
+    <article class="wrapper section page-content">
+      <h1 class="page-content__title">{page.data.title}</h1>
       <Content />
     </article>
   </BaseLayout>

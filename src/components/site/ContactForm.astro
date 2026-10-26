@@ -5,30 +5,26 @@ const endpoint = import.meta.env.PUBLIC_FORM_ENDPOINT;
 const enabled = siteConfig.features.contactForm && Boolean(endpoint);
 ---
 
-<section id="contacto" class="section bg-role-muted">
-  <div class="wrapper max-w-2xl">
-    <h2 class="text-3xl font-semibold tracking-tight">Hablemos de tu proyecto</h2>
-    <p class="mt-3">Cuéntanos qué necesitas y te responderemos lo antes posible.</p>
+<section id="contacto" class="section contact-section">
+  <div class="wrapper contact-section__content">
+    <h2 class="contact-section__title">Hablemos de tu proyecto</h2>
+    <p class="contact-section__intro">
+      Cuéntanos qué necesitas y te responderemos lo antes posible.
+    </p>
     {enabled ? (
-      <form class="mt-8 grid gap-5" action={endpoint} method="POST" data-contact-form>
+      <form class="contact-form" action={endpoint} method="POST" data-contact-form>
         <div>
-          <label class="mb-1 block font-medium" for="name">
+          <label class="contact-form__label" for="name">
             Nombre
           </label>
-          <input
-            class="w-full rounded-md border border-role-border bg-role-surface px-3 py-2"
-            id="name"
-            name="name"
-            autocomplete="name"
-            required
-          />
+          <input class="contact-form__control" id="name" name="name" autocomplete="name" required />
         </div>
         <div>
-          <label class="mb-1 block font-medium" for="email">
+          <label class="contact-form__label" for="email">
             Email
           </label>
           <input
-            class="w-full rounded-md border border-role-border bg-role-surface px-3 py-2"
+            class="contact-form__control"
             id="email"
             name="email"
             type="email"
@@ -37,29 +33,32 @@ const enabled = siteConfig.features.contactForm && Boolean(endpoint);
           />
         </div>
         <div>
-          <label class="mb-1 block font-medium" for="message">
+          <label class="contact-form__label" for="message">
             Mensaje
           </label>
           <textarea
-            class="w-full rounded-md border border-role-border bg-role-surface px-3 py-2"
+            class="contact-form__control"
             id="message"
             name="message"
             rows="5"
             required
           ></textarea>
         </div>
-        <button
-          class="w-fit rounded-md bg-role-primary px-5 py-3 font-semibold text-role-on-primary shadow-[var(--shadow-1)]"
-          type="submit"
-        >
+        <button class="button button--primary contact-form__submit" type="submit">
           Enviar mensaje
         </button>
-        <p class="hidden text-sm" data-form-status role="status" aria-live="polite"></p>
+        <p
+          class="contact-form__status"
+          hidden
+          data-form-status
+          role="status"
+          aria-live="polite"
+        ></p>
       </form>
     ) : (
-      <p class="mt-6 rounded-md border border-role-foreground/15 bg-role-surface p-4 text-sm">
+      <p class="contact-section__fallback">
         El formulario aún no está configurado. Escríbenos a{' '}
-        <a class="font-medium" href={`mailto:${siteConfig.contact.email}`}>
+        <a class="contact-section__email" href={`mailto:${siteConfig.contact.email}`}>
           {siteConfig.contact.email}
         </a>
         .
@@ -76,7 +75,7 @@ const enabled = siteConfig.features.contactForm && Boolean(endpoint);
       if (!status || !button) return;
       button.disabled = true;
       form.setAttribute('aria-busy', 'true');
-      status.classList.remove('hidden');
+      status.hidden = false;
       status.textContent = 'Enviando…';
       try {
         const response = await fetch(form.action, {

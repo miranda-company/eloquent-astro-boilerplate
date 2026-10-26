@@ -59,7 +59,7 @@ Use GSAP or ScrollTrigger only when the client brief defines the motion intent, 
 
 ## 7. Review responsive behavior
 
-Breakpoints are build-time Tailwind tokens in `src/styles/global.css`, not values in `site.config.ts`. Do not duplicate them in client configuration. If the scale changes, review every responsive layout at compact, medium, expanded, large, and extra-large widths.
+Breakpoints are authored CSS media queries in `src/styles/global.css`, not values in `site.config.ts`. Do not duplicate them in client configuration. If the scale changes, review every responsive layout at compact, medium, expanded, large, and extra-large widths.
 
 ## 8. Verify before handoff
 

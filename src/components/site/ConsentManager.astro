@@ -10,29 +10,21 @@ const enabled =
 {siteConfig.features.consentBanner && (
   <aside
     id="consent-banner"
-    class="fixed inset-x-4 bottom-4 z-40 mx-auto hidden max-w-xl rounded-md bg-role-foreground p-5 text-role-background shadow-[var(--shadow-2)]"
+    class="consent-banner consent-banner--hidden"
     aria-label="Preferencias de cookies"
     data-enabled={enabled ? 'true' : 'false'}
     data-ga-id={gaId}
     data-gtm-id={gtmId}
   >
-    <p class="font-semibold">Tu privacidad</p>
-    <p class="mt-1 text-sm">
+    <p class="consent-banner__title">Tu privacidad</p>
+    <p class="consent-banner__description">
       Usamos cookies opcionales para medir el uso del sitio. Puedes aceptarlas o rechazarlas.
     </p>
-    <div class="mt-4 flex flex-wrap gap-3">
-      <button
-        class="rounded-md bg-role-secondary px-4 py-2 font-semibold text-role-foreground"
-        type="button"
-        data-consent="accepted"
-      >
+    <div class="consent-banner__actions">
+      <button class="button consent-banner__accept" type="button" data-consent="accepted">
         Aceptar
       </button>
-      <button
-        class="rounded-md border border-role-background/50 px-4 py-2"
-        type="button"
-        data-consent="rejected"
-      >
+      <button class="button consent-banner__reject" type="button" data-consent="rejected">
         Rechazar
       </button>
     </div>
@@ -72,18 +64,18 @@ const enabled =
   };
   const state = localStorage.getItem(key);
   if (state === 'accepted') loadAnalytics();
-  else if (!state && banner) banner.classList.remove('hidden');
+  else if (!state && banner) banner.classList.remove('consent-banner--hidden');
   document.querySelectorAll<HTMLElement>('[data-consent]').forEach((button) =>
     button.addEventListener('click', () => {
       const value = button.dataset.consent || 'rejected';
       localStorage.setItem(key, value);
-      banner?.classList.add('hidden');
+      banner?.classList.add('consent-banner--hidden');
       if (value === 'accepted') loadAnalytics();
     }),
   );
   document
     .querySelectorAll<HTMLElement>('[data-open-consent]')
     .forEach((button) =>
-      button.addEventListener('click', () => banner?.classList.remove('hidden')),
+      button.addEventListener('click', () => banner?.classList.remove('consent-banner--hidden')),
     );
 </script>}

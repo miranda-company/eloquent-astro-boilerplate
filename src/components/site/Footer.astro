@@ -2,15 +2,15 @@
 import { siteConfig } from '../../config/site.config';
 ---
 
-<footer class="border-t border-role-foreground/10 bg-role-surface">
-  <div class="wrapper grid gap-6 py-10 text-sm md:grid-cols-2">
-    <address class="not-italic">
-      <p class="font-semibold">{siteConfig.name}</p>
+<footer class="site-footer">
+  <div class="site-footer__inner wrapper">
+    <address class="site-footer__contact">
+      <p class="site-footer__name">{siteConfig.name}</p>
       <a href={`mailto:${siteConfig.contact.email}`}>{siteConfig.contact.email}</a>
     </address>
-    <div class="flex flex-wrap items-center gap-x-3 gap-y-1 md:justify-end">
+    <div class="site-footer__links">
       <nav aria-label={siteConfig.legal.navigationLabel}>
-        <ul class="flex list-none flex-wrap gap-x-3 gap-y-1 p-0">
+        <ul class="site-footer__legal-list">
           {siteConfig.legal.pages.map((page) => (
             <li>
               <a href={page.href}>{page.label}</a>
@@ -19,11 +19,7 @@ import { siteConfig } from '../../config/site.config';
         </ul>
       </nav>
       {siteConfig.features.consentBanner && (
-        <button
-          class="cursor-pointer border-0 bg-transparent p-0 underline"
-          type="button"
-          data-open-consent
-        >
+        <button class="site-footer__consent-button" type="button" data-open-consent>
           Gestionar cookies
         </button>
       )}

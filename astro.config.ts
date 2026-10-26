@@ -1,6 +1,5 @@
 import mdx from '@astrojs/mdx';
 import sitemap from '@astrojs/sitemap';
-import tailwindcss from '@tailwindcss/vite';
 import { defineConfig, envField } from 'astro/config';
 import { siteConfig } from './src/config/site.config';
 
@@ -19,9 +18,6 @@ export default defineConfig({
       },
     }),
   ],
-  vite: {
-    plugins: [tailwindcss()],
-  },
   env: {
     schema: {
       PUBLIC_FORM_ENDPOINT: envField.string({

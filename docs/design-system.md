@@ -9,12 +9,12 @@ The internal design-system preview is the root page while this boilerplate is be
 | Concern                                                                                                                   | Source                                          | Why it belongs there                                        |
 | ------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------- | ----------------------------------------------------------- |
 | Client identity, raw palettes, semantic colour mappings, typography, spacing, size, wrapper, radius, and elevation values | `src/config/site.config.ts`                     | Typed, client-specific runtime configuration                |
-| Responsive breakpoints, global CSS fallback values, and shared motion timing                                              | `src/styles/global.css`                         | Tailwind generates media queries at build time              |
+| Responsive breakpoints, global CSS fallback values, and shared motion timing                                              | `src/styles/global.css`                         | Authored media queries and global CSS are kept together     |
 | Reusable markup and component composition                                                                                 | `src/components/`                               | Components consume semantic roles rather than client values |
 | Visual reference                                                                                                          | `src/components/site/DesignSystemPreview.astro` | Renders the configured system for review                    |
 | Motion behavior and GSAP/ScrollTrigger usage                                                                              | `docs/animation.md`                             | Motion remains optional, local, and accessible              |
 
-`BaseLayout.astro` resolves semantic colour references and emits the configured CSS custom properties on the document root. `global.css` provides the fallback values and connects semantic variables to Tailwind utilities.
+`BaseLayout.astro` resolves semantic colour references and emits the configured CSS custom properties on the document root. `global.css` provides fallback values and shared styles use the semantic variables directly.
 
 ## Colour system
 
@@ -25,11 +25,18 @@ Colours have two layers in `siteConfig.colors`.
 
 The required roles are `background`, `foreground`, `muted`, `surface`, `border`, `primary`, `on-primary`, `primary-hover`, `secondary`, `on-secondary`, `accent`, `error`, and `on-error`. `tertiary` and `quaternary` are optional: add them only when the approved system has a meaningful use for them.
 
-Use semantic Tailwind utilities in components, for example:
+Use semantic CSS custom properties in authored component styles. Keep structural class names in BEM and avoid embedding client-specific raw colours in component markup.
 
-```html
-<button class="bg-role-primary text-role-on-primary">Save</button>
-<div class="border border-role-border bg-role-surface">...</div>
+```css
+.button--primary {
+  background: var(--color-primary);
+  color: var(--color-on-primary);
+}
+
+.card {
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+}
 ```
 
 Do not use raw palette variables in production component markup. They exist for design inspection and deliberate exceptions only. Do not invent 100–900 ramps when a client provides a small palette; enter the supplied colours and map the available semantic roles.
@@ -52,7 +59,7 @@ Use `.wrapper` and `.section` for page structure. A wrapper keeps its inner cont
 
 The radius scale is `radius-none`, `radius-xs`, `radius-sm`, `radius-md`, `radius-lg`, `radius-xl`, and `radius-full`. It follows the Material 3 vocabulary from square to fully rounded, but the values are client-configurable.
 
-Use Tailwind radius utilities such as `rounded-md` for normal component work. Use `border-radius: var(--radius-lg)` only when a dynamic CSS value is genuinely needed. The preview records the intended use and exact value for every shape token.
+Use the shared radius custom properties in authored styles, for example `border-radius: var(--radius-md)`. The preview records the intended use and exact value for every shape token.
 
 ## Elevation
 
@@ -62,19 +69,19 @@ The labels are Material-inspired visual hierarchy labels, not physical distances
 
 ## Breakpoints
 
-Breakpoints are build-time CSS/Tailwind tokens in `src/styles/global.css`, not values in `site.config.ts`. Runtime CSS variables cannot control media queries, so duplicating the values in client configuration would create a misleading second source of truth.
+Breakpoints are authored CSS media queries in `src/styles/global.css`, not values in `site.config.ts`. Runtime CSS variables cannot control media queries, so duplicating the values in client configuration would create a misleading second source of truth.
 
 The starter is mobile-first:
 
-| Layout class | Range              | Tailwind usage       |
+| Layout range | Viewport width     | CSS media query      |
 | ------------ | ------------------ | -------------------- |
-| Compact      | Under `600px`      | Unprefixed utilities |
-| Medium       | `600px`–`839px`    | `sm:`                |
-| Expanded     | `840px`–`1199px`   | `md:`                |
-| Large        | `1200px`–`1599px`  | `lg:`                |
-| Extra large  | `1600px` and above | `xl:`                |
+| Compact      | Under `600px`      | Base styles          |
+| Medium       | `600px`–`839px`    | `min-width: 37.5rem` |
+| Expanded     | `840px`–`1199px`   | `min-width: 52.5rem` |
+| Large        | `1200px`–`1599px`  | `min-width: 75rem`   |
+| Extra large  | `1600px` and above | `min-width: 100rem`  |
 
-Change this scale only as a deliberate layout-system decision. Any breakpoint change requires responsive regression testing because it affects every prefixed Tailwind utility.
+Change this scale only as a deliberate layout-system decision. Any breakpoint change requires responsive regression testing of all authored media-query layouts.
 
 ## Motion
 
@@ -115,7 +122,7 @@ Authored CSS classes follow BEM (Block, Element, Modifier):
 - An **element** belongs to its block: `.brand__mark`.
 - A **modifier** changes a block or element variant: `.brand__mark--black`, `.site--wireframe`.
 
-Tailwind classes remain styling utilities and do not need BEM names. Combine them with authored BEM classes when both structural naming and utility styling are useful. Name component state with a BEM modifier rather than an unscoped state class.
+All authored classes follow BEM. Keep component-specific styles scoped to the component when practical, and put shared primitives and tokens in `src/styles/global.css`. Name component state with a BEM modifier rather than an unscoped state class.
 
 ## Wireframe mode
 

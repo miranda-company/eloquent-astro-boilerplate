@@ -12,11 +12,11 @@
 - Read `src/config/site.config.ts` before introducing client-wide identity, URLs, contacts, feature flags, palettes, or theme values.
 - Keep configured public SVG brand paths and their intrinsic dimensions together in `siteConfig.brand`. Put an approved default social image in `siteConfig.seo.defaultOgImage`, not in component markup.
 - Use final, manually optimised assets from `public/images/` with native responsive image markup. Keep source files in the agency asset library; do not use Astro image transformations in this starter.
-- Use semantic Tailwind roles and shared CSS tokens. Do not hard-code client colour, spacing, radius, or elevation values in components when a token fits.
+- Use semantic CSS custom properties and shared design tokens. Do not hard-code client colour, spacing, radius, or elevation values in components when a token fits.
 - Keep raw palettes out of ordinary component markup. Components consume semantic roles; raw values are for design inventory and approved exceptions.
 - Keep build-time breakpoints in `src/styles/global.css`, not `site.config.ts`.
 - Use `.wrapper` for shared horizontal layout. Keep `wrapper-max` separate from the responsive `wrapper-gutter-mobile`, `wrapper-gutter-tablet`, and `wrapper-gutter-desktop` theme tokens; their defaults are `16px`, `32px`, and `48px`.
-- Name authored CSS classes with BEM: `block`, `block__element`, and `block--modifier`. Tailwind utility classes remain utilities and are not renamed to BEM.
+- Name authored CSS classes with BEM: `block`, `block__element`, and `block--modifier`. Use component-scoped or shared authored CSS rather than utility-class styling.
 - Update `docs/design-system.md` and the design-system preview when changing the token model, component conventions, or visual reference.
 - Follow the mandatory semantic, metadata, AEO/GEO, media, and JSON-LD rules in [`docs/DOM_ARCHITECTURE.md`](docs/DOM_ARCHITECTURE.md). Read it before changing a page, layout, or rendered-content component.
 - Keep canonical, social metadata, and optional JSON-LD in `BaseLayout.astro`; do not duplicate document-head metadata in routes or components.
