@@ -87,16 +87,16 @@ This gives the team a clean comparison point and makes future boilerplate upgrad
 
 Start from the [client technical brief template](templates/client-technical-brief.md). Duplicate it into the client project's private documentation area (for example, `docs/client-brief.md`), complete it with the client, and keep it current as decisions are approved. A technical brief belongs in the repository only if the client permits it; otherwise store the approved location and a concise decision summary in the project documentation.
 
-| Input                 | Required decisions before implementation                                                               |
-| --------------------- | ------------------------------------------------------------------------------------------------------ |
-| Business and audience | Primary audience, geography, language, conversion goal, differentiators                                |
-| Sitemap               | Public routes, navigation hierarchy, redirects, page ownership                                         |
-| Content               | Approved copy status, content owner, image/video assets, legal-copy owner                              |
-| Brand system          | Logo/icon SVGs, font licences/files, full palette, component states, Figma link                        |
-| SEO                   | Canonical domain, page titles/descriptions, social-image approach, indexable routes, schema candidates |
-| Integrations          | Form provider, analytics/consent decision, CRM, email destination, privacy constraints                 |
-| Motion                | Animation intent, affected routes, reduced-motion behavior, performance budget, approved GSAP plugins  |
-| Delivery              | Hosting, DNS owner, deployment access, launch date, maintenance owner                                  |
+| Input                 | Required decisions before implementation                                                                 |
+| --------------------- | -------------------------------------------------------------------------------------------------------- |
+| Business and audience | Primary audience, geography, language, conversion goal, differentiators                                  |
+| Sitemap               | Public routes, navigation hierarchy, redirects, page ownership                                           |
+| Content               | Approved copy status, content owner, image/video assets, legal-copy owner                                |
+| Brand system          | Logo/icon SVGs, font licences/files, full palette, component states, Figma file and approved frame links |
+| SEO                   | Canonical domain, page titles/descriptions, social-image approach, indexable routes, schema candidates   |
+| Integrations          | Form provider, analytics/consent decision, CRM, email destination, privacy constraints                   |
+| Motion                | Animation intent, affected routes, reduced-motion behavior, performance budget, approved GSAP plugins    |
+| Delivery              | Hosting, DNS owner, deployment access, launch date, maintenance owner                                    |
 
 Resolve unknown requirements with the client before adding a dependency, server runtime, CMS, animation package, or third-party script. GSAP and ScrollTrigger are already available in this starter, but each client still needs an approved animation scope and accessibility acceptance criteria. Read [animation](animation.md) before implementing them.
 
@@ -142,7 +142,7 @@ Edit `src/config/site.config.ts` first.
 3. Add `tertiary` or `quaternary` only when the brand requires them. Do not create empty or duplicate palettes.
 4. Set `theme.font-sans`, then configure approved font loading if the client uses a custom font. Keep a system-font fallback.
 5. Adjust the spacing, size, wrapper, radius, and elevation tokens only when the approved design system calls for it. `wrapper-max` controls the `1440px` default inner content width; the independent responsive gutters default to `16px` on mobile, `32px` on tablet, and `48px` on desktop.
-6. Do not move breakpoints into `site.config.ts`; they compile at build time from `src/styles/global.css`.
+6. Do not move breakpoints into `site.config.ts`; keep the shared wrapper breakpoints in `src/styles/global.css` and use the same authored thresholds in module-specific responsive styles.
 
 ### 4. Review the internal design system
 
@@ -201,7 +201,7 @@ Move to content and page work only when:
 
 Define or extend Content Collection schemas before adding new frontmatter fields. Build reusable, semantic components before composing repeated page patterns. Keep client configuration out of Markdown/MDX frontmatter.
 
-Follow [content authoring](content.md) and [semantic DOM architecture](DOM_ARCHITECTURE.md). For every public route, use `BaseLayout`, one `h1`, sequential headings, accurate metadata, and JSON-LD only when it truthfully represents visible indexable content.
+Follow [content authoring](content.md), [reusable component patterns](component-library.md), and [semantic DOM architecture](DOM_ARCHITECTURE.md). Compose approved Astro patterns from MDX using their typed content props. Keep the Figma frame, implementation, token usage, and verification mapped in the component catalog. For every public route, use `BaseLayout`, one `h1`, sequential headings, accurate metadata, and JSON-LD only when it truthfully represents visible indexable content.
 
 ## Stage 4 — Build pages in vertical slices
 

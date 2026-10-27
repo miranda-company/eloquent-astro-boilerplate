@@ -1,0 +1,73 @@
+---
+import '../../styles/button.css';
+
+interface Props {
+  title: string;
+  headingLevel?: 1 | 2;
+  eyebrow?: string;
+  description?: string;
+  action?: {
+    label: string;
+    href: string;
+  };
+}
+
+const { title, headingLevel = 1, eyebrow, description, action } = Astro.props;
+---
+
+<section class="section marketing-hero">
+  <div class="wrapper marketing-hero__content">
+    {eyebrow && <p class="marketing-hero__eyebrow">{eyebrow}</p>}
+    {headingLevel === 1 ? (
+      <h1 class="marketing-hero__title">{title}</h1>
+    ) : (
+      <h2 class="marketing-hero__title">{title}</h2>
+    )}
+    {description && <p class="marketing-hero__description">{description}</p>}
+    {action && (
+      <a class="button button--primary marketing-hero__action" href={action.href}>
+        {action.label}
+      </a>
+    )}
+  </div>
+</section>
+
+<style>
+  .marketing-hero__content {
+    max-width: 48rem;
+  }
+
+  .marketing-hero__eyebrow {
+    margin: 0;
+    color: var(--color-primary);
+    font-size: 0.875rem;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+
+  .marketing-hero__title {
+    margin: var(--space-4) 0 0;
+    font-size: 3rem;
+    font-weight: 600;
+    letter-spacing: -0.025em;
+    line-height: 1.05;
+  }
+
+  .marketing-hero__description {
+    max-width: 42rem;
+    margin: var(--space-6) 0 0;
+    color: color-mix(in srgb, var(--color-foreground) 75%, transparent);
+    font-size: 1.125rem;
+  }
+
+  .marketing-hero__action {
+    margin-top: var(--space-8);
+  }
+
+  @media (min-width: 37.5rem) {
+    .marketing-hero__title {
+      font-size: 4.5rem;
+    }
+  }
+</style>

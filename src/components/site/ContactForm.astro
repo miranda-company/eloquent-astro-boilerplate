@@ -1,5 +1,6 @@
 ---
 import { siteConfig } from '../../config/site.config';
+import '../../styles/button.css';
 
 const endpoint = import.meta.env.PUBLIC_FORM_ENDPOINT;
 const enabled = siteConfig.features.contactForm && Boolean(endpoint);
@@ -96,3 +97,69 @@ const enabled = siteConfig.features.contactForm && Boolean(endpoint);
     }),
   );
 </script>}
+
+<style>
+  .contact-section {
+    background: var(--color-muted);
+  }
+
+  .contact-section__content {
+    max-width: 42rem;
+  }
+
+  .contact-section__title {
+    margin: 0;
+    font-size: 1.875rem;
+    font-weight: 600;
+    letter-spacing: -0.025em;
+    line-height: 1.2;
+  }
+
+  .contact-section__intro {
+    margin: var(--space-3) 0 0;
+  }
+
+  .contact-form {
+    display: grid;
+    gap: 1.25rem;
+    margin-top: var(--space-8);
+  }
+
+  .contact-form__label {
+    display: block;
+    margin-bottom: var(--space-1);
+    font-weight: 500;
+  }
+
+  .contact-form__control {
+    display: block;
+    width: 100%;
+    padding: var(--space-2) var(--space-3);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--color-surface);
+    color: var(--color-foreground);
+    font: inherit;
+  }
+
+  .contact-form__submit {
+    justify-self: start;
+  }
+
+  .contact-form__status[hidden] {
+    display: none;
+  }
+
+  .contact-section__fallback {
+    margin-top: var(--space-6);
+    padding: var(--space-4);
+    border: 1px solid color-mix(in srgb, var(--color-foreground) 15%, transparent);
+    border-radius: var(--radius-md);
+    background: var(--color-surface);
+    font-size: 0.875rem;
+  }
+
+  .contact-section__email {
+    font-weight: 500;
+  }
+</style>

@@ -27,6 +27,7 @@ Edit `src/config/site.config.ts` first.
 3. Add `tertiary` or `quaternary` only when the approved system needs those roles; do not create filler palettes.
 4. Review typography, spacing, size, wrapper maximum/gutters, radius, and elevation values in `theme`. Keep `wrapper-max` independent from `wrapper-gutter-mobile` (`16px`), `wrapper-gutter-tablet` (`32px`), and `wrapper-gutter-desktop` (`48px`).
 5. Use the internal preview to validate token values and semantic colour mappings. See [design-system.md](design-system.md) for the complete rules.
+6. Keep the approved Figma project link and direct component/frame links in [component-library.md](component-library.md). Record the design owner and approval status; map a component to code only after its frame and responsive behavior are reviewed.
 
 ## 4. Add content and legal copy
 
@@ -59,7 +60,7 @@ Use GSAP or ScrollTrigger only when the client brief defines the motion intent, 
 
 ## 7. Review responsive behavior
 
-Breakpoints are authored CSS media queries in `src/styles/global.css`, not values in `site.config.ts`. Do not duplicate them in client configuration. If the scale changes, review every responsive layout at compact, medium, expanded, large, and extra-large widths.
+Breakpoints are authored CSS media queries, not values in `site.config.ts`. The shared wrapper rules live in `src/styles/global.css`; component-specific responsive rules stay beside their modules and use the same fixed thresholds. Do not duplicate breakpoints in client configuration. If the scale changes, review every responsive layout at compact, medium, expanded, large, and extra-large widths.
 
 ## 8. Verify before handoff
 

@@ -4,17 +4,20 @@ The design system is deliberately small, semantic, and client-configurable. Its 
 
 The internal design-system preview is the root page while this boilerplate is being prepared. It is `noindex, nofollow` and excluded from the sitemap. Move it to `/design-system` when the client homepage is ready; the exact procedure is in [client setup](client-setup.md).
 
+Reusable page patterns are catalogued in [component-library.md](component-library.md), which maps each Astro implementation to its approved Figma reference, content interface, and verification. The current [Figma Design System project](https://www.figma.com/design/56g1RP9hV1uVFigLSQKHsC/Design-System?node-id=0-1&t=OgKJWWi7p2SpP6WS-1) is the visual reference; implementation and approval remain human-reviewed.
+
 ## Source of truth
 
-| Concern                                                                                                                   | Source                                          | Why it belongs there                                        |
-| ------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------- | ----------------------------------------------------------- |
-| Client identity, raw palettes, semantic colour mappings, typography, spacing, size, wrapper, radius, and elevation values | `src/config/site.config.ts`                     | Typed, client-specific runtime configuration                |
-| Responsive breakpoints, global CSS fallback values, and shared motion timing                                              | `src/styles/global.css`                         | Authored media queries and global CSS are kept together     |
-| Reusable markup and component composition                                                                                 | `src/components/`                               | Components consume semantic roles rather than client values |
-| Visual reference                                                                                                          | `src/components/site/DesignSystemPreview.astro` | Renders the configured system for review                    |
-| Motion behavior and GSAP/ScrollTrigger usage                                                                              | `docs/animation.md`                             | Motion remains optional, local, and accessible              |
+| Concern                                                                                                                   | Source                                          | Why it belongs there                                           |
+| ------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------- | -------------------------------------------------------------- |
+| Client identity, raw palettes, semantic colour mappings, typography, spacing, size, wrapper, radius, and elevation values | `src/config/site.config.ts`                     | Typed, client-specific runtime configuration                   |
+| Token fallbacks, reset/base rules, global focus, wrapper/section layout, and shared motion timing                         | `src/styles/global.css`                         | Rules apply across the document and define shared layout       |
+| Shared button variants                                                                                                    | `src/styles/button.css`                         | One imported stylesheet keeps common button treatments aligned |
+| Component markup and component-specific styles                                                                            | `src/components/` and owning page modules       | Changes stay local to the markup and interface they affect     |
+| Visual reference                                                                                                          | `src/components/site/DesignSystemPreview.astro` | Renders the configured system for review                       |
+| Motion behavior and GSAP/ScrollTrigger usage                                                                              | `docs/animation.md`                             | Motion remains optional, local, and accessible                 |
 
-`BaseLayout.astro` resolves semantic colour references and emits the configured CSS custom properties on the document root. `global.css` provides fallback values and shared styles use the semantic variables directly.
+`BaseLayout.astro` resolves semantic colour references and emits the configured CSS custom properties on the document root. `global.css` provides fallback values; shared and component styles consume semantic variables directly.
 
 ## Colour system
 
@@ -69,7 +72,7 @@ The labels are Material-inspired visual hierarchy labels, not physical distances
 
 ## Breakpoints
 
-Breakpoints are authored CSS media queries in `src/styles/global.css`, not values in `site.config.ts`. Runtime CSS variables cannot control media queries, so duplicating the values in client configuration would create a misleading second source of truth.
+Breakpoints are authored CSS media queries, not values in `site.config.ts`. The responsive wrapper rules live in `src/styles/global.css`; module-specific responsive rules stay with their owning styles and use the same fixed thresholds. Runtime CSS variables cannot control media queries, so duplicating the values in client configuration would create a misleading second source of truth.
 
 The starter is mobile-first:
 
@@ -122,7 +125,7 @@ Authored CSS classes follow BEM (Block, Element, Modifier):
 - An **element** belongs to its block: `.brand__mark`.
 - A **modifier** changes a block or element variant: `.brand__mark--black`, `.site--wireframe`.
 
-All authored classes follow BEM. Keep component-specific styles scoped to the component when practical, and put shared primitives and tokens in `src/styles/global.css`. Name component state with a BEM modifier rather than an unscoped state class.
+All authored classes follow BEM. Keep component-specific styles scoped to their Astro module or owning page, and reserve `src/styles/global.css` for tokens, reset/base behavior, focus defaults, and shared layout foundations. Import shared treatments such as buttons from a dedicated stylesheet instead of expanding the global foundation. Name component state with a BEM modifier rather than an unscoped state class.
 
 ## Wireframe mode
 

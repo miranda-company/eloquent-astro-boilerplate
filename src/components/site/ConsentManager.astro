@@ -1,5 +1,6 @@
 ---
 import { siteConfig } from '../../config/site.config';
+import '../../styles/button.css';
 
 const gaId = import.meta.env.PUBLIC_GA_MEASUREMENT_ID;
 const gtmId = import.meta.env.PUBLIC_GTM_CONTAINER_ID;
@@ -79,3 +80,54 @@ const enabled =
       button.addEventListener('click', () => banner?.classList.remove('consent-banner--hidden')),
     );
 </script>}
+
+<style>
+  .consent-banner {
+    position: fixed;
+    inset-inline: var(--space-4);
+    bottom: var(--space-4);
+    z-index: 40;
+    width: min(100% - 2 * var(--space-4), 36rem);
+    margin-inline: auto;
+    padding: 1.25rem;
+    border-radius: var(--radius-md);
+    background: var(--color-foreground);
+    color: var(--color-background);
+    box-shadow: var(--shadow-2);
+  }
+
+  .consent-banner--hidden {
+    display: none;
+  }
+
+  .consent-banner__title {
+    margin: 0;
+    font-weight: 600;
+  }
+
+  .consent-banner__description {
+    margin: var(--space-1) 0 0;
+    font-size: 0.875rem;
+  }
+
+  .consent-banner__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+    margin-top: var(--space-4);
+  }
+
+  .consent-banner__accept,
+  .consent-banner__reject {
+    padding: var(--space-2) var(--space-4);
+  }
+
+  .consent-banner__accept {
+    background: var(--color-secondary);
+    color: var(--color-on-secondary);
+  }
+
+  .consent-banner__reject {
+    border-color: color-mix(in srgb, var(--color-background) 50%, transparent);
+  }
+</style>

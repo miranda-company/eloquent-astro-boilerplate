@@ -4,15 +4,15 @@
 
 ## Project
 
-| Field                | Answer                  |
-| -------------------- | ----------------------- |
-| Client name          | `[Name]`                |
-| Project / website    | `[Name]`                |
-| Brief status         | `Draft / Approved`      |
-| Decision owner       | `[Name and role]`       |
-| Figma / brand source | `[URL]`                 |
-| Production domain    | `[https://example.com]` |
-| Default language     | `es / other`            |
+| Field                | Answer                                                                                                                     |
+| -------------------- | -------------------------------------------------------------------------------------------------------------------------- |
+| Client name          | `[Name]`                                                                                                                   |
+| Project / website    | `[Name]`                                                                                                                   |
+| Brief status         | `Draft / Approved`                                                                                                         |
+| Decision owner       | `[Name and role]`                                                                                                          |
+| Figma / brand source | `[Client Figma URL; boilerplate reference: https://www.figma.com/design/56g1RP9hV1uVFigLSQKHsC/Design-System?node-id=0-1]` |
+| Production domain    | `[https://example.com]`                                                                                                    |
+| Default language     | `es / other`                                                                                                               |
 
 ## Goal and audience
 
@@ -51,6 +51,8 @@
 | Icon intrinsic dimensions           | `[width × height]`                                                  |
 | Font family and source/licence      | `[System font / details]`                                           |
 | Colour palette source               | `[Figma URL / file path]`                                           |
+| Approved component/frame links      | `[Direct Figma node links; include hero and key reusable patterns]` |
+| Design owner and approval status    | `[Name / role; Not started / In review / Approved]`                 |
 | Optional tertiary/quaternary roles? | `No / list roles and purpose`                                       |
 | Token exceptions                    | `[None / spacing, wrapper width/gutter, radius, elevation changes]` |
 

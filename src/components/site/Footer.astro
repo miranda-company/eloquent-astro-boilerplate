@@ -26,3 +26,67 @@ import { siteConfig } from '../../config/site.config';
     </div>
   </div>
 </footer>
+
+<style>
+  .site-footer {
+    border-top: 1px solid color-mix(in srgb, var(--color-foreground) 10%, transparent);
+    background: var(--color-surface);
+  }
+
+  .site-footer__inner {
+    display: grid;
+    gap: var(--space-6);
+    padding-block: 2.5rem;
+    font-size: 0.875rem;
+  }
+
+  .site-footer__contact {
+    font-style: normal;
+  }
+
+  .site-footer__name {
+    margin: 0;
+    font-weight: 600;
+  }
+
+  .site-footer__contact p {
+    margin: 0;
+    font-weight: 600;
+  }
+
+  .site-footer__links {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-1) var(--space-3);
+  }
+
+  .site-footer__legal-list {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-1) var(--space-3);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .site-footer__consent-button {
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: inherit;
+    cursor: pointer;
+    text-decoration: underline;
+  }
+
+  @media (min-width: 52.5rem) {
+    .site-footer__inner {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .site-footer__links {
+      justify-content: flex-end;
+    }
+  }
+</style>

@@ -4,43 +4,30 @@ description: 'Una base inicial lista para adaptar a cada nuevo proyecto.'
 locale: es
 ---
 
-<section class="section marketing-home__hero">
-  <div class="wrapper marketing-home__hero-content">
-    <p class="marketing-home__eyebrow">{'Estudio independiente'}</p>
-    <h1 class="marketing-home__title">{'Una propuesta clara, pensada para las personas.'}</h1>
-    <p class="marketing-home__intro">
-      {
-        'Este contenido es un punto de partida. Sustitúyelo por el mensaje, los servicios y la personalidad de tu cliente.'
-      }
-    </p>
-    <a class="button button--primary marketing-home__action" href="#contacto">
-      {'Cuéntanos tu idea'}
-    </a>
-  </div>
-</section>
+import MarketingHero from '../../../components/site/MarketingHero.astro';
+import MarketingFeatures from '../../../components/site/MarketingFeatures.astro';
 
-<section class="section marketing-home__features">
-  <div class="wrapper">
-    <h2 class="marketing-home__section-title">Una base que se adapta</h2>
-    <div class="marketing-home__features-grid">
-      <article class="marketing-home__feature">
-        <h3 class="marketing-home__feature-title">Contenido local</h3>
-        <p class="marketing-home__feature-description">
-          {'Textos estructurados en Markdown y MDX, validados en compilación.'}
-        </p>
-      </article>
-      <article class="marketing-home__feature">
-        <h3 class="marketing-home__feature-title">Diseño consistente</h3>
-        <p class="marketing-home__feature-description">
-          {'Tokens semánticos para cambiar identidad sin reescribir componentes.'}
-        </p>
-      </article>
-      <article class="marketing-home__feature">
-        <h3 class="marketing-home__feature-title">Rendimiento real</h3>
-        <p class="marketing-home__feature-description">
-          HTML estático y JavaScript solo cuando aporta una interacción.
-        </p>
-      </article>
-    </div>
-  </div>
-</section>
+<MarketingHero
+  eyebrow="Estudio independiente"
+  title="Una propuesta clara, pensada para las personas."
+  description="Este contenido es un punto de partida. Sustitúyelo por el mensaje, los servicios y la personalidad de tu cliente."
+  action={{ label: 'Cuéntanos tu idea', href: '#contacto' }}
+/>
+
+<MarketingFeatures
+  title="Una base que se adapta"
+  features={[
+    {
+      title: 'Contenido local',
+      description: 'Textos estructurados en Markdown y MDX, validados en compilación.',
+    },
+    {
+      title: 'Diseño consistente',
+      description: 'Tokens semánticos para cambiar identidad sin reescribir componentes.',
+    },
+    {
+      title: 'Rendimiento real',
+      description: 'HTML estático y JavaScript solo cuando aporta una interacción.',
+    },
+  ]}
+/>

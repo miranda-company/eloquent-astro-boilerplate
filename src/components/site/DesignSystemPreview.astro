@@ -4,6 +4,8 @@ import {
   type SemanticColorToken,
   siteConfig,
 } from '../../config/site.config';
+import '../../styles/button.css';
+import MarketingHero from './MarketingHero.astro';
 
 const typeTokens = [
   { name: 'Extra small', size: 'xs', value: '0.75rem / 12px' },
@@ -121,6 +123,22 @@ const brandElements = [
     </p>
   </div>
 </section>
+
+<MarketingHero
+  headingLevel={2}
+  eyebrow="Reusable pattern"
+  title="A hero built from the design system"
+  description="This section pattern uses semantic colours, shared spacing, and typed content props. Use the heading level that fits the page outline."
+  action={{ label: 'Explore components', href: '#components' }}
+/>
+
+<MarketingHero
+  headingLevel={2}
+  eyebrow="Pattern"
+  title="Hero Type-1"
+  description="This section pattern uses semantic colours, shared spacing, and typed content props. Use the heading level that fits the page outline."
+  action={{ label: 'Explore components', href: '#components' }}
+/>
 
 <section class="section design-system-preview__section design-system-preview__section--surface">
   <div class="wrapper">
@@ -440,8 +458,29 @@ const brandElements = [
 </section>
 
 <style>
+  .design-system-preview__eyebrow {
+    margin: 0;
+    color: var(--color-primary);
+    font-size: 0.875rem;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+
   .design-system-preview__title {
     display: block;
+    margin: var(--space-4) 0 0;
+    font-size: 3rem;
+    font-weight: 600;
+    letter-spacing: -0.025em;
+    line-height: 1.05;
+  }
+
+  .design-system-preview__lead {
+    max-width: 42rem;
+    margin: var(--space-6) 0 0;
+    color: color-mix(in srgb, var(--color-foreground) 75%, transparent);
+    font-size: 1.125rem;
   }
 
   .design-system-preview__description {
@@ -451,7 +490,41 @@ const brandElements = [
   }
 
   .design-system-preview__section-title {
+    margin: 0;
+    font-size: 1.875rem;
+    font-weight: 600;
+    letter-spacing: -0.025em;
     line-height: 1.2;
+  }
+
+  .design-system-preview__section--surface {
+    background: var(--color-surface);
+  }
+
+  .design-system-preview__section--muted {
+    background: var(--color-muted);
+  }
+
+  .brand__mark {
+    display: block;
+    -webkit-mask: var(--brand-asset) center / contain no-repeat;
+    mask: var(--brand-asset) center / contain no-repeat;
+  }
+
+  .brand__mark--black {
+    background: var(--palette-black-base);
+  }
+
+  .brand__mark--white {
+    background: var(--palette-white-base);
+  }
+
+  .brand__preview--light {
+    background: var(--palette-white-base);
+  }
+
+  .brand__preview--dark {
+    background: var(--palette-black-base);
   }
 
   .design-system-preview__grid {
@@ -843,5 +916,45 @@ const brandElements = [
 
   .design-system-preview__breakpoint-card > p:last-child {
     margin-top: var(--space-4);
+  }
+
+  @media (min-width: 37.5rem) {
+    .design-system-preview__title {
+      font-size: 4.5rem;
+    }
+
+    .design-system-preview__brand-swatches,
+    .design-system-preview__grid--elevation,
+    .design-system-preview__grid--shape,
+    .design-system-preview__grid--breakpoints,
+    .design-system-preview__grid--semantic {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 75rem) {
+    .design-system-preview__grid--brand,
+    .design-system-preview__grid--spacing,
+    .design-system-preview__grid--components {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 100rem) {
+    .design-system-preview__grid--palette,
+    .design-system-preview__grid--elevation,
+    .design-system-preview__grid--breakpoints,
+    .design-system-preview__grid--semantic {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .design-system-preview__grid--shape {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    .design-system-preview__spacing-grid,
+    .design-system-preview__components-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
   }
 </style>

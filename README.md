@@ -9,6 +9,7 @@ A static-first, white-label Astro starter for Spanish marketing sites. It combin
 - Manual raw palettes mapped to stable semantic colour roles.
 - Configurable font families plus shared typography, spacing, sizing, wrapper, radius, and elevation tokens.
 - A no-index design-system preview for tokens, components, brand assets, elevation, shape, and breakpoints.
+- Reusable Astro page patterns with typed MDX props, starting with a token-driven marketing hero linked to the Figma design reference.
 - Spanish starter content and a configurable legal-page layout with a table of contents, optional status notice, and optional summary facts.
 - A pre-optimised asset workflow: native responsive image markup with agency-prepared files copied unchanged from `public/images/`.
 - Configurable sticky-header and back-to-top controls with semantic, no-JavaScript fallbacks.
@@ -59,6 +60,7 @@ Then complete [the client setup checklist](docs/client-setup.md). Copy `.env.exa
 - [Client technical brief template](docs/templates/client-technical-brief.md)
 - [Content authoring](docs/content.md)
 - [Design system](docs/design-system.md)
+- [Reusable component patterns and Figma references](docs/component-library.md)
 - [Semantic DOM, SEO, AEO, and GEO](docs/DOM_ARCHITECTURE.md)
 - [Integrations and privacy](docs/integrations.md)
 - [Animation](docs/animation.md)

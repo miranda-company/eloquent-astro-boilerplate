@@ -22,7 +22,25 @@ test('design-system homepage is noindex, keyboard-accessible, and has no default
   await expect(page.locator('.back-to-top')).toHaveAttribute('href', '#top');
   await expect(page.locator('body > header nav')).toHaveCount(0);
   await expect(page.locator('.wrapper').first()).toHaveCSS('padding-left', '48px');
+  await expect(page.locator('.site-header__inner')).toHaveCSS('display', 'flex');
+  await expect(page.locator('.site-footer__inner')).toHaveCSS('display', 'grid');
+  await expect(page.locator('.back-to-top')).toHaveCSS('position', 'fixed');
   await expect(page.locator('.design-system-preview__title')).toHaveCSS('font-size', '72px');
+  await expect(
+    page.getByRole('heading', { level: 2, name: 'A hero built from the design system' }),
+  ).toBeVisible();
+  await expect(page.locator('.marketing-hero')).toHaveCount(2);
+  await expect(page.locator('.marketing-hero__eyebrow').first()).toHaveText('Reusable pattern');
+  await expect(page.getByRole('link', { name: 'Explore components' }).first()).toHaveAttribute(
+    'href',
+    '#components',
+  );
+  await expect(page.locator('.marketing-hero__title').first()).toHaveCSS('font-size', '72px');
+  await expect(page.locator('.marketing-hero__content').first()).toHaveCSS('max-width', '768px');
+  await expect(page.locator('.button--primary').first()).toHaveCSS(
+    'background-color',
+    'rgb(31, 77, 61)',
+  );
   const columnCount = (selector: string) =>
     page
       .locator(selector)
@@ -95,11 +113,13 @@ test('design-system homepage is noindex, keyboard-accessible, and has no default
   await page.setViewportSize({ width: 768, height: 900 });
   await expect(page.locator('.wrapper').first()).toHaveCSS('padding-left', '32px');
   await expect(page.locator('.design-system-preview__title')).toHaveCSS('font-size', '72px');
+  await expect(page.locator('.marketing-hero__title').first()).toHaveCSS('font-size', '72px');
   expect(await columnCount('.design-system-preview__grid--brand')).toBe(1);
   expect(await columnCount('.design-system-preview__grid--semantic')).toBe(2);
   await page.setViewportSize({ width: 390, height: 844 });
   await expect(page.locator('.wrapper').first()).toHaveCSS('padding-left', '16px');
   await expect(page.locator('.design-system-preview__title')).toHaveCSS('font-size', '48px');
+  await expect(page.locator('.marketing-hero__title').first()).toHaveCSS('font-size', '48px');
   expect(await columnCount('.design-system-preview__grid--semantic')).toBe(1);
   await expect(page.getByText('9X large · 8rem / 128px', { exact: true })).toBeVisible();
   await expect(page.getByText('--radius-full', { exact: true })).toBeVisible();
@@ -108,6 +128,7 @@ test('design-system homepage is noindex, keyboard-accessible, and has no default
   await page.setViewportSize({ width: 1600, height: 900 });
   expect(await columnCount('.design-system-preview__grid--semantic')).toBe(3);
   expect(await columnCount('.design-system-preview__grid--breakpoints')).toBe(3);
+  expect(await columnCount('.site-footer__inner')).toBe(2);
   await expect(page.getByText('Elevation 24dp', { exact: true })).toBeVisible();
   await expect(page.getByText('--shadow-24', { exact: true })).toBeVisible();
   await page.evaluate(() => window.scrollTo(0, 700));
