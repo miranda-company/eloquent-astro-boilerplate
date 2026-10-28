@@ -112,6 +112,182 @@ test('design-system homepage is noindex, keyboard-accessible, and has no default
   await expect(
     page.locator('.ds-tokens__semantic-colors-grid .ds-tokens__color-sample').nth(1),
   ).toHaveCSS('background-color', 'rgb(229, 229, 229)');
+  await expect(page.getByRole('heading', { level: 3, name: 'Primitive colors' })).toBeVisible();
+  await expect(page.locator('.ds-tokens__primitive-colors-grid')).toHaveCSS('display', 'grid');
+  await expect(page.locator('.ds-tokens__primitive-colors-grid > .ds-tokens__card')).toHaveCount(
+    36,
+  );
+  await expect(
+    page.locator('.ds-tokens__primitive-colors-grid .ds-tokens__css-name code'),
+  ).toHaveText([
+    '--color-neutral-100',
+    '--color-neutral-200',
+    '--color-neutral-300',
+    '--color-neutral-400',
+    '--color-neutral-500',
+    '--color-neutral-600',
+    '--color-neutral-700',
+    '--color-neutral-800',
+    '--color-neutral-900',
+    '--color-palette-1-100',
+    '--color-palette-1-200',
+    '--color-palette-1-300',
+    '--color-palette-1-400',
+    '--color-palette-1-500',
+    '--color-palette-1-600',
+    '--color-palette-1-700',
+    '--color-palette-1-800',
+    '--color-palette-1-900',
+    '--color-palette-2-100',
+    '--color-palette-2-200',
+    '--color-palette-2-300',
+    '--color-palette-2-400',
+    '--color-palette-2-500',
+    '--color-palette-2-600',
+    '--color-palette-2-700',
+    '--color-palette-2-800',
+    '--color-palette-2-900',
+    '--color-palette-3-100',
+    '--color-palette-3-200',
+    '--color-palette-3-300',
+    '--color-palette-3-400',
+    '--color-palette-3-500',
+    '--color-palette-3-600',
+    '--color-palette-3-700',
+    '--color-palette-3-800',
+    '--color-palette-3-900',
+  ]);
+  await expect(
+    page.locator('.ds-tokens__primitive-colors-grid .ds-tokens__primitive-color-swatch'),
+  ).toHaveCount(36);
+  await expect(
+    page.locator('.ds-tokens__primitive-colors-grid .ds-tokens__primitive-color-swatch').first(),
+  ).toHaveCSS('background-color', 'rgb(255, 255, 255)');
+  await expect(
+    page.locator('.ds-tokens__primitive-colors-grid .ds-tokens__primitive-color-swatch').nth(9),
+  ).toHaveCSS('background-color', 'rgb(255, 250, 235)');
+  await expect(
+    page.locator('.ds-tokens__primitive-colors-grid .ds-tokens__primitive-color-swatch').last(),
+  ).toHaveCSS('background-color', 'rgb(52, 60, 0)');
+  await expect(page.getByRole('heading', { level: 3, name: 'Spacing' })).toBeVisible();
+  await expect(page.locator('.ds-tokens__spacing-grid')).toHaveCSS('display', 'grid');
+  await expect(page.locator('.ds-tokens__spacing-grid > .ds-tokens__card')).toHaveCount(13);
+  await expect(page.locator('.ds-tokens__spacing-grid .ds-tokens__css-name code')).toHaveText([
+    '--spacing-none',
+    '--spacing-xs',
+    '--spacing-sm',
+    '--spacing-md',
+    '--spacing-lg',
+    '--spacing-xl',
+    '--spacing-2xl',
+    '--spacing-3xl',
+    '--spacing-4xl',
+    '--spacing-5xl',
+    '--spacing-wrapper-default',
+    '--spacing-gutter-default',
+    '--spacing-section-default',
+  ]);
+  await expect(page.locator('.ds-tokens__spacing-grid .ds-tokens__values')).toHaveCount(13);
+  await expect(page.locator('.ds-tokens__spacing-grid .ds-tokens__spacing-sample')).toHaveCount(26);
+  const spacingSamplesByMode = await page
+    .locator('.ds-tokens__spacing-grid > .ds-tokens__card')
+    .evaluateAll((cards) =>
+      cards.map((card) =>
+        [...card.querySelectorAll('.ds-tokens__spacing-example')].map((example) => ({
+          mode: example.querySelector('.ds-tokens__spacing-mode')?.textContent?.trim(),
+          width: getComputedStyle(example.querySelector('.ds-tokens__spacing-sample')!).width,
+        })),
+      ),
+    );
+  expect(spacingSamplesByMode).toEqual([
+    [
+      { mode: 'desktop', width: '0px' },
+      { mode: 'mobile', width: '0px' },
+    ],
+    [
+      { mode: 'desktop', width: '8px' },
+      { mode: 'mobile', width: '4px' },
+    ],
+    [
+      { mode: 'desktop', width: '16px' },
+      { mode: 'mobile', width: '8px' },
+    ],
+    [
+      { mode: 'desktop', width: '24px' },
+      { mode: 'mobile', width: '16px' },
+    ],
+    [
+      { mode: 'desktop', width: '32px' },
+      { mode: 'mobile', width: '24px' },
+    ],
+    [
+      { mode: 'desktop', width: '40px' },
+      { mode: 'mobile', width: '32px' },
+    ],
+    [
+      { mode: 'desktop', width: '56px' },
+      { mode: 'mobile', width: '40px' },
+    ],
+    [
+      { mode: 'desktop', width: '80px' },
+      { mode: 'mobile', width: '56px' },
+    ],
+    [
+      { mode: 'desktop', width: '120px' },
+      { mode: 'mobile', width: '80px' },
+    ],
+    [
+      { mode: 'desktop', width: '240px' },
+      { mode: 'mobile', width: '120px' },
+    ],
+    [
+      { mode: 'desktop', width: '64px' },
+      { mode: 'mobile', width: '32px' },
+    ],
+    [
+      { mode: 'desktop', width: '32px' },
+      { mode: 'mobile', width: '24px' },
+    ],
+    [
+      { mode: 'desktop', width: '80px' },
+      { mode: 'mobile', width: '48px' },
+    ],
+  ]);
+  await expect(page.getByRole('heading', { level: 3, name: 'Global size tokens' })).toBeVisible();
+  await expect(page.locator('.ds-tokens__global-size-grid')).toHaveCSS('display', 'grid');
+  await expect(page.locator('.ds-tokens__global-size-grid > .ds-tokens__card')).toHaveCount(6);
+  await expect(page.locator('.ds-tokens__global-size-grid .ds-tokens__css-name code')).toHaveText([
+    '--max-width-2xl',
+    '--max-width-xl',
+    '--max-width-lg',
+    '--max-width-md',
+    '--max-width-sm',
+    '--wire-size',
+  ]);
+  await expect(
+    page.locator('.ds-tokens__global-size-grid .ds-tokens__global-size-sample'),
+  ).toHaveCount(6);
+  const globalSizeSamples = await page
+    .locator('.ds-tokens__global-size-grid > .ds-tokens__card')
+    .evaluateAll((cards) =>
+      cards.map((card) => {
+        const example = card.querySelector('.ds-tokens__global-size-example')!;
+        const sample = example.querySelector('.ds-tokens__global-size-sample')!;
+        return {
+          mode: example.querySelector('.ds-tokens__global-size-mode')?.textContent?.trim(),
+          width: (sample as HTMLElement).style.width,
+          height: getComputedStyle(sample).height,
+        };
+      }),
+    );
+  expect(globalSizeSamples).toEqual([
+    { mode: 'desktop', width: '100%', height: '8px' },
+    { mode: 'desktop', width: '71.11%', height: '8px' },
+    { mode: 'desktop', width: '63.89%', height: '8px' },
+    { mode: 'desktop', width: '53.33%', height: '8px' },
+    { mode: 'desktop', width: '33.33%', height: '8px' },
+    { mode: 'desktop', width: '100%', height: '1px' },
+  ]);
   const desktopSampleFontSizes = await page
     .locator('.ds-tokens__font-sizes-grid .ds-tokens__sample:first-child')
     .evaluateAll((samples) =>
@@ -263,8 +439,29 @@ test('design-system homepage is noindex, keyboard-accessible, and has no default
   await page.keyboard.press('Enter');
   await expect(page.locator('#contenido')).toBeFocused();
   await expect(page.locator('html')).toHaveCSS('--font-family-body', '"Helvetica Neue"');
-  await page.setViewportSize({ width: 768, height: 900 });
+  await page.setViewportSize({ width: 767, height: 900 });
   await expect(page.locator('.wrapper').first()).toHaveCSS('padding-left', '64px');
+  expect(
+    await page
+      .locator('.site-footer__inner')
+      .evaluate((element) => getComputedStyle(element).gridTemplateColumns.split(' ').length),
+  ).toBe(1);
+  await page.setViewportSize({ width: 768, height: 900 });
+  expect(
+    await page
+      .locator('.site-footer__inner')
+      .evaluate((element) => getComputedStyle(element).gridTemplateColumns.split(' ').length),
+  ).toBe(2);
+  await page.setViewportSize({ width: 991, height: 900 });
+  expect(
+    await page
+      .locator('.site-footer__inner')
+      .evaluate((element) => getComputedStyle(element).gridTemplateColumns.split(' ').length),
+  ).toBe(2);
+  await page.setViewportSize({ width: 576, height: 900 });
+  await expect(page.locator('.wrapper').first()).toHaveCSS('padding-left', '64px');
+  await page.setViewportSize({ width: 575, height: 900 });
+  await expect(page.locator('.wrapper').first()).toHaveCSS('padding-left', '32px');
   await page.setViewportSize({ width: 390, height: 844 });
   await expect(page.locator('.wrapper').first()).toHaveCSS('padding-left', '32px');
   const mobileGridColumns = await page
@@ -279,6 +476,19 @@ test('design-system homepage is noindex, keyboard-accessible, and has no default
       .evaluate((element) => getComputedStyle(element).gridTemplateColumns.split(' ').length),
   ).toBe(2);
   expect(thirdPartyRequests).toEqual([]);
+  await page.goto('/aviso-legal/');
+  await page.setViewportSize({ width: 991, height: 900 });
+  expect(
+    await page
+      .locator('.legal-page__grid')
+      .evaluate((element) => getComputedStyle(element).gridTemplateColumns.split(' ').length),
+  ).toBe(1);
+  await page.setViewportSize({ width: 992, height: 900 });
+  expect(
+    await page
+      .locator('.legal-page__grid')
+      .evaluate((element) => getComputedStyle(element).gridTemplateColumns.split(' ').length),
+  ).toBe(2);
 });
 
 for (const route of legalRoutes)

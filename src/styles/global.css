@@ -73,7 +73,6 @@ html.site--sticky-header {
 }
 
 body {
-  min-width: 20rem;
   background: var(--color-surface-default);
   color: var(--color-text-default);
   font-family: var(--font-family-body), sans-serif;
@@ -117,7 +116,33 @@ h2 {
   padding-inline: var(--spacing-wrapper-default);
 }
 
-/* Wire */
 .wire {
   border: var(--wire-size) solid var(--color-wire);
+}
+
+/*
+ * Mobile-first breakpoints:
+ * - sm: 576px
+ * - md: 768px
+ * - lg: 992px
+ * - xl: 1200px
+ * - xxl: 1400px
+ */
+
+@media (max-width: 575.98px) {
+  :root {
+    --spacing-none: var(--spacing-none-mobile);
+    --spacing-xs: var(--spacing-xs-mobile);
+    --spacing-sm: var(--spacing-sm-mobile);
+    --spacing-md: var(--spacing-md-mobile);
+    --spacing-lg: var(--spacing-lg-mobile);
+    --spacing-xl: var(--spacing-xl-mobile);
+    --spacing-2xl: var(--spacing-2xl-mobile);
+    --spacing-3xl: var(--spacing-3xl-mobile);
+    --spacing-4xl: var(--spacing-4xl-mobile);
+    --spacing-5xl: var(--spacing-5xl-mobile);
+    --spacing-wrapper-default: var(--spacing-wrapper-default-mobile);
+    --spacing-gutter-default: var(--spacing-gutter-default-mobile);
+    --spacing-section-default: var(--spacing-section-default-mobile);
+  }
 }

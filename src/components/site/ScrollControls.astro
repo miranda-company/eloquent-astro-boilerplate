@@ -45,18 +45,6 @@ const { stickyHeader, backToTop } = siteConfig.features;
     pointer-events: auto;
     transform: none;
   }
-
-  @media (min-width: 37.5rem) {
-    .back-to-top {
-      right: var(--spacing-wrapper-default);
-    }
-  }
-
-  @media (min-width: 75rem) {
-    .back-to-top {
-      right: var(--spacing-wrapper-default);
-    }
-  }
 </style>
 
 {(stickyHeader || backToTop) && <script define:vars={{ stickyHeader, backToTop }}>

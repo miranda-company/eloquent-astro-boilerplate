@@ -101,19 +101,14 @@ export function getFigmaTokenStyles(): string {
 
   const spacingCollection = tokens['spacing-tokens'];
   const mobileDeclarations = spacingCollection
-    ? declarationsForMode(spacingCollection, 'mobile').join('\n')
-    : '';
+    ? Object.entries(spacingCollection).map(([name, values]) => {
+        const value = values.mobile ?? values[Object.keys(values)[0]!];
+        if (value === undefined) throw new Error(`Missing mobile value for Figma token: ${name}`);
+        return `${cssName(`${name}-mobile`)}: ${cssValue(name, value)};`;
+      })
+    : [];
 
-  return [
-    `:root {\n${declarationsForCollections().join('\n')}\n}`,
-    mobileDeclarations &&
-      `@media (max-width: 37.5rem) {\n  :root {\n${mobileDeclarations
-        .split('\n')
-        .map((declaration) => `    ${declaration}`)
-        .join('\n')}\n  }\n}`,
-  ]
-    .filter(Boolean)
-    .join('\n');
+  return `:root {\n${[...declarationsForCollections(), ...mobileDeclarations].join('\n')}\n}`;
 }
 
 export function getFigmaTokenCollections() {

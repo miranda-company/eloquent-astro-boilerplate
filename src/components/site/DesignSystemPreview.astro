@@ -3,13 +3,39 @@ import { getFigmaTokenCollections, getFigmaTokenCssName } from '../../config/fig
 
 const fontTokens = getFigmaTokenCollections().find(({ name }) => name === 'Font tokens');
 const colorTokens = getFigmaTokenCollections().find(({ name }) => name === 'Color tokens');
+const primitiveTokenCollection = getFigmaTokenCollections().find(
+  ({ name }) => name === 'Primitives',
+);
+const spacingTokenCollection = getFigmaTokenCollections().find(
+  ({ name }) => name === 'Spacing tokens',
+);
+const globalSizeTokenCollection = getFigmaTokenCollections().find(
+  ({ name }) => name === 'Global size tokens',
+);
 const fontSizeTokens =
   fontTokens?.variables.filter(({ name }) => name.startsWith('font-size-')) ?? [];
 const semanticColorTokens = colorTokens?.variables ?? [];
+const primitiveColorTokens =
+  primitiveTokenCollection?.variables.filter(
+    ({ name }) => name.startsWith('color-neutral-') || name.startsWith('color-palette-'),
+  ) ?? [];
+const spacingTokens = spacingTokenCollection?.variables ?? [];
+const globalSizeTokens = globalSizeTokenCollection?.variables ?? [];
+const maxGlobalWidth = Math.max(
+  ...globalSizeTokens
+    .filter(({ name }) => name.startsWith('max-width-'))
+    .flatMap(({ modes }) => Object.values(modes))
+    .filter((value): value is number => typeof value === 'number'),
+);
 
 if (fontSizeTokens.length === 0) throw new Error('Missing Figma font-size tokens for preview');
 if (semanticColorTokens.length === 0)
   throw new Error('Missing Figma semantic color tokens for preview');
+if (primitiveColorTokens.length === 0)
+  throw new Error('Missing Figma primitive color tokens for preview');
+if (spacingTokens.length === 0) throw new Error('Missing Figma spacing tokens for preview');
+if (globalSizeTokens.length === 0 || !Number.isFinite(maxGlobalWidth))
+  throw new Error('Missing Figma global size tokens for preview');
 
 function formatValue(value: string | number, type: string, name: string): string {
   if (typeof value !== 'number') return value;
@@ -108,12 +134,124 @@ function formatValue(value: string | number, type: string, name: string): string
         </div>
       ))}
     </div>
+    <h3 class="ds-tokens__group-title">Primitive colors</h3>
+    <div class="ds-tokens__primitive-colors-grid">
+      {primitiveColorTokens.map((token) => (
+        <div class="ds-tokens__card">
+          <p class="ds-tokens__css-name">
+            <code>{getFigmaTokenCssName(token.name)}</code>
+          </p>
+          <div class="ds-tokens__details">
+            <p class="ds-tokens__figma-name">
+              Figma name:
+              <code> {token.name}</code>
+            </p>
+            <ul class="ds-tokens__values">
+              {Object.entries(token.modes).map(([mode, value]) => (
+                <li class="ds-tokens__value">
+                  <span>{mode}:</span> <code>{formatValue(value, token.type, token.name)}</code>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div
+            class="ds-tokens__primitive-color-swatch"
+            style={`background-color: ${Object.values(token.modes)[0]}`}
+            aria-hidden="true"
+          ></div>
+        </div>
+      ))}
+    </div>
+    <h3 class="ds-tokens__group-title">Spacing</h3>
+    <div class="ds-tokens__spacing-grid">
+      {spacingTokens.map((token) => (
+        <div class="ds-tokens__card">
+          <p class="ds-tokens__css-name">
+            <code>{getFigmaTokenCssName(token.name)}</code>
+          </p>
+          <div class="ds-tokens__details">
+            <p class="ds-tokens__figma-name">
+              Figma name:
+              <code> {token.name}</code>
+            </p>
+            <ul class="ds-tokens__values">
+              {Object.entries(token.modes).map(([mode, value]) => (
+                <li class="ds-tokens__value">
+                  <span>{mode}:</span> <code>{formatValue(value, token.type, token.name)}</code>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div class="ds-tokens__spacing-examples">
+            {Object.entries(token.modes).map(([mode, value]) => (
+              <div class="ds-tokens__spacing-example">
+                <span class="ds-tokens__spacing-mode">{mode}</span>
+                <div class="ds-tokens__spacing-track" aria-hidden="true">
+                  <div
+                    class="ds-tokens__spacing-sample"
+                    style={`width: ${formatValue(value, token.type, token.name)}`}
+                  ></div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+    <h3 class="ds-tokens__group-title">Global size tokens</h3>
+    <div class="ds-tokens__global-size-grid">
+      {globalSizeTokens.map((token) => (
+        <div class="ds-tokens__card">
+          <p class="ds-tokens__css-name">
+            <code>{getFigmaTokenCssName(token.name)}</code>
+          </p>
+          <div class="ds-tokens__details">
+            <p class="ds-tokens__figma-name">
+              Figma name:
+              <code> {token.name}</code>
+            </p>
+            <ul class="ds-tokens__values">
+              {Object.entries(token.modes).map(([mode, value]) => (
+                <li class="ds-tokens__value">
+                  <span>{mode}:</span> <code>{formatValue(value, token.type, token.name)}</code>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div class="ds-tokens__global-size-examples">
+            {Object.entries(token.modes).map(([mode, value]) => (
+              <div class="ds-tokens__global-size-example">
+                <span class="ds-tokens__global-size-mode">{mode}</span>
+                <div class="ds-tokens__global-size-track" aria-hidden="true">
+                  <div
+                    class:list={[
+                      'ds-tokens__global-size-sample',
+                      token.name.startsWith('max-width-')
+                        ? 'ds-tokens__global-size-sample--max-width'
+                        : 'ds-tokens__global-size-sample--wire-size',
+                    ]}
+                    style={
+                      token.name.startsWith('max-width-') && typeof value === 'number'
+                        ? `width: ${((value / maxGlobalWidth) * 100).toFixed(2)}%`
+                        : `width: 100%; height: ${formatValue(value, token.type, token.name)}`
+                    }
+                  ></div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
   </div>
 </section>
 
 <style>
   .ds-tokens__font-sizes-grid,
-  .ds-tokens__semantic-colors-grid {
+  .ds-tokens__semantic-colors-grid,
+  .ds-tokens__primitive-colors-grid,
+  .ds-tokens__spacing-grid,
+  .ds-tokens__global-size-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
     gap: var(--spacing-md);
@@ -122,6 +260,10 @@ function formatValue(value: string | number, type: string, name: string): string
 
   .ds-tokens__group-title {
     margin-top: var(--spacing-xl);
+  }
+
+  .ds-tokens__group-description {
+    color: var(--color-text-secondary);
   }
 
   .ds-tokens__card {
@@ -199,5 +341,78 @@ function formatValue(value: string | number, type: string, name: string): string
     min-height: var(--spacing-5);
     border: 1px solid var(--color-border-secondary);
     border-radius: var(--radius-sm);
+  }
+
+  .ds-tokens__primitive-color-swatch {
+    min-height: var(--spacing-5);
+    border: 1px solid var(--color-border-secondary);
+    border-radius: var(--radius-sm);
+  }
+
+  .ds-tokens__spacing-examples {
+    display: grid;
+    gap: var(--spacing-sm);
+  }
+
+  .ds-tokens__spacing-example {
+    display: grid;
+    gap: var(--spacing-xs);
+  }
+
+  .ds-tokens__spacing-mode {
+    color: var(--color-text-secondary);
+    font-size: var(--font-size-sm);
+  }
+
+  .ds-tokens__spacing-track {
+    width: 15rem;
+    max-width: 100%;
+    min-height: var(--spacing-1);
+    overflow: hidden;
+    border-radius: var(--radius-sm);
+    background: var(--color-surface-secondary);
+  }
+
+  .ds-tokens__spacing-sample {
+    min-height: var(--spacing-1);
+    border-radius: var(--radius-sm);
+    background: var(--color-surface-brand);
+  }
+
+  .ds-tokens__global-size-examples {
+    display: grid;
+    gap: var(--spacing-sm);
+  }
+
+  .ds-tokens__global-size-example {
+    display: grid;
+    gap: var(--spacing-xs);
+  }
+
+  .ds-tokens__global-size-mode {
+    color: var(--color-text-secondary);
+    font-size: var(--font-size-sm);
+  }
+
+  .ds-tokens__global-size-track {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    min-height: var(--spacing-1);
+    border-radius: var(--radius-sm);
+    background: var(--color-surface-secondary);
+  }
+
+  .ds-tokens__global-size-sample {
+    border-radius: var(--radius-sm);
+    background: var(--color-surface-brand);
+  }
+
+  .ds-tokens__global-size-sample--max-width {
+    height: var(--spacing-1);
+  }
+
+  .ds-tokens__global-size-sample--wire-size {
+    width: 100%;
   }
 </style>

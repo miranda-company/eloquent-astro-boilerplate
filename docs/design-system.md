@@ -42,9 +42,20 @@ The preview displays every variable in these collections and its exported value 
 ## Modes and numeric values
 
 - Color tokens use the first exported mode (`light-mode`) as the generated CSS value. The `dark-mode` values remain visible in the preview and export but are not activated by the adapter.
-- Spacing tokens use `desktop` by default and switch to `mobile` at or below `600px` (`37.5rem`). The `.wrapper` uses `spacing-wrapper-default` and `max-width-2xl`; top-level sections use `spacing-section-default`.
+- Spacing tokens use `desktop` by default. The token adapter emits Figma mobile values as companion variables (for example, `--spacing-xs-mobile`), and `src/styles/global.css` activates them below the `sm` breakpoint of `576px`. Responsive styles use these mobile-first minimum-width breakpoints as needed:
+
+  | Name  | Starts at |
+  | ----- | --------: |
+  | `sm`  |   `576px` |
+  | `md`  |   `768px` |
+  | `lg`  |   `992px` |
+  | `xl`  |  `1200px` |
+  | `xxl` |  `1400px` |
+
+  Base styles apply below `sm`; use `min-width` queries at the named thresholds for larger layouts. When a rule must target only the range below `sm`, use `max-width: 575.98px` so it does not overlap the `576px` threshold. These names describe viewport-width breakpoints, not specific device types. The `.wrapper` uses `spacing-wrapper-default` and `max-width-2xl`; top-level sections use `spacing-section-default`.
+
 - Figma numeric values do not encode CSS units. The adapter treats dimensional `FLOAT` tokens as CSS pixels. Font weights remain unitless. String font-family values are emitted as quoted CSS strings.
-- Breakpoints remain authored media queries in `src/styles/global.css` and component styles. They are implementation layout rules, not variables in the current Figma file.
+- Use the shared fixed-pixel breakpoints documented in `src/styles/global.css` for media queries in global and component styles. The token adapter provides mode values but does not choose when a mode becomes active. Breakpoints are implementation layout rules, not variables in the current Figma file.
 
 Do not silently invent tokens for properties absent from this minimal system. For example, it currently has no shadow, error-state, hover, or dedicated on-brand text variables. If a design needs one, add and approve it in Figma first; then update the checked-in export and code together.
 

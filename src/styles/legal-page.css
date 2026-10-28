@@ -170,7 +170,7 @@
   vertical-align: top;
 }
 
-@media (max-width: 52.49rem) {
+@media (max-width: 991.98px) {
   .legal-page__grid {
     grid-template-columns: 1fr;
   }
@@ -180,7 +180,7 @@
   }
 }
 
-@media (max-width: 37.49rem) {
+@media (max-width: 575.98px) {
   .legal-page__summary-item + .legal-page__summary-item {
     border-top: 1px solid var(--color-border-secondary);
     border-inline-start: 0;

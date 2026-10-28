@@ -64,7 +64,7 @@ describe('Figma design tokens', () => {
     );
   });
 
-  it('validates tokens and emits default and mobile CSS without activating dark mode', () => {
+  it('validates tokens and emits desktop and mobile spacing values without activating dark mode', () => {
     expect(() => validateFigmaTokenSnapshot()).not.toThrow();
 
     const styles = getFigmaTokenStyles();
@@ -72,8 +72,9 @@ describe('Figma design tokens', () => {
     expect(styles).not.toContain('data-theme');
     expect(styles).not.toContain('prefers-color-scheme');
     expect(styles).not.toContain('--color-text-default: #e5e5e5;');
-    expect(styles).toContain('@media (max-width: 37.5rem)');
-    expect(styles).toContain('--spacing-wrapper-default: 32px;');
+    expect(styles).not.toContain('@media');
+    expect(styles).toContain('--spacing-wrapper-default: 64px;');
+    expect(styles).toContain('--spacing-wrapper-default-mobile: 32px;');
     expect(styles).toContain('--font-family-body: "Helvetica Neue";');
     expect(styles).toContain('--font-weight-bold: 700;');
   });
