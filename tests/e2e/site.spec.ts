@@ -242,15 +242,15 @@ test('design-system homepage is noindex, keyboard-accessible, and has no default
     ],
     [
       { mode: 'desktop', width: '64px' },
-      { mode: 'mobile', width: '32px' },
+      { mode: 'mobile', width: '18px' },
     ],
     [
       { mode: 'desktop', width: '32px' },
-      { mode: 'mobile', width: '24px' },
+      { mode: 'mobile', width: '16px' },
     ],
     [
       { mode: 'desktop', width: '80px' },
-      { mode: 'mobile', width: '48px' },
+      { mode: 'mobile', width: '40px' },
     ],
   ]);
   await expect(page.getByRole('heading', { level: 3, name: 'Global size tokens' })).toBeVisible();
@@ -461,9 +461,9 @@ test('design-system homepage is noindex, keyboard-accessible, and has no default
   await page.setViewportSize({ width: 576, height: 900 });
   await expect(page.locator('.wrapper').first()).toHaveCSS('padding-left', '64px');
   await page.setViewportSize({ width: 575, height: 900 });
-  await expect(page.locator('.wrapper').first()).toHaveCSS('padding-left', '32px');
+  await expect(page.locator('.wrapper').first()).toHaveCSS('padding-left', '18px');
   await page.setViewportSize({ width: 390, height: 844 });
-  await expect(page.locator('.wrapper').first()).toHaveCSS('padding-left', '32px');
+  await expect(page.locator('.wrapper').first()).toHaveCSS('padding-left', '18px');
   const mobileGridColumns = await page
     .locator('.ds-tokens__font-sizes-grid')
     .evaluate((grid) => getComputedStyle(grid).gridTemplateColumns.split(' ').length);

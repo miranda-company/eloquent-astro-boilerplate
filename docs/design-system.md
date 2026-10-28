@@ -29,7 +29,7 @@ Keep token names stable across client projects. A client rebrand changes primiti
 
 ## Current Figma collections
 
-The current minimum system contains 128 variables in five collections:
+The current minimum system contains 129 variables in five collections:
 
 - **Font tokens:** family, size, weight, line-height, and letter-spacing scales.
 - **Primitives:** generic color ramps, neutral colors, spacing values, and radii.
@@ -37,7 +37,7 @@ The current minimum system contains 128 variables in five collections:
 - **Spacing tokens:** semantic spacing roles with desktop and mobile modes.
 - **Global size tokens:** wrapper and content maximum widths plus wire size.
 
-The preview displays every variable in these collections and its exported value for each mode. The export contains resolved values, not alias references.
+The preview displays font-size, semantic-color, primitive-color, spacing, and global-size tokens with their exported values and modes. Other font and primitive variables remain available in the snapshot and generated CSS but are not currently given dedicated preview grids. The export contains resolved values, not alias references.
 
 ## Modes and numeric values
 

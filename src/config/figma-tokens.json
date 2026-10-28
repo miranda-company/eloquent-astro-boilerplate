@@ -69,7 +69,7 @@
     "color-palette-2-700": { "mode-1": "#655f53" },
     "color-palette-2-800": { "mode-1": "#454138" },
     "color-palette-2-900": { "mode-1": "#2f2c26" },
-    "spacing-05": { "mode-1": 4 },
+    "spacing-0-5": { "mode-1": 4 },
     "spacing-1": { "mode-1": 8 },
     "spacing-2": { "mode-1": 16 },
     "spacing-3": { "mode-1": 24 },
@@ -93,7 +93,8 @@
     "radius-lg": { "mode-1": 16 },
     "radius-xl": { "mode-1": 32 },
     "radius-2xl": { "mode-1": 128 },
-    "radius-3xl": { "mode-1": 360 }
+    "radius-3xl": { "mode-1": 360 },
+    "spacing-2-25": { "mode-1": 18 }
   },
   "color-tokens": {
     "color-text-default": { "light-mode": "#222222", "dark-mode": "#e5e5e5" },
@@ -125,9 +126,9 @@
     "spacing-3xl": { "desktop": 80, "mobile": 56 },
     "spacing-4xl": { "desktop": 120, "mobile": 80 },
     "spacing-5xl": { "desktop": 240, "mobile": 120 },
-    "spacing-wrapper-default": { "desktop": 64, "mobile": 32 },
-    "spacing-gutter-default": { "desktop": 32, "mobile": 24 },
-    "spacing-section-default": { "desktop": 80, "mobile": 48 }
+    "spacing-wrapper-default": { "desktop": 64, "mobile": 18 },
+    "spacing-gutter-default": { "desktop": 32, "mobile": 16 },
+    "spacing-section-default": { "desktop": 80, "mobile": 40 }
   },
   "global-size-tokens": {
     "max-width-2xl": { "desktop": 1440 },

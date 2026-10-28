@@ -1,15 +1,12 @@
 ---
 import { getFigmaTokenCollections, getFigmaTokenCssName } from '../../config/figma-tokens-adapter';
 
-const fontTokens = getFigmaTokenCollections().find(({ name }) => name === 'Font tokens');
-const colorTokens = getFigmaTokenCollections().find(({ name }) => name === 'Color tokens');
-const primitiveTokenCollection = getFigmaTokenCollections().find(
-  ({ name }) => name === 'Primitives',
-);
-const spacingTokenCollection = getFigmaTokenCollections().find(
-  ({ name }) => name === 'Spacing tokens',
-);
-const globalSizeTokenCollection = getFigmaTokenCollections().find(
+const tokenCollections = getFigmaTokenCollections();
+const fontTokens = tokenCollections.find(({ name }) => name === 'Font tokens');
+const colorTokens = tokenCollections.find(({ name }) => name === 'Color tokens');
+const primitiveTokenCollection = tokenCollections.find(({ name }) => name === 'Primitives');
+const spacingTokenCollection = tokenCollections.find(({ name }) => name === 'Spacing tokens');
+const globalSizeTokenCollection = tokenCollections.find(
   ({ name }) => name === 'Global size tokens',
 );
 const fontSizeTokens =

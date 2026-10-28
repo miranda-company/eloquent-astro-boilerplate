@@ -29,8 +29,8 @@ function sortPrimitiveTokens(
     const palette = name.match(/^color-palette-(\d+)-(\d+)$/);
     if (palette) return [0, Number(palette[1]), Number(palette[2])];
 
-    const spacing = name.match(/^spacing-(\d+)$/);
-    if (spacing) return [1, Number(spacing[1] === '05' ? '0.5' : spacing[1])];
+    const spacing = name.match(/^spacing-(\d+(?:-\d+)?)$/);
+    if (spacing) return [1, Number(spacing[1]!.replace('-', '.'))];
 
     const radius = name.match(/^radius-(sm|md|lg|xl|2xl|3xl)$/);
     if (radius) return [2, ['sm', 'md', 'lg', 'xl', '2xl', '3xl'].indexOf(radius[1]!)];

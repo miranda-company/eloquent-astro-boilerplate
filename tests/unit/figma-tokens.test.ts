@@ -14,7 +14,7 @@ describe('Figma design tokens', () => {
     );
   });
 
-  it('contains the five Figma collections and all 128 variables', () => {
+  it('contains the five Figma collections and all 129 variables', () => {
     const collections = getFigmaTokenCollections();
 
     expect(collections.map(({ name }) => name)).toEqual([
@@ -25,7 +25,7 @@ describe('Figma design tokens', () => {
       'Global size tokens',
     ]);
     expect(collections.reduce((count, collection) => count + collection.variables.length, 0)).toBe(
-      128,
+      129,
     );
   });
 
@@ -45,7 +45,7 @@ describe('Figma design tokens', () => {
       modes: { 'light-mode': '#222222', 'dark-mode': '#e5e5e5' },
     });
     expect(spacing.variables.find(({ name }) => name === 'spacing-wrapper-default')).toMatchObject({
-      modes: { desktop: 64, mobile: 32 },
+      modes: { desktop: 64, mobile: 18 },
     });
   });
 
@@ -62,6 +62,32 @@ describe('Figma design tokens', () => {
         ),
       ),
     );
+    expect(
+      primitives.variables
+        .filter(({ name }) => name.startsWith('spacing-'))
+        .map(({ name }) => name),
+    ).toEqual([
+      'spacing-0-5',
+      'spacing-1',
+      'spacing-2',
+      'spacing-2-25',
+      'spacing-3',
+      'spacing-4',
+      'spacing-5',
+      'spacing-6',
+      'spacing-7',
+      'spacing-8',
+      'spacing-9',
+      'spacing-10',
+      'spacing-11',
+      'spacing-12',
+      'spacing-13',
+      'spacing-14',
+      'spacing-15',
+      'spacing-20',
+      'spacing-30',
+      'spacing-40',
+    ]);
   });
 
   it('validates tokens and emits desktop and mobile spacing values without activating dark mode', () => {
@@ -74,7 +100,7 @@ describe('Figma design tokens', () => {
     expect(styles).not.toContain('--color-text-default: #e5e5e5;');
     expect(styles).not.toContain('@media');
     expect(styles).toContain('--spacing-wrapper-default: 64px;');
-    expect(styles).toContain('--spacing-wrapper-default-mobile: 32px;');
+    expect(styles).toContain('--spacing-wrapper-default-mobile: 18px;');
     expect(styles).toContain('--font-family-body: "Helvetica Neue";');
     expect(styles).toContain('--font-weight-bold: 700;');
   });
