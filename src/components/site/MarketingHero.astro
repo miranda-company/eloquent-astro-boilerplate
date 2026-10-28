@@ -39,35 +39,37 @@ const { title, headingLevel = 1, eyebrow, description, action } = Astro.props;
 
   .marketing-hero__eyebrow {
     margin: 0;
-    color: var(--color-primary);
-    font-size: 0.875rem;
-    font-weight: 600;
-    letter-spacing: 0.16em;
+    color: var(--color-text-default);
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-bold);
+    letter-spacing: var(--font-tracking-extended);
     text-transform: uppercase;
   }
 
   .marketing-hero__title {
-    margin: var(--space-4) 0 0;
-    font-size: 3rem;
-    font-weight: 600;
-    letter-spacing: -0.025em;
-    line-height: 1.05;
+    margin: var(--spacing-2) 0 0;
+    font-size: var(--font-size-3xl);
+    font-weight: var(--font-weight-bold);
+    letter-spacing: var(--font-tracking-tight);
+    line-height: var(--font-leading-3xl);
   }
 
   .marketing-hero__description {
     max-width: 42rem;
-    margin: var(--space-6) 0 0;
-    color: color-mix(in srgb, var(--color-foreground) 75%, transparent);
-    font-size: 1.125rem;
+    margin: var(--spacing-3) 0 0;
+    color: color-mix(in srgb, var(--color-text-default) 75%, transparent);
+    font-size: var(--font-size-md);
+    line-height: var(--font-leading-lg);
   }
 
   .marketing-hero__action {
-    margin-top: var(--space-8);
+    margin-top: var(--spacing-4);
   }
 
   @media (min-width: 37.5rem) {
     .marketing-hero__title {
-      font-size: 4.5rem;
+      font-size: var(--font-size-6xl);
+      line-height: var(--font-leading-6xl);
     }
   }
 </style>

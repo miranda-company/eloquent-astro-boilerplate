@@ -1,6 +1,6 @@
 # Integrations and privacy
 
-All integrations are opt-in and provider-agnostic by default. Public environment values are validated by Astro in `astro.config.ts`; feature flags in `site.config.ts` determine whether the related component can run.
+All integrations are opt-in and provider-agnostic by default. Public environment values are validated by Astro in `astro.config.ts`; feature flags in `client-config.ts` determine whether the related component can run.
 
 ## Environment variables
 

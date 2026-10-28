@@ -1,142 +1,103 @@
 # Design system
 
-The design system is deliberately small, semantic, and client-configurable. Its job is to let a client rebrand the site by editing a few well-defined values, without changing component markup.
+The approved [Figma Design System](https://www.figma.com/design/56g1RP9hV1uVFigLSQKHsC/Design-System?node-id=0-1&t=OgKJWWi7p2SpP6WS-1) is the source of truth for design tokens. Keep its variable names, values, and modes aligned with the Astro implementation; do not create a second hand-maintained palette or theme-token system in code.
 
-The internal design-system preview is the root page while this boilerplate is being prepared. It is `noindex, nofollow` and excluded from the sitemap. Move it to `/design-system` when the client homepage is ready; the exact procedure is in [client setup](client-setup.md).
+The internal design-system preview is the root page while the boilerplate is being prepared. It is `noindex, nofollow` and excluded from the sitemap. Move it to `/design-system` when the client homepage is ready; the procedure is in [client setup](client-setup.md).
 
-Reusable page patterns are catalogued in [component-library.md](component-library.md), which maps each Astro implementation to its approved Figma reference, content interface, and verification. The current [Figma Design System project](https://www.figma.com/design/56g1RP9hV1uVFigLSQKHsC/Design-System?node-id=0-1&t=OgKJWWi7p2SpP6WS-1) is the visual reference; implementation and approval remain human-reviewed.
+## Token source and implementation
 
-## Source of truth
+| Concern                                                           | Source                                          | Responsibility                                                    |
+| ----------------------------------------------------------------- | ----------------------------------------------- | ----------------------------------------------------------------- |
+| Approved tokens, names, values, and modes                         | Figma Design System file                        | Authoritative design decisions                                    |
+| Checked-in snapshot                                               | `src/config/figma-tokens.json`                  | Figma variable export grouped by collection, with values per mode |
+| Token validation, CSS names, and mode output                      | `src/config/figma-tokens-adapter.ts`            | Converts the export to static CSS custom properties               |
+| CSS reset, base rules, responsive wrapper layout, and breakpoints | `src/styles/global.css`                         | Structural site-wide CSS; not a duplicate token source            |
+| Site identity, URLs, brand assets, feature flags, and navigation  | `src/config/client-config.ts`                   | Non-design-token site configuration                               |
+| Rendered token reference                                          | `src/components/site/DesignSystemPreview.astro` | Displays variable names, CSS names, values, and modes             |
 
-| Concern                                                                                                                   | Source                                          | Why it belongs there                                           |
-| ------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------- | -------------------------------------------------------------- |
-| Client identity, raw palettes, semantic colour mappings, typography, spacing, size, wrapper, radius, and elevation values | `src/config/site.config.ts`                     | Typed, client-specific runtime configuration                   |
-| Token fallbacks, reset/base rules, global focus, wrapper/section layout, and shared motion timing                         | `src/styles/global.css`                         | Rules apply across the document and define shared layout       |
-| Shared button variants                                                                                                    | `src/styles/button.css`                         | One imported stylesheet keeps common button treatments aligned |
-| Component markup and component-specific styles                                                                            | `src/components/` and owning page modules       | Changes stay local to the markup and interface they affect     |
-| Visual reference                                                                                                          | `src/components/site/DesignSystemPreview.astro` | Renders the configured system for review                       |
-| Motion behavior and GSAP/ScrollTrigger usage                                                                              | `docs/animation.md`                             | Motion remains optional, local, and accessible                 |
+`BaseLayout.astro` emits the generated token CSS in the document head. A site build does not call Figma or require credentials, so output remains static, repeatable, and buildable offline. `global.css` must not define fallback values for tokens already in the Figma export.
 
-`BaseLayout.astro` resolves semantic colour references and emits the configured CSS custom properties on the document root. `global.css` provides fallback values; shared and component styles consume semantic variables directly.
+Each exported token name becomes its CSS custom property name by adding `--`. For example:
 
-## Colour system
+```text
+font-size-md             →  --font-size-md
+color-text-default       →  --color-text-default
+spacing-wrapper-default  →  --spacing-wrapper-default
+```
 
-Colours have two layers in `siteConfig.colors`.
+Keep token names stable across client projects. A client rebrand changes primitive values and semantic mode values in Figma, not component CSS names.
 
-1. `palettes` is the raw inventory. Add, remove, or rename client palette families and shades manually. The preview renders every supplied value as `--palette-{family}-{shade}`.
-2. `semantic` maps palette references such as `primary.500` to UI roles. Components use only these roles.
+## Current Figma collections
 
-The required roles are `background`, `foreground`, `muted`, `surface`, `border`, `primary`, `on-primary`, `primary-hover`, `secondary`, `on-secondary`, `accent`, `error`, and `on-error`. `tertiary` and `quaternary` are optional: add them only when the approved system has a meaningful use for them.
+The current minimum system contains 128 variables in five collections:
 
-Use semantic CSS custom properties in authored component styles. Keep structural class names in BEM and avoid embedding client-specific raw colours in component markup.
+- **Font tokens:** family, size, weight, line-height, and letter-spacing scales.
+- **Primitives:** generic color ramps, neutral colors, spacing values, and radii.
+- **Color tokens:** semantic text, surface, icon, and border roles with light and dark modes.
+- **Spacing tokens:** semantic spacing roles with desktop and mobile modes.
+- **Global size tokens:** wrapper and content maximum widths plus wire size.
+
+The preview displays every variable in these collections and its exported value for each mode. The export contains resolved values, not alias references.
+
+## Modes and numeric values
+
+- Color tokens use the first exported mode (`light-mode`) as the generated CSS value. The `dark-mode` values remain visible in the preview and export but are not activated by the adapter.
+- Spacing tokens use `desktop` by default and switch to `mobile` at or below `600px` (`37.5rem`). The `.wrapper` uses `spacing-wrapper-default` and `max-width-2xl`; top-level sections use `spacing-section-default`.
+- Figma numeric values do not encode CSS units. The adapter treats dimensional `FLOAT` tokens as CSS pixels. Font weights remain unitless. String font-family values are emitted as quoted CSS strings.
+- Breakpoints remain authored media queries in `src/styles/global.css` and component styles. They are implementation layout rules, not variables in the current Figma file.
+
+Do not silently invent tokens for properties absent from this minimal system. For example, it currently has no shadow, error-state, hover, or dedicated on-brand text variables. If a design needs one, add and approve it in Figma first; then update the checked-in export and code together.
+
+## Consuming tokens
+
+Use the Figma semantic roles for colors, and Figma primitive or semantic variables for dimensions and typography. Examples:
 
 ```css
 .button--primary {
-  background: var(--color-primary);
-  color: var(--color-on-primary);
+  background: var(--color-surface-brand);
+  color: var(--color-text-default);
+  border-radius: var(--radius-md);
 }
 
 .card {
-  border: 1px solid var(--color-border);
-  background: var(--color-surface);
+  border: 1px solid var(--color-border-secondary);
+  background: var(--color-surface-default);
+  padding: var(--spacing-md);
 }
 ```
 
-Do not use raw palette variables in production component markup. They exist for design inspection and deliberate exceptions only. Do not invent 100–900 ramps when a client provides a small palette; enter the supplied colours and map the available semantic roles.
+Do not reintroduce the removed `--color-primary`, `--space-*`, `--shadow-*`, or `--wrapper-gutter-*` tokens as compatibility aliases. Change call sites to the approved exported token names. Keep component styles authored and scoped as before; the token migration does not imply a component-sync workflow.
 
-The monochrome brand preview relies on `black.base` and `white.base`. Keep those two primitives when editing the palette inventory, or update the brand-preview CSS at the same time.
+## Updating the snapshot
 
-## Typography, spacing, and layout
+When an approved Figma variable changes:
 
-The `theme` object contains the client-editable non-colour tokens:
+1. Export the variables from the approved Figma file using the agreed collection → variable name → mode/value JSON structure.
+2. Replace `src/config/figma-tokens.json` with the approved export. Keep the token names and mode values intact; this format contains resolved values and does not preserve Figma alias relationships.
+3. Run the token tests and review the snapshot diff against the Figma file and the preview.
+4. Update CSS consumers only when token names or intended usage change. If a required design role is missing, add it to Figma rather than creating a code-only token.
+5. Run `pnpm run verify` and relevant Playwright coverage.
 
-- `font-sans` is the system-font stack. Replace it and load an approved webfont locally or through the approved provider when a client needs one.
-- `space-1` through `space-24` form the shared spacing scale. `space-section` controls responsive vertical section rhythm.
-- `size-icon`, `size-control`, and `size-header` define common icon, control, and header dimensions.
-- `wrapper-max` is the maximum inner content width, currently `1440px`.
-- `wrapper-gutter-mobile`, `wrapper-gutter-tablet`, and `wrapper-gutter-desktop` are the shared horizontal padding values. They default to `1rem` (`16px`), `2rem` (`32px`), and `3rem` (`48px`) respectively, independently from the maximum content width.
+The JSON snapshot is generated input, not a second authority. Do not edit token values directly in the snapshot or `client-config.ts`.
 
-Use `.wrapper` and `.section` for page structure. A wrapper keeps its inner content within `wrapper-max` while applying the mobile gutter below `600px`, tablet gutter from `600px` to `1199px`, and desktop gutter from `1200px` upward. Changing a gutter token does not change the maximum content width. Use the shared spacing values before introducing a one-off gap, margin, or width. The preview displays each configured value so designers and developers can verify the scale together.
+## Breakpoints and motion
 
-## Shape
+The starter is mobile-first. Shared wrapper rules use fixed CSS breakpoints, and component-specific responsive rules stay with their owning stylesheets. Runtime variables cannot control media queries; do not duplicate breakpoints in client configuration.
 
-The radius scale is `radius-none`, `radius-xs`, `radius-sm`, `radius-md`, `radius-lg`, `radius-xl`, and `radius-full`. It follows the Material 3 vocabulary from square to fully rounded, but the values are client-configurable.
-
-Use the shared radius custom properties in authored styles, for example `border-radius: var(--radius-md)`. The preview records the intended use and exact value for every shape token.
-
-## Elevation
-
-The two-layer shadow scale contains `shadow-0`, `shadow-1`, `shadow-2`, `shadow-3`, `shadow-4`, `shadow-6`, `shadow-8`, `shadow-12`, `shadow-16`, and `shadow-24`.
-
-The labels are Material-inspired visual hierarchy labels, not physical distances. Use low levels for resting surfaces and interactive lift; reserve `shadow-8` and above for temporary, high-priority UI such as menus, drawers, and dialogs. The preview shows the full CSS value and intended use for every elevation level.
-
-## Breakpoints
-
-Breakpoints are authored CSS media queries, not values in `site.config.ts`. The responsive wrapper rules live in `src/styles/global.css`; module-specific responsive rules stay with their owning styles and use the same fixed thresholds. Runtime CSS variables cannot control media queries, so duplicating the values in client configuration would create a misleading second source of truth.
-
-The starter is mobile-first:
-
-| Layout range | Viewport width     | CSS media query      |
-| ------------ | ------------------ | -------------------- |
-| Compact      | Under `600px`      | Base styles          |
-| Medium       | `600px`–`839px`    | `min-width: 37.5rem` |
-| Expanded     | `840px`–`1199px`   | `min-width: 52.5rem` |
-| Large        | `1200px`–`1599px`  | `min-width: 75rem`   |
-| Extra large  | `1600px` and above | `min-width: 100rem`  |
-
-Change this scale only as a deliberate layout-system decision. Any breakpoint change requires responsive regression testing of all authored media-query layouts.
-
-## Motion
-
-`--motion-fast` currently lives in `src/styles/global.css` and provides the shared `160ms` timing used by lightweight CSS state changes. It is a global implementation token, not a client-editable `siteConfig.theme` value. Change it only as a deliberate system-wide decision and update this guide and affected interaction tests at the same time.
-
-GSAP and ScrollTrigger are available for approved component-level motion, but they are not part of the default bundle or the design-system preview. Read [animation](animation.md) before using them. Motion must preserve the static readable state, respect reduced-motion preferences, and avoid changing the document’s meaning or interaction semantics.
+GSAP and ScrollTrigger are available for approved component-level motion, but they are not part of the Figma token set or the default site bundle. Read [animation](animation.md) before using them. Respect reduced-motion preferences and preserve usable static content.
 
 ## Brand assets
 
-Set `siteConfig.brand.logo` and `siteConfig.brand.icon` to public SVG paths, and keep their `logoWidth`, `logoHeight`, `iconWidth`, and `iconHeight` values aligned with each file's intrinsic dimensions. The preview applies the assets as CSS masks and shows the standard monochrome treatments: black on white and white on black.
-
-Provide single-colour SVGs with an opaque vector shape and no embedded raster image. Replace the placeholders in `public/brand/`, update the paths and dimensions, and confirm the header logo still has meaningful alternative text through `siteConfig.name`.
-
-## Component conventions
-
-The component set is intentionally small: base and legal layouts, header, footer, scroll controls, consent manager, contact form, marketing homepage, design-system preview, and the component-scoped animation helper. Compose existing primitives before adding a generic component.
-
-- Keep interactive controls keyboard-accessible and preserve visible focus styles.
-- Use semantic colours, shared radius, spacing, and elevation tokens.
-- Avoid a Material component library; Material principles inform hierarchy and interaction, not the visual identity.
-- Keep optional client JavaScript scoped to the component that needs it.
-
-### Scroll controls
-
-`ScrollControls.astro` provides the default scroll behavior: `stickyHeader` and `backToTop` are enabled in `siteConfig.features`, while each can be disabled per client. The header becomes sticky after scrolling `240px`; the semantic back-to-top link appears after `640px`. Without JavaScript, the header remains static and the visible `#top` link remains usable. The control uses `size-control`, `size-icon`, `radius-full`, and `shadow-6`; it sits below the consent banner when one is active.
-
-### Class naming
-
-Authored CSS classes follow BEM (Block, Element, Modifier):
-
-```html
-<div class="brand">
-  <span class="brand__mark brand__mark--black"></span>
-</div>
-```
-
-- A **block** is an independent component or layout primitive: `.wrapper`, `.section`, `.brand`.
-- An **element** belongs to its block: `.brand__mark`.
-- A **modifier** changes a block or element variant: `.brand__mark--black`, `.site--wireframe`.
-
-All authored classes follow BEM. Keep component-specific styles scoped to their Astro module or owning page, and reserve `src/styles/global.css` for tokens, reset/base behavior, focus defaults, and shared layout foundations. Import shared treatments such as buttons from a dedicated stylesheet instead of expanding the global foundation. Name component state with a BEM modifier rather than an unscoped state class.
-
-## Wireframe mode
-
-Set `siteConfig.features.wireframe` to `true` to add the `.site--wireframe` modifier and outline every `.wrapper` and `section` with a dashed red line. It is a local layout-review aid. Set it to `false` before a production release.
+Set `siteConfig.brand.logo` and `siteConfig.brand.icon` to public SVG paths, and keep their dimensions aligned with the SVG viewBox. Provide approved assets in `public/brand/` and confirm the header has meaningful alternative text through `siteConfig.name`.
 
 ## Review checklist
 
-Before approving a client theme:
+Before approving a token update:
 
-1. Check semantic mappings and text/background contrast combinations.
-2. Confirm all brand assets, radius, spacing, and elevation values in the preview.
-3. Review the compact, medium, expanded, large, and extra-large layouts.
-4. If approved motion is present, verify normal and reduced-motion behavior without hiding meaningful static content.
-5. Turn wireframe mode off and run `pnpm run verify` plus `pnpm run test:e2e`.
+1. Compare every collection, variable name, value, and mode with Figma.
+2. Confirm CSS names match exported Figma variable names and no duplicate token definitions remain.
+3. Check color contrast for actual combinations used in components, especially branded surfaces.
+4. Review the design-system preview at compact, medium, expanded, large, and extra-large widths.
+5. Run `pnpm run verify` and `pnpm run test:e2e`.
+
+Set `siteConfig.features.wireframe` to `false` before a production release.

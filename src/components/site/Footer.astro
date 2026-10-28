@@ -1,43 +1,45 @@
 ---
-import { siteConfig } from '../../config/site.config';
+import { siteConfig } from '../../config/client-config';
 ---
 
 <footer class="site-footer">
-  <div class="site-footer__inner wrapper">
-    <address class="site-footer__contact">
-      <p class="site-footer__name">{siteConfig.name}</p>
-      <a href={`mailto:${siteConfig.contact.email}`}>{siteConfig.contact.email}</a>
-    </address>
-    <div class="site-footer__links">
-      <nav aria-label={siteConfig.legal.navigationLabel}>
-        <ul class="site-footer__legal-list">
-          {siteConfig.legal.pages.map((page) => (
-            <li>
-              <a href={page.href}>{page.label}</a>
-            </li>
-          ))}
-        </ul>
-      </nav>
-      {siteConfig.features.consentBanner && (
-        <button class="site-footer__consent-button" type="button" data-open-consent>
-          Gestionar cookies
-        </button>
-      )}
+  <div class="wrapper">
+    <div class="site-footer__inner">
+      <address class="site-footer__contact">
+        <p class="site-footer__name">{siteConfig.name}</p>
+        <a href={`mailto:${siteConfig.contact.email}`}>{siteConfig.contact.email}</a>
+      </address>
+      <div class="site-footer__links">
+        <nav aria-label={siteConfig.legal.navigationLabel}>
+          <ul class="site-footer__legal-list">
+            {siteConfig.legal.pages.map((page) => (
+              <li>
+                <a href={page.href}>{page.label}</a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+        {siteConfig.features.consentBanner && (
+          <button class="site-footer__consent-button" type="button" data-open-consent>
+            Gestionar cookies
+          </button>
+        )}
+      </div>
     </div>
   </div>
 </footer>
 
 <style>
   .site-footer {
-    border-top: 1px solid color-mix(in srgb, var(--color-foreground) 10%, transparent);
-    background: var(--color-surface);
+    padding-block: var(--spacing-5);
+    border-top: 1px solid color-mix(in srgb, var(--color-text-default) 10%, transparent);
+    background: var(--color-surface-default);
   }
 
   .site-footer__inner {
     display: grid;
-    gap: var(--space-6);
-    padding-block: 2.5rem;
-    font-size: 0.875rem;
+    gap: var(--spacing-3);
+    font-size: var(--font-size-sm);
   }
 
   .site-footer__contact {
@@ -46,26 +48,26 @@ import { siteConfig } from '../../config/site.config';
 
   .site-footer__name {
     margin: 0;
-    font-weight: 600;
+    font-weight: var(--font-weight-bold);
   }
 
   .site-footer__contact p {
     margin: 0;
-    font-weight: 600;
+    font-weight: var(--font-weight-bold);
   }
 
   .site-footer__links {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    gap: var(--space-1) var(--space-3);
+    gap: var(--spacing-05) var(--spacing-2);
   }
 
   .site-footer__legal-list {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    gap: var(--space-1) var(--space-3);
+    gap: var(--spacing-05) var(--spacing-2);
     margin: 0;
     padding: 0;
     list-style: none;

@@ -12,40 +12,53 @@ test('design-system homepage is noindex, keyboard-accessible, and has no default
       thirdPartyRequests.push(request.url());
   });
   await page.goto('/');
-  await expect(page.getByRole('heading', { level: 1, name: 'Design system' })).toBeVisible();
+  await expect(page.getByRole('heading', { level: 1, name: 'Design System' })).toBeVisible();
+  await expect(page.getByText('This is the design system of eloquent.')).toBeVisible();
   await expect(page.locator('main h1')).toHaveCount(1);
   await expect(page.locator('body > header')).toHaveCount(1);
   await expect(page.locator('body > main#contenido')).toHaveCount(1);
   await expect(page.locator('body > footer')).toHaveCount(1);
+  await expect(page.locator('.site-header > .site-header__wrapper.wrapper')).toHaveCount(1);
+  await expect(page.locator('.site-footer > .wrapper > .site-footer__inner')).toHaveCount(1);
+  await expect(page.locator('main > section > .wrapper')).toHaveCount(1);
+  await expect(
+    page.locator(
+      'main > section.design-system-preview__intro > .design-system-preview__wrapper.wrapper',
+    ),
+  ).toHaveCount(1);
+  const wireBorder = await page.evaluate(() => {
+    const probe = document.createElement('div');
+    probe.style.border = 'var(--wire-size) solid var(--color-wire)';
+    document.body.append(probe);
+    const computed = getComputedStyle(probe);
+    const result = { width: computed.borderTopWidth, color: computed.borderTopColor };
+    probe.remove();
+    return result;
+  });
+  await expect(page.locator('.site-header')).toHaveCSS('padding-top', '16px');
+  await expect(page.locator('.site-footer')).toHaveCSS('padding-top', '40px');
+  await expect(page.locator('main > section').first()).toHaveCSS('padding-top', '80px');
+  await expect(page.locator('html')).toHaveClass(/(?:^|\s)site(?:\s|$)/);
   await expect(page.locator('html')).toHaveClass(/site--sticky-header/);
+  await expect(page.locator('html')).toHaveClass(/site--wireframe/);
   await expect(page.locator('body')).toHaveAttribute('id', 'top');
   await expect(page.locator('.back-to-top')).toHaveAttribute('href', '#top');
   await expect(page.locator('body > header nav')).toHaveCount(0);
-  await expect(page.locator('.wrapper').first()).toHaveCSS('padding-left', '48px');
-  await expect(page.locator('.site-header__inner')).toHaveCSS('display', 'flex');
+  await expect(page.locator('.wrapper').first()).toHaveCSS('padding-left', '64px');
+  await expect(page.locator('.wrapper').first()).toHaveCSS('padding-top', '0px');
+  await expect(page.locator('.wrapper').first()).toHaveCSS('border-width', wireBorder.width);
+  await expect(page.locator('.wrapper').first()).toHaveCSS('border-color', wireBorder.color);
+  await expect(page.locator('.design-system-preview__intro')).toHaveCSS(
+    'border-width',
+    wireBorder.width,
+  );
+  await expect(page.locator('.design-system-preview__intro')).toHaveCSS(
+    'border-color',
+    wireBorder.color,
+  );
+  await expect(page.locator('.wrapper').first()).toHaveCSS('outline-style', 'none');
   await expect(page.locator('.site-footer__inner')).toHaveCSS('display', 'grid');
   await expect(page.locator('.back-to-top')).toHaveCSS('position', 'fixed');
-  await expect(page.locator('.design-system-preview__title')).toHaveCSS('font-size', '72px');
-  await expect(
-    page.getByRole('heading', { level: 2, name: 'A hero built from the design system' }),
-  ).toBeVisible();
-  await expect(page.locator('.marketing-hero')).toHaveCount(2);
-  await expect(page.locator('.marketing-hero__eyebrow').first()).toHaveText('Reusable pattern');
-  await expect(page.getByRole('link', { name: 'Explore components' }).first()).toHaveAttribute(
-    'href',
-    '#components',
-  );
-  await expect(page.locator('.marketing-hero__title').first()).toHaveCSS('font-size', '72px');
-  await expect(page.locator('.marketing-hero__content').first()).toHaveCSS('max-width', '768px');
-  await expect(page.locator('.button--primary').first()).toHaveCSS(
-    'background-color',
-    'rgb(31, 77, 61)',
-  );
-  const columnCount = (selector: string) =>
-    page
-      .locator(selector)
-      .evaluate((element) => getComputedStyle(element).gridTemplateColumns.split(' ').length);
-  expect(await columnCount('.design-system-preview__grid--brand')).toBe(2);
   await expect(page.locator('.container')).toHaveCount(0);
   await expect(page.getByRole('link', { name: 'Nombre del cliente' })).toHaveAttribute('href', '/');
   await expect(page.getByRole('img', { name: 'Nombre del cliente' })).toHaveAttribute(
@@ -74,66 +87,18 @@ test('design-system homepage is noindex, keyboard-accessible, and has no default
   await page.getByText('Saltar al contenido').focus();
   await page.keyboard.press('Enter');
   await expect(page.locator('#contenido')).toBeFocused();
-  for (const section of [
-    'Typography',
-    'Brand elements',
-    'Colors',
-    'Spacing and size tokens',
-    'Shape and border radius',
-    'Buttons',
-    'Cards and other components',
-    'Elevation',
-    'Breakpoints',
-  ]) {
-    await expect(page.getByRole('heading', { level: 2, name: section })).toBeVisible();
-  }
-  await expect(page.getByText('--font-sans:', { exact: false })).toBeVisible();
-  await expect(page.getByText('/brand/brand-logo.svg', { exact: true })).toBeVisible();
-  await expect(page.getByText('/brand/brand-icon.svg', { exact: true })).toBeVisible();
-  await expect(page.locator('.brand__mark')).toHaveCount(4);
-  await expect(page.locator('.brand__mark').first()).toHaveCSS('mask-image', /url\(/);
-  await expect(page.locator('.brand__preview--light').first()).toHaveCSS(
-    'background-color',
-    'rgb(255, 255, 255)',
-  );
-  await expect(page.locator('.brand__preview--dark').first()).toHaveCSS(
-    'background-color',
-    'rgb(0, 0, 0)',
-  );
-  await expect(page.getByText('#1f4d3d', { exact: true })).toBeVisible();
-  await expect(page.getByText('--palette-primary-500', { exact: true })).toBeVisible();
-  await expect(page.getByText('primary.500 → #1f4d3d', { exact: true })).toBeVisible();
-  await expect(page.getByText('--space-24 · 6rem', { exact: true })).toBeVisible();
-  await expect(page.getByText('--size-control · 2.75rem', { exact: true })).toBeVisible();
-  await expect(page.getByText('--size-header · 4rem', { exact: true })).toBeVisible();
-  await expect(page.getByText('--wrapper-max · 1440px', { exact: true })).toBeVisible();
-  await expect(page.getByText('--wrapper-gutter-mobile · 1rem', { exact: true })).toBeVisible();
-  await expect(page.getByText('--wrapper-gutter-tablet · 2rem', { exact: true })).toBeVisible();
-  await expect(page.getByText('--wrapper-gutter-desktop · 3rem', { exact: true })).toBeVisible();
+  await expect(page.locator('html')).toHaveCSS('--font-family-body', '"Helvetica Neue"');
   await page.setViewportSize({ width: 768, height: 900 });
-  await expect(page.locator('.wrapper').first()).toHaveCSS('padding-left', '32px');
-  await expect(page.locator('.design-system-preview__title')).toHaveCSS('font-size', '72px');
-  await expect(page.locator('.marketing-hero__title').first()).toHaveCSS('font-size', '72px');
-  expect(await columnCount('.design-system-preview__grid--brand')).toBe(1);
-  expect(await columnCount('.design-system-preview__grid--semantic')).toBe(2);
+  await expect(page.locator('.wrapper').first()).toHaveCSS('padding-left', '64px');
   await page.setViewportSize({ width: 390, height: 844 });
-  await expect(page.locator('.wrapper').first()).toHaveCSS('padding-left', '16px');
-  await expect(page.locator('.design-system-preview__title')).toHaveCSS('font-size', '48px');
-  await expect(page.locator('.marketing-hero__title').first()).toHaveCSS('font-size', '48px');
-  expect(await columnCount('.design-system-preview__grid--semantic')).toBe(1);
-  await expect(page.getByText('9X large · 8rem / 128px', { exact: true })).toBeVisible();
-  await expect(page.getByText('--radius-full', { exact: true })).toBeVisible();
-  await expect(page.getByText('9999px', { exact: true })).toBeVisible();
-  await expect(page.getByText('@media (min-width: 100rem)', { exact: true })).toBeVisible();
+  await expect(page.locator('.wrapper').first()).toHaveCSS('padding-left', '32px');
   await page.setViewportSize({ width: 1600, height: 900 });
-  expect(await columnCount('.design-system-preview__grid--semantic')).toBe(3);
-  expect(await columnCount('.design-system-preview__grid--breakpoints')).toBe(3);
-  expect(await columnCount('.site-footer__inner')).toBe(2);
-  await expect(page.getByText('Elevation 24dp', { exact: true })).toBeVisible();
-  await expect(page.getByText('--shadow-24', { exact: true })).toBeVisible();
-  await page.evaluate(() => window.scrollTo(0, 700));
-  await expect(page.locator('.site-header')).toHaveClass(/site-header--sticky/);
-  await expect(page.locator('.back-to-top')).toHaveClass(/back-to-top--visible/);
+  await expect(page.locator('.wrapper').first()).toHaveCSS('max-width', '1440px');
+  expect(
+    await page
+      .locator('.site-footer__inner')
+      .evaluate((element) => getComputedStyle(element).gridTemplateColumns.split(' ').length),
+  ).toBe(2);
   expect(thirdPartyRequests).toEqual([]);
 });
 
@@ -143,6 +108,12 @@ for (const route of legalRoutes)
     await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
     await expect(page.locator('main h1')).toHaveCount(1);
     await expect(page.locator('article')).toHaveCount(1);
+    const layoutRegionsHaveWrappers = await page
+      .locator('.legal-page > header, .legal-page > section')
+      .evaluateAll((regions) =>
+        regions.every((region) => region.querySelector(':scope > .wrapper')),
+      );
+    expect(layoutRegionsHaveWrappers).toBe(true);
     await expect(page.locator('body > footer address')).toHaveCount(1);
     await expect(page.locator('body > footer nav ul > li')).toHaveCount(3);
     await expect(page.locator('.legal-page__toc nav')).toHaveCount(1);

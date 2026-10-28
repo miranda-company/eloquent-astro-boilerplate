@@ -26,38 +26,37 @@ const { title, features } = Astro.props;
 
 <style>
   .marketing-features {
-    background: var(--color-surface);
+    background: var(--color-surface-default);
   }
 
   .marketing-features__title {
     margin: 0;
-    font-size: 1.875rem;
-    font-weight: 600;
-    letter-spacing: -0.025em;
-    line-height: 1.2;
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-bold);
+    letter-spacing: var(--font-tracking-tight);
+    line-height: var(--font-leading-xl);
   }
 
   .marketing-features__grid {
     display: grid;
     gap: 1.25rem;
-    margin-top: var(--space-8);
+    margin-top: var(--spacing-4);
   }
 
   .marketing-features__card {
-    padding: var(--space-6);
-    border: 1px solid color-mix(in srgb, var(--color-foreground) 10%, transparent);
+    padding: var(--spacing-3);
+    border: 1px solid color-mix(in srgb, var(--color-text-default) 10%, transparent);
     border-radius: var(--radius-md);
-    box-shadow: var(--shadow-1);
   }
 
   .marketing-features__card-title {
     margin: 0;
-    font-weight: 600;
+    font-weight: var(--font-weight-bold);
   }
 
   .marketing-features__card-description {
-    margin: var(--space-2) 0 0;
-    font-size: 0.875rem;
+    margin: var(--spacing-1) 0 0;
+    font-size: var(--font-size-sm);
   }
 
   @media (min-width: 52.5rem) {

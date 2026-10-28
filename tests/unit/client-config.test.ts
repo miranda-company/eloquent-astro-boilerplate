@@ -1,9 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import {
-  resolveColorReference,
-  resolveSemanticColors,
-  siteConfig,
-} from '../../src/config/site.config';
+import { siteConfig } from '../../src/config/client-config';
 
 describe('site configuration', () => {
   it('uses the configured default locale and a valid canonical URL', () => {
@@ -18,40 +14,6 @@ describe('site configuration', () => {
     expect(siteConfig.brand.logoHeight).toBeGreaterThan(0);
     expect(siteConfig.brand.iconWidth).toBeGreaterThan(0);
     expect(siteConfig.brand.iconHeight).toBeGreaterThan(0);
-  });
-
-  it('defines every required semantic theme token', () => {
-    expect(Object.values(siteConfig.theme).every(Boolean)).toBe(true);
-  });
-
-  it('keeps wrapper width and gutter tokens independently configurable', () => {
-    expect(siteConfig.theme['wrapper-max']).toBe('1440px');
-    expect(siteConfig.theme['wrapper-gutter-mobile']).toBe('1rem');
-    expect(siteConfig.theme['wrapper-gutter-tablet']).toBe('2rem');
-    expect(siteConfig.theme['wrapper-gutter-desktop']).toBe('3rem');
-  });
-
-  it('resolves semantic roles from the configured manual palettes', () => {
-    const colors = resolveSemanticColors(siteConfig.colors);
-
-    expect(colors.primary).toBe('#1f4d3d');
-    expect(colors.background).toBe('#fcfbf7');
-    expect(colors.error).toBe('#b42318');
-  });
-
-  it('does not require optional tertiary or quaternary colours', () => {
-    const colors = resolveSemanticColors(siteConfig.colors);
-
-    expect(siteConfig.colors.palettes.tertiary).toBeUndefined();
-    expect(siteConfig.colors.palettes.quaternary).toBeUndefined();
-    expect(colors.tertiary).toBeUndefined();
-    expect(colors.quaternary).toBeUndefined();
-  });
-
-  it('rejects references to a missing palette shade', () => {
-    expect(() =>
-      resolveColorReference(siteConfig.colors, { palette: 'primary', shade: '999' }),
-    ).toThrow('Missing color token: primary.999');
   });
 
   it('defines a configurable wireframe mode', () => {

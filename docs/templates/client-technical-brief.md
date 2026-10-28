@@ -54,7 +54,7 @@
 | Approved component/frame links      | `[Direct Figma node links; include hero and key reusable patterns]` |
 | Design owner and approval status    | `[Name / role; Not started / In review / Approved]`                 |
 | Optional tertiary/quaternary roles? | `No / list roles and purpose`                                       |
-| Token exceptions                    | `[None / spacing, wrapper width/gutter, radius, elevation changes]` |
+| Token additions/changes             | `[None / approved Figma variables or mode changes]`                 |
 
 **Design-system approval status:** `Not started / In review / Approved`
 
@@ -105,7 +105,7 @@ Read AGENTS.md, docs/client-project-workflow.md, docs/client-setup.md,
 docs/DOM_ARCHITECTURE.md, and docs/client-brief.md.
 
 Configure the Astro boilerplate from the approved client brief. Update
-site.config.ts, brand assets, tokens, environment placeholders, and relevant
+client-config.ts, brand assets, Figma tokens, environment placeholders, and relevant
 Spanish content only where the brief supplies an approved decision. Keep static
 output and do not add dependencies or integrations not approved in the brief.
 

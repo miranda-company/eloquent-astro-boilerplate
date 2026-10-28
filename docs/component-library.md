@@ -30,7 +30,7 @@ import MarketingHero from '../../../components/site/MarketingHero.astro';
 
 The title is required. Use `headingLevel={1}` (the default) for the page's one `h1`; use `headingLevel={2}` only when the page already has its `h1` and the hero is a subordinate section. The eyebrow, description, and action are optional. The action is a link, so its `href` must be a valid route or in-page destination. Keep public site copy in Spanish unless the approved locale strategy changes.
 
-The module owns its section markup and BEM styles. It consumes configured primary/foreground colours and shared spacing, and uses the existing shared primary button treatment. Do not add client-specific palette values, layout classes, or page copy to the implementation.
+The module owns its section markup and BEM styles. It consumes Figma semantic color roles and shared spacing variables, and uses the existing shared primary button treatment. Do not add client-specific palette values, layout classes, or page copy to the implementation.
 
 ## Homepage feature grid
 
@@ -42,7 +42,7 @@ The starter homepage uses `MarketingFeatures.astro` for a three-card feature sec
 2. Link the approved Figma frame/component and record its design owner and review status in the table above.
 3. Define the smallest typed content interface that covers the intended use. Keep page copy and client identity in content/configuration, not in the reusable module.
 4. Use semantic HTML and an explicit content contract. A caller should not need to know internal layout or styling details.
-5. Use BEM classes, semantic CSS custom properties, and shared spacing/shape/elevation tokens. Keep component-specific CSS with the Astro module and import genuinely shared styles such as buttons from their dedicated stylesheet; reserve `src/styles/global.css` for document-wide foundations and shared layout.
+5. Use BEM classes, Figma-derived CSS custom properties, and the available spacing/shape variables. Keep component-specific CSS with the Astro module and import genuinely shared styles such as buttons from their dedicated stylesheet; reserve `src/styles/global.css` for document-wide foundations and shared layout.
 6. Review the implementation with design at compact, medium, expanded, large, and extra-large widths. Verify keyboard, focus, heading hierarchy, contrast, and reduced-motion requirements where relevant.
 7. Add deterministic tests for externally visible behavior and styles. Update this catalog and [design-system.md](design-system.md) when the token model or conventions change.
 

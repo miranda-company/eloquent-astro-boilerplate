@@ -20,32 +20,34 @@ const { Content } = await render(page);
   </LegalPageLayout>
 ) : (
   <BaseLayout title={page.data.title} description={page.data.description}>
-    <article class="wrapper section page-content">
-      <h1 class="page-content__title">{page.data.title}</h1>
-      <Content />
+    <article class="section page-content">
+      <div class="wrapper page-content__wrapper">
+        <h1 class="page-content__title">{page.data.title}</h1>
+        <Content />
+      </div>
     </article>
   </BaseLayout>
 )}
 
 <style>
-  .page-content {
-    max-width: 48rem;
+  .page-content__wrapper {
+    max-width: var(--max-width-md);
   }
 
   .page-content__title {
     margin: 0;
-    font-size: 2.25rem;
-    font-weight: 600;
-    letter-spacing: -0.025em;
+    font-size: var(--font-size-2xl);
+    font-weight: var(--font-weight-bold);
+    letter-spacing: var(--font-tracking-tight);
   }
 
   :global(.page-content > * + *) {
-    margin-top: 1rem;
+    margin-top: var(--spacing-2);
   }
 
   :global(.page-content h2) {
-    margin-top: 2rem;
-    font-size: 1.5rem;
-    font-weight: 700;
+    margin-top: var(--spacing-4);
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-bold);
   }
 </style>

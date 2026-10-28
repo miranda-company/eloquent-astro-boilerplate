@@ -4,21 +4,23 @@ This is a static-first Astro starter for content-led marketing sites. It ships s
 
 ## Directory map
 
-| Path                              | Responsibility                                                                                                              |
-| --------------------------------- | --------------------------------------------------------------------------------------------------------------------------- |
-| `src/pages/`                      | Public routes and static endpoint routes                                                                                    |
-| `src/layouts/BaseLayout.astro`    | Document shell, canonical/social metadata, optional JSON-LD, configured CSS properties, header, footer, and consent manager |
-| `src/components/seo/JsonLd.astro` | Safely serializes page-level Schema.org JSON-LD supplied by a route or layout consumer                                      |
-| `src/components/site/`            | Reusable site components and the internal design-system preview                                                             |
-| `src/config/site.config.ts`       | Typed client identity, features, palettes, semantic mappings, and theme values                                              |
-| `src/content/`                    | Local Markdown and MDX source content                                                                                       |
-| `src/content.config.ts`           | Content Collection loader and Zod schema                                                                                    |
-| `src/styles/global.css`           | Token fallbacks, reset/base rules, focus defaults, shared layout foundations, and responsive wrapper rules                  |
-| `src/styles/button.css`           | Shared button base and variants imported by their consumers                                                                 |
-| `public/brand/`                   | Public SVG logo and icon placeholders                                                                                       |
-| `tests/`                          | Unit configuration tests and browser smoke/accessibility tests                                                              |
-| `docs/`                           | Architecture, semantic DOM, client workflow/handoff, content, design-system, integrations, and testing guidance             |
-| `docs/templates/`                 | Reusable documents, including the client technical-brief template                                                           |
+| Path                                 | Responsibility                                                                                                           |
+| ------------------------------------ | ------------------------------------------------------------------------------------------------------------------------ |
+| `src/pages/`                         | Public routes and static endpoint routes                                                                                 |
+| `src/layouts/BaseLayout.astro`       | Document shell, canonical/social metadata, optional JSON-LD, Figma token stylesheet, header, footer, and consent manager |
+| `src/components/seo/JsonLd.astro`    | Safely serializes page-level Schema.org JSON-LD supplied by a route or layout consumer                                   |
+| `src/components/site/`               | Reusable site components and the internal design-system preview                                                          |
+| `src/config/client-config.ts`        | Typed client identity, features, brand assets, navigation, and site metadata                                             |
+| `src/config/figma-tokens.json`       | Checked-in export of approved Figma variables and mode values                                                            |
+| `src/config/figma-tokens-adapter.ts` | Validates the export and emits Figma tokens as CSS custom properties                                                     |
+| `src/content/`                       | Local Markdown and MDX source content                                                                                    |
+| `src/content.config.ts`              | Content Collection loader and Zod schema                                                                                 |
+| `src/styles/global.css`              | Reset/base rules, focus defaults, shared layout foundations, and responsive wrapper rules                                |
+| `src/styles/button.css`              | Shared button base and variants imported by their consumers                                                              |
+| `public/brand/`                      | Public SVG logo and icon placeholders                                                                                    |
+| `tests/`                             | Unit configuration tests and browser smoke/accessibility tests                                                           |
+| `docs/`                              | Architecture, semantic DOM, client workflow/handoff, content, design-system, integrations, and testing guidance          |
+| `docs/templates/`                    | Reusable documents, including the client technical-brief template                                                        |
 
 ## Route model
 
@@ -28,9 +30,9 @@ At client kickoff, move the preview to `/design-system` and restore `/` as the m
 
 ## Configuration flow
 
-`site.config.ts` is the typed home for client decisions that are safe to expose in static output. `BaseLayout.astro` resolves configured semantic colours and writes them as CSS custom properties. Component styles consume semantic variables such as `var(--color-primary)` instead of client hex values. It also defines the independent `wrapper-max` and mobile/tablet/desktop gutter tokens; `.wrapper` selects the correct gutter in `global.css` at the existing breakpoints.
+`client-config.ts` is the typed home for client identity and operational decisions that are safe to expose in static output. Figma is the source of truth for design tokens; `figma-tokens.json` is its checked-in export, and `figma-tokens-adapter.ts` validates it and emits mode-aware CSS custom properties at build time. Component styles consume Figma-derived variables such as `var(--color-text-default)`, never client hex values. `.wrapper` uses Figma's `max-width-2xl` and `spacing-wrapper-default` variables.
 
-Breakpoints are intentionally excluded from `site.config.ts`: authored CSS media queries are their source of truth. The shared wrapper rules live in `global.css`; responsive details stay with the owning module and use the same fixed thresholds.
+Breakpoints are intentionally excluded from client configuration: authored CSS media queries are their source of truth. The shared wrapper rules live in `global.css`; responsive details stay with the owning module and use the same fixed thresholds.
 
 ## Metadata and structured data
 

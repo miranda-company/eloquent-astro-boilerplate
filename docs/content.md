@@ -41,7 +41,7 @@ template: standard
 
 Use Markdown for ordinary editorial and legal content. Use MDX only when a page needs intentionally selected Astro markup or components. Do not use MDX to hide site-wide configuration inside content.
 
-Keep client identity, URLs, contact details, navigation, colours, and feature flags in `site.config.ts`, not in frontmatter. Keep reusable layout and UI in components, not copied across MDX files.
+Keep client identity, URLs, contact details, navigation, and feature flags in `client-config.ts`, not in frontmatter. Keep design tokens in the Figma export. Keep reusable layout and UI in components, not copied across MDX files.
 
 ## New content types
 

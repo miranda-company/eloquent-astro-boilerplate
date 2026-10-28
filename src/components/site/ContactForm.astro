@@ -1,5 +1,5 @@
 ---
-import { siteConfig } from '../../config/site.config';
+import { siteConfig } from '../../config/client-config';
 import '../../styles/button.css';
 
 const endpoint = import.meta.env.PUBLIC_FORM_ENDPOINT;
@@ -100,7 +100,7 @@ const enabled = siteConfig.features.contactForm && Boolean(endpoint);
 
 <style>
   .contact-section {
-    background: var(--color-muted);
+    background: var(--color-surface-secondary);
   }
 
   .contact-section__content {
@@ -109,36 +109,36 @@ const enabled = siteConfig.features.contactForm && Boolean(endpoint);
 
   .contact-section__title {
     margin: 0;
-    font-size: 1.875rem;
-    font-weight: 600;
-    letter-spacing: -0.025em;
-    line-height: 1.2;
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-bold);
+    letter-spacing: var(--font-tracking-tight);
+    line-height: var(--font-leading-xl);
   }
 
   .contact-section__intro {
-    margin: var(--space-3) 0 0;
+    margin: var(--spacing-2) 0 0;
   }
 
   .contact-form {
     display: grid;
     gap: 1.25rem;
-    margin-top: var(--space-8);
+    margin-top: var(--spacing-4);
   }
 
   .contact-form__label {
     display: block;
-    margin-bottom: var(--space-1);
-    font-weight: 500;
+    margin-bottom: var(--spacing-05);
+    font-weight: var(--font-weight-regular);
   }
 
   .contact-form__control {
     display: block;
     width: 100%;
-    padding: var(--space-2) var(--space-3);
-    border: 1px solid var(--color-border);
+    padding: var(--spacing-1) var(--spacing-2);
+    border: 1px solid var(--color-border-secondary);
     border-radius: var(--radius-md);
-    background: var(--color-surface);
-    color: var(--color-foreground);
+    background: var(--color-surface-default);
+    color: var(--color-text-default);
     font: inherit;
   }
 
@@ -151,15 +151,15 @@ const enabled = siteConfig.features.contactForm && Boolean(endpoint);
   }
 
   .contact-section__fallback {
-    margin-top: var(--space-6);
-    padding: var(--space-4);
-    border: 1px solid color-mix(in srgb, var(--color-foreground) 15%, transparent);
+    margin-top: var(--spacing-3);
+    padding: var(--spacing-2);
+    border: 1px solid color-mix(in srgb, var(--color-text-default) 15%, transparent);
     border-radius: var(--radius-md);
-    background: var(--color-surface);
-    font-size: 0.875rem;
+    background: var(--color-surface-default);
+    font-size: var(--font-size-sm);
   }
 
   .contact-section__email {
-    font-weight: 500;
+    font-weight: var(--font-weight-regular);
   }
 </style>

@@ -1,7 +1,7 @@
 import mdx from '@astrojs/mdx';
 import sitemap from '@astrojs/sitemap';
 import { defineConfig, envField } from 'astro/config';
-import { siteConfig } from './src/config/site.config';
+import { siteConfig } from './src/config/client-config';
 
 export default defineConfig({
   output: 'static',

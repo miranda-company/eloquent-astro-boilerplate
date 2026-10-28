@@ -9,13 +9,14 @@
 
 ## Configuration and design system
 
-- Read `src/config/site.config.ts` before introducing client-wide identity, URLs, contacts, feature flags, palettes, or theme values.
+- Read `src/config/client-config.ts` before introducing client identity, URLs, contacts, feature flags, brand assets, or site metadata. Read `docs/design-system.md` before changing the Figma token snapshot or token usage.
 - Keep configured public SVG brand paths and their intrinsic dimensions together in `siteConfig.brand`. Put an approved default social image in `siteConfig.seo.defaultOgImage`, not in component markup.
 - Use final, manually optimised assets from `public/images/` with native responsive image markup. Keep source files in the agency asset library; do not use Astro image transformations in this starter.
-- Use semantic CSS custom properties and shared design tokens. Do not hard-code client colour, spacing, radius, or elevation values in components when a token fits.
-- Keep raw palettes out of ordinary component markup. Components consume semantic roles; raw values are for design inventory and approved exceptions.
-- Keep build-time breakpoints in `src/styles/global.css`, not `site.config.ts`.
-- Use `.wrapper` for shared horizontal layout. Keep `wrapper-max` separate from the responsive `wrapper-gutter-mobile`, `wrapper-gutter-tablet`, and `wrapper-gutter-desktop` theme tokens; their defaults are `16px`, `32px`, and `48px`.
+- Use CSS custom properties derived from the approved Figma variables. Do not invent code-only design tokens or hard-code client colour, spacing, or radius values when a Figma token fits.
+- Components consume Figma semantic roles for colors and the approved primitive/semantic dimensions; preserve generic primitive names so clients replace values rather than rename them.
+- Keep build-time breakpoints in `src/styles/global.css`, not client configuration.
+- Use `.wrapper` for shared horizontal layout. Keep the Figma `max-width-2xl` size separate from `spacing-wrapper-padding`; defaults are `1440px` maximum width, `64px` desktop padding, and `32px` mobile padding. Keep the responsive breakpoint in authored CSS.
+- Structure top-level content as section/header/footer for vertical spacing, then a `.wrapper` for horizontal padding and centering, then the content. Give both the outer region and inner wrapper a BEM class alongside shared `.section` and `.wrapper` layout classes. Keep vertical padding off `.wrapper`.
 - Name authored CSS classes with BEM: `block`, `block__element`, and `block--modifier`. Use component-scoped or shared authored CSS rather than utility-class styling.
 - Update `docs/design-system.md` and the design-system preview when changing the token model, component conventions, or visual reference.
 - Follow the mandatory semantic, metadata, AEO/GEO, media, and JSON-LD rules in [`docs/DOM_ARCHITECTURE.md`](docs/DOM_ARCHITECTURE.md). Read it before changing a page, layout, or rendered-content component.

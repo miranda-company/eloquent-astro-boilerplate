@@ -96,7 +96,33 @@ Before adding GSAP or ScrollTrigger, read [animation](animation.md). Motion is a
 
 ## Layout and class naming
 
-Use a `<section>` for a meaningful content region, then place its content in `.wrapper` when it needs the shared page layout. `.wrapper` is the layout block: `wrapper-max` controls its maximum inner content width, while the mobile, tablet, and desktop gutter tokens control horizontal padding independently. The defaults are `16px` below `600px`, `32px` from `600px`, and `48px` from `1200px`.
+Use this consistent layout structure for each top-level content section:
+
+```html
+<section class="section">
+  <div class="wrapper">
+    <!-- Content -->
+  </div>
+</section>
+```
+
+The semantic site `<header>` and `<footer>` use the same outer-to-inner arrangement: put vertical spacing on the semantic element, place a `.wrapper` inside it for horizontal padding and centering, then put the component content inside the wrapper. Their vertical spacing may differ from regular sections. The `.section` class supplies standard vertical section spacing; `.wrapper` controls width, horizontal padding, and `margin-inline: auto`. Do not put vertical spacing on the wrapper. Keep nested content groups inside the existing wrapper rather than adding layout wrappers without a need.
+
+Give both the outer region and its inner wrapper a BEM class identifying their block role, alongside shared layout classes. For example:
+
+```html
+<section class="design-system-preview__intro section">
+  <div class="design-system-preview__wrapper wrapper">
+    <!-- Content -->
+  </div>
+</section>
+```
+
+Use the block element class to identify the region or wrapper; use `.section` and `.wrapper` for shared layout behavior.
+
+The `.wrapper` maximum width comes from `--max-width-2xl`; horizontal padding comes from `--spacing-wrapper-default`. Top-level sections use `--spacing-section-default` for vertical padding.
+
+When `siteConfig.features.wireframe` is enabled, `site--wireframe` applies a border to each top-level section, the site header and footer, and each `.wrapper`. The border uses Figma's `--wire-size` and `--color-wire` tokens. Keep this as the shared wireframe modifier rather than adding a separate `.wire` class to every region.
 
 Authored CSS class names use BEM: `block`, `block__element`, and `block--modifier`. For example, `.brand__mark--black` is the black variant of the `brand__mark` element. Keep styling in component-scoped or shared authored CSS, and use semantic custom properties for client-configurable values.
 

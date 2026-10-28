@@ -1,5 +1,5 @@
 ---
-import { siteConfig } from '../../config/site.config';
+import { siteConfig } from '../../config/client-config';
 
 const { stickyHeader, backToTop } = siteConfig.features;
 ---
@@ -13,31 +13,30 @@ const { stickyHeader, backToTop } = siteConfig.features;
 <style>
   .back-to-top {
     position: fixed;
-    right: var(--wrapper-gutter-mobile);
-    bottom: var(--space-4);
+    right: var(--spacing-wrapper-default);
+    bottom: var(--spacing-2);
     z-index: 30;
     display: inline-grid;
-    width: var(--size-control);
-    height: var(--size-control);
+    width: var(--spacing-5);
+    height: var(--spacing-5);
     place-items: center;
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-full);
-    background: var(--color-primary);
-    color: var(--color-on-primary);
-    box-shadow: var(--shadow-6);
-    font-size: var(--size-icon);
-    line-height: 1;
+    border: 1px solid var(--color-border-secondary);
+    border-radius: var(--radius-3xl);
+    background: var(--color-surface-brand);
+    color: var(--color-text-default);
+    font-size: var(--font-size-md);
+    line-height: var(--font-leading-lg);
   }
 
   .back-to-top--enhanced {
     visibility: hidden;
     opacity: 0;
     pointer-events: none;
-    transform: translateY(var(--space-4));
+    transform: translateY(var(--spacing-2));
     transition:
-      opacity var(--motion-fast) ease,
-      transform var(--motion-fast) ease,
-      visibility var(--motion-fast) ease;
+      opacity 160ms ease,
+      transform 160ms ease,
+      visibility 160ms ease;
   }
 
   .back-to-top--enhanced.back-to-top--visible {
@@ -49,13 +48,13 @@ const { stickyHeader, backToTop } = siteConfig.features;
 
   @media (min-width: 37.5rem) {
     .back-to-top {
-      right: var(--wrapper-gutter-tablet);
+      right: var(--spacing-wrapper-default);
     }
   }
 
   @media (min-width: 75rem) {
     .back-to-top {
-      right: var(--wrapper-gutter-desktop);
+      right: var(--spacing-wrapper-default);
     }
   }
 </style>

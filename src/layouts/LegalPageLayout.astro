@@ -1,5 +1,5 @@
 ---
-import { siteConfig } from '../config/site.config';
+import { siteConfig } from '../config/client-config';
 import BaseLayout from './BaseLayout.astro';
 import '../styles/legal-page.css';
 
@@ -31,7 +31,7 @@ const { title, description, intro, updated, navigation, summary = [], notice } =
 
 <BaseLayout title={title} description={description}>
   <article class="legal-page">
-    <header class="legal-page__hero">
+    <header class="section legal-page__hero">
       <div class="wrapper legal-page__hero-content">
         <p class="legal-page__eyebrow">Información legal</p>
         <h1>{title}</h1>
@@ -41,7 +41,7 @@ const { title, description, intro, updated, navigation, summary = [], notice } =
     </header>
 
     {(notice || summary.length > 0) && (
-      <section class="legal-page__overview" aria-label={`Resumen de ${title}`}>
+      <section class="section legal-page__overview" aria-label={`Resumen de ${title}`}>
         <div class="wrapper">
           {notice && (
             <aside class="legal-page__notice" aria-labelledby="legal-page-notice-title">
@@ -63,7 +63,7 @@ const { title, description, intro, updated, navigation, summary = [], notice } =
       </section>
     )}
 
-    <section class="legal-page__content" aria-label={`Contenido de ${title}`}>
+    <section class="section legal-page__content" aria-label={`Contenido de ${title}`}>
       <div class="wrapper legal-page__grid">
         <aside class="legal-page__toc">
           <nav aria-label={siteConfig.legal.tableOfContentsLabel}>

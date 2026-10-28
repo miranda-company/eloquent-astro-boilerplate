@@ -118,7 +118,7 @@ Treat this stage as a configuration milestone, not a page-building exercise. The
 
 ### 1. Configure site identity and SEO
 
-Edit `src/config/site.config.ts` first.
+Edit `src/config/client-config.ts` first.
 
 1. Set `name` and the final canonical `url` using `https` and no path suffix.
 2. Add the client email, optional phone number, social links, and initial Spanish navigation items.
@@ -137,20 +137,21 @@ Edit `src/config/site.config.ts` first.
 
 ### 3. Configure tokens from the approved design system
 
-1. Enter all supplied raw colours in `colors.palettes`. Preserve the names and shade keys supplied by the client whenever they are meaningful.
-2. Map the required semantic roles in `colors.semantic`: `background`, `foreground`, `muted`, `surface`, `border`, `primary`, `on-primary`, `primary-hover`, `secondary`, `on-secondary`, `accent`, `error`, and `on-error`.
-3. Add `tertiary` or `quaternary` only when the brand requires them. Do not create empty or duplicate palettes.
-4. Set `theme.font-sans`, then configure approved font loading if the client uses a custom font. Keep a system-font fallback.
-5. Adjust the spacing, size, wrapper, radius, and elevation tokens only when the approved design system calls for it. `wrapper-max` controls the `1440px` default inner content width; the independent responsive gutters default to `16px` on mobile, `32px` on tablet, and `48px` on desktop.
-6. Do not move breakpoints into `site.config.ts`; keep the shared wrapper breakpoints in `src/styles/global.css` and use the same authored thresholds in module-specific responsive styles.
+1. Treat the approved Figma variables as the source of truth for token names, values, and modes. Preserve the generic primitive names so client projects replace values without changing CSS references.
+2. Replace `src/config/figma-tokens.json` with the approved Figma export. Keep the checked-in data aligned with the variable collections; do not hand-edit token values in `client-config.ts` or add code-only roles.
+3. Keep site identity, URLs, contacts, and feature flags in `client-config.ts`; keep design-token values only in the Figma snapshot and emit their CSS properties through the token adapter.
+4. Confirm font assets/licensing with the client and add the approved font-loading implementation when the Figma family is not locally available. Keep a generic sans-serif fallback.
+5. Use the internal preview to review primitive and semantic values and available color/spacing modes before page work begins.
+6. If the design requires a token absent from the minimal Figma system, add and approve it in Figma first; update the snapshot and code together.
+7. Keep breakpoints in authored CSS, not token or site configuration. The shared wrapper uses `max-width-2xl` and `spacing-wrapper-default` while its responsive breakpoint remains in `src/styles/global.css`.
 
 ### 4. Review the internal design system
 
 Use the root preview to review the complete system with the designer/client:
 
 - Brand logo and icon on the two monochrome surfaces
-- Full palette inventory and semantic mappings
-- Font values, type scale, spacing, sizes, wrapper width/gutter, elevation, radius, and breakpoints
+- Figma token inventory, values, semantic roles, and approved modes
+- Typography, spacing, wrapper sizing/padding, radius, and breakpoint behavior
 - Buttons, cards, forms, states, focus styles, and contrast
 - Compact, medium, expanded, large, and extra-large layouts
 

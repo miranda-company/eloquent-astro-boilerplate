@@ -21,7 +21,7 @@ Playwright builds the site and serves `dist/`, so browser tests exercise the sta
 
 Browser coverage verifies the current design-system homepage, legal routes and their table-of-contents targets, skip link, header brand link, configured logo dimensions, shell landmarks, single-page `h1` structure, canonical/social metadata, noindex JSON-LD suppression, token previews, BEM brand classes, responsive wrapper gutters, inactive optional integrations, absence of default third-party analytics requests, and baseline accessibility through axe.
 
-Unit coverage verifies URL and locale configuration, brand asset paths, colour-resolution failures, required semantic mappings, optional palette roles, independent wrapper tokens, wireframe feature configurability, and the GSAP/ScrollTrigger animation foundation.
+Unit coverage verifies site identity and brand configuration, the Figma token export and values, emitted CSS names and modes, wireframe feature configurability, and the GSAP/ScrollTrigger animation foundation.
 
 ## Contribution rules
 
