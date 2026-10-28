@@ -41,11 +41,14 @@ const { title, description, intro, updated, navigation, summary = [], notice } =
     </header>
 
     {(notice || summary.length > 0) && (
-      <section class="section legal-page__overview" aria-label={`Resumen de ${title}`}>
+      <section class="section legal-page__overview" aria-labelledby="legal-page-overview-title">
         <div class="wrapper">
+          <h2 class="legal-page__section-title" id="legal-page-overview-title">
+            Información importante
+          </h2>
           {notice && (
             <aside class="legal-page__notice" aria-labelledby="legal-page-notice-title">
-              <h2 id="legal-page-notice-title">{notice.title}</h2>
+              <h3 id="legal-page-notice-title">{notice.title}</h3>
               <p>{notice.text}</p>
             </aside>
           )}
@@ -63,9 +66,12 @@ const { title, description, intro, updated, navigation, summary = [], notice } =
       </section>
     )}
 
-    <section class="section legal-page__content" aria-label={`Contenido de ${title}`}>
+    <section class="section legal-page__content" aria-labelledby="legal-page-content-title">
       <div class="wrapper legal-page__grid">
-        <aside class="legal-page__toc">
+        <h2 class="legal-page__section-title" id="legal-page-content-title">
+          Contenido
+        </h2>
+        <div class="legal-page__toc">
           <nav aria-label={siteConfig.legal.tableOfContentsLabel}>
             <p class="legal-page__eyebrow">{siteConfig.legal.tableOfContentsLabel}</p>
             <ol>
@@ -76,7 +82,7 @@ const { title, description, intro, updated, navigation, summary = [], notice } =
               ))}
             </ol>
           </nav>
-        </aside>
+        </div>
         <div class="legal-page__article">
           <slot />
         </div>

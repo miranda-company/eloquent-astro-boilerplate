@@ -524,6 +524,7 @@ test('site header remains usable without JavaScript', async ({ browser }) => {
 for (const route of legalRoutes)
   test(`legal page renders: ${route}`, async ({ page }) => {
     await page.goto(route);
+    await page.setViewportSize({ width: 1400, height: 900 });
     await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
     await expect(page.locator('main h1')).toHaveCount(1);
     await expect(page.locator('body > header nav')).toHaveCount(0);
@@ -545,12 +546,39 @@ for (const route of legalRoutes)
     await expect(page.locator('body > footer address')).toHaveCount(1);
     await expect(page.locator('body > footer nav ul > li')).toHaveCount(3);
     await expect(page.locator('.legal-page__toc nav')).toHaveCount(1);
+    await expect(page.locator('div.legal-page__toc')).toHaveCount(1);
     await expect(page.locator('.legal-page__toc a')).toHaveCount(4);
+    const headerHeight = await page
+      .locator('body > header')
+      .evaluate((header) => header.getBoundingClientRect().height);
+    const tocTop = await page
+      .locator('.legal-page__toc')
+      .evaluate((toc) => Number.parseFloat(getComputedStyle(toc).top));
+    expect(tocTop).toBeGreaterThanOrEqual(headerHeight);
+    await page.evaluate(() => window.scrollTo(0, 500));
+    await expect(page.locator('body > header')).toHaveClass(/site-header--sticky/);
+    await expect
+      .poll(() =>
+        page.locator('.legal-page__toc').evaluate((toc) => toc.getBoundingClientRect().top),
+      )
+      .toBeGreaterThanOrEqual(headerHeight);
+    await expect(
+      page.getByRole('heading', { level: 2, name: 'Información importante' }),
+    ).toBeVisible();
+    await expect(page.getByRole('heading', { level: 2, name: 'Contenido' })).toBeVisible();
     await expect(page.locator('.legal-page__article > section')).toHaveCount(4);
+    const sectionsHaveHeadings = await page
+      .locator('.legal-page > section, .legal-page__article > section')
+      .evaluateAll((sections) =>
+        sections.every((section) => section.querySelector(':scope > .wrapper > h2, :scope > h2')),
+      );
+    expect(sectionsHaveHeadings).toBe(true);
     const targets = await page
       .locator('.legal-page__toc a')
       .evaluateAll((links) => links.map((link) => link.getAttribute('href')));
     for (const target of targets) await expect(page.locator(target ?? '')).toHaveCount(1);
+    const accessibility = await new AxeBuilder({ page }).analyze();
+    expect(accessibility.violations).toEqual([]);
   });
 
 test('default optional integrations stay inactive', async ({ page }) => {
