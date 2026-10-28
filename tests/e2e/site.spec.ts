@@ -568,6 +568,41 @@ test('site header remains usable without JavaScript', async ({ browser }) => {
   await page.close();
 });
 
+test('site header has balanced vertical logo spacing across viewport sizes', async ({ page }) => {
+  await page.goto('/');
+
+  for (const width of [390, 1280]) {
+    await page.setViewportSize({ width, height: 900 });
+    const spacing = await page.locator('.site-header').evaluate((header) => {
+      const logo = header.querySelector('.site-header__logo')!;
+      const headerRect = header.getBoundingClientRect();
+      const logoRect = logo.getBoundingClientRect();
+      const styles = getComputedStyle(header);
+      return {
+        top: logoRect.top - headerRect.top - Number.parseFloat(styles.borderTopWidth),
+        bottom: headerRect.bottom - logoRect.bottom - Number.parseFloat(styles.borderBottomWidth),
+      };
+    });
+
+    expect(Math.abs(spacing.top - spacing.bottom)).toBeLessThanOrEqual(1);
+  }
+});
+
+test('mobile sticky header enters with the back-to-top motion and respects reduced motion', async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto('/');
+  await page.evaluate(() => window.scrollTo(0, 300));
+  await expect(page.locator('.site-header')).toHaveClass(/site-header--sticky/);
+  await expect(page.locator('.site-header')).toHaveCSS('animation-duration', '0.16s');
+  await expect(page.locator('.site-header')).toHaveCSS('animation-timing-function', 'ease');
+  await expect(page.locator('.site-header')).toHaveCSS('animation-name', 'site-header-enter');
+
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await expect(page.locator('.site-header')).toHaveCSS('animation-name', 'none');
+});
+
 for (const route of legalRoutes)
   test(`legal page renders: ${route}`, async ({ page }) => {
     await page.goto(route);

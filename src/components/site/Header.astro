@@ -20,6 +20,8 @@ import { siteConfig } from '../../config/client-config';
 
 <style>
   .site-header {
+    display: grid;
+    align-items: center;
     position: relative;
     z-index: 20;
     min-height: var(--spacing-8);
@@ -47,5 +49,24 @@ import { siteConfig } from '../../config/client-config';
     position: sticky;
     top: 0;
     z-index: 30;
+    animation: site-header-enter 160ms ease;
+  }
+
+  @keyframes site-header-enter {
+    from {
+      opacity: 0;
+      transform: translateY(calc(var(--spacing-2) * -1));
+    }
+
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .site-header--sticky {
+      animation: none;
+    }
   }
 </style>
