@@ -13,7 +13,8 @@
 - Keep configured public SVG brand paths and their intrinsic dimensions together in `siteConfig.brand`. Put an approved default social image in `siteConfig.seo.defaultOgImage`, not in component markup.
 - Use final, manually optimised assets from `public/images/` with native responsive image markup. Keep source files in the agency asset library; do not use Astro image transformations in this starter.
 - Use CSS custom properties derived from the approved Figma variables. Do not invent code-only design tokens or hard-code client colour, spacing, or radius values when a Figma token fits.
-- Components consume Figma semantic roles for colors and the approved primitive/semantic dimensions; preserve generic primitive names so clients replace values rather than rename them.
+- Prefer semantic Figma tokens when selecting values, especially spacing roles such as `--spacing-xs`, `--spacing-sm`, `--spacing-md`, and `--spacing-lg`. Use numbered primitive spacing tokens only when no semantic token expresses the required value or role. Preserve generic primitive names so clients replace values rather than rename them.
+- Components consume semantic color roles; use semantic tokens first in other categories where available, and primitives when no suitable semantic token exists.
 - Keep build-time breakpoints in `src/styles/global.css`, not client configuration.
 - Use `.wrapper` for shared horizontal layout. Keep the Figma `max-width-2xl` size separate from `spacing-wrapper-padding`; defaults are `1440px` maximum width, `64px` desktop padding, and `32px` mobile padding. Keep the responsive breakpoint in authored CSS.
 - Structure top-level content as section/header/footer for vertical spacing, then a `.wrapper` for horizontal padding and centering, then the content. Give both the outer region and inner wrapper a BEM class alongside shared `.section` and `.wrapper` layout classes. Keep vertical padding off `.wrapper`.

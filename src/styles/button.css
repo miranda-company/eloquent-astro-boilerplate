@@ -16,17 +16,6 @@
   color: var(--color-text-default);
 }
 
-.button--secondary {
-  border-color: var(--color-border-secondary);
-  background: transparent;
-  color: var(--color-text-default);
-}
-
-.button--muted {
-  background: var(--color-surface-secondary);
-  color: var(--color-text-default);
-}
-
 .button:disabled {
   cursor: not-allowed;
   opacity: 0.5;

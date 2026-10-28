@@ -50,7 +50,9 @@ Do not silently invent tokens for properties absent from this minimal system. Fo
 
 ## Consuming tokens
 
-Use the Figma semantic roles for colors, and Figma primitive or semantic variables for dimensions and typography. Examples:
+Prefer semantic tokens when choosing design values. For spacing, use semantic roles such as `--spacing-xs`, `--spacing-sm`, `--spacing-md`, and `--spacing-lg` when they express the intended spacing. Use a numeric primitive such as `--spacing-3` only when no semantic spacing token represents the required value or role; do not choose a primitive just because its number is familiar. Apply the same principle to other token categories: prefer semantic roles where available, and use primitives when a semantic role does not fit.
+
+Use the Figma semantic roles for colors. Examples:
 
 ```css
 .button--primary {

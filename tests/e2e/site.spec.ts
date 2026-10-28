@@ -14,18 +14,32 @@ test('design-system homepage is noindex, keyboard-accessible, and has no default
   await page.goto('/');
   await expect(page.getByRole('heading', { level: 1, name: 'Design System' })).toBeVisible();
   await expect(page.getByText('This is the design system of eloquent.')).toBeVisible();
+  await expect(page.getByRole('heading', { level: 2, name: 'Tokens' })).toBeVisible();
+  await expect(
+    page.getByText(
+      'This are the variables from the figma file and their corresponding css classes.',
+    ),
+  ).toBeVisible();
+  await expect(page.locator('.ds-tokens__grid > .ds-tokens__card')).toHaveCount(1);
+  await expect(page.getByRole('heading', { level: 3, name: 'font-size-xs' })).toBeVisible();
+  await expect(page.getByText('CSS custom property:')).toBeVisible();
+  await expect(page.locator('.ds-tokens__css-name code')).toHaveText('--font-size-xs');
+  await expect(page.locator('.ds-tokens__value')).toHaveText('desktop: 8px');
   await expect(page.locator('main h1')).toHaveCount(1);
   await expect(page.locator('body > header')).toHaveCount(1);
   await expect(page.locator('body > main#contenido')).toHaveCount(1);
   await expect(page.locator('body > footer')).toHaveCount(1);
   await expect(page.locator('.site-header > .site-header__wrapper.wrapper')).toHaveCount(1);
   await expect(page.locator('.site-footer > .wrapper > .site-footer__inner')).toHaveCount(1);
-  await expect(page.locator('main > section > .wrapper')).toHaveCount(1);
+  await expect(page.locator('main > section > .wrapper')).toHaveCount(2);
   await expect(
     page.locator(
       'main > section.design-system-preview__intro > .design-system-preview__wrapper.wrapper',
     ),
   ).toHaveCount(1);
+  await expect(page.locator('main > section.ds-tokens > .ds-tokens__wrapper.wrapper')).toHaveCount(
+    1,
+  );
   const wireBorder = await page.evaluate(() => {
     const probe = document.createElement('div');
     probe.style.border = 'var(--wire-size) solid var(--color-wire)';

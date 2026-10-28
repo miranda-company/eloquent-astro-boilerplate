@@ -1,3 +1,17 @@
+---
+import { getFigmaTokenCollections, getFigmaTokenCssName } from '../../config/figma-tokens-adapter';
+
+const fontTokens = getFigmaTokenCollections().find(({ name }) => name === 'Font tokens');
+const sampleToken = fontTokens?.variables.find(({ name }) => name === 'font-size-xs');
+
+if (!sampleToken) throw new Error('Missing Figma token for preview: font-size-xs');
+
+function formatValue(value: string | number, type: string, name: string): string {
+  if (typeof value !== 'number') return value;
+  return type === 'FLOAT' && !name.startsWith('font-weight-') ? `${value}px` : String(value);
+}
+---
+
 <section
   class="design-system-preview__intro section wire"
   aria-labelledby="design-system-preview-title"
@@ -9,3 +23,69 @@
     <p class="design-system-preview__description">This is the design system of eloquent.</p>
   </div>
 </section>
+
+<section class="ds-tokens section wire" aria-labelledby="ds-tokens-title">
+  <div class="ds-tokens__wrapper wrapper wire">
+    <h2 class="ds-tokens__title" id="ds-tokens-title">
+      Tokens
+    </h2>
+    <p class="ds-tokens__description">
+      This are the variables from the figma file and their corresponding css classes.
+    </p>
+    <div class="ds-tokens__grid">
+      <article class="ds-tokens__card" aria-labelledby="ds-token-font-size-xs">
+        <h3 class="ds-tokens__token-name" id="ds-token-font-size-xs">
+          {sampleToken.name}
+        </h3>
+        <p class="ds-tokens__css-name">
+          CSS custom property: <code>{getFigmaTokenCssName(sampleToken.name)}</code>
+        </p>
+        <ul class="ds-tokens__values">
+          {Object.entries(sampleToken.modes).map(([mode, value]) => (
+            <li class="ds-tokens__value">
+              <span>{mode}:</span>{' '}
+              <code>{formatValue(value, sampleToken.type, sampleToken.name)}</code>
+            </li>
+          ))}
+        </ul>
+      </article>
+    </div>
+  </div>
+</section>
+
+<style>
+  .ds-tokens__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-md);
+  }
+
+  .ds-tokens__card {
+    padding: var(--spacing-md);
+    border: 1px solid var(--color-border-secondary);
+    border-radius: var(--radius-md);
+    background: var(--color-surface-default);
+  }
+
+  .ds-tokens__token-name {
+    font-size: var(--font-size-lg);
+    line-height: var(--font-leading-xl);
+  }
+
+  .ds-tokens__css-name {
+    margin-top: var(--spacing-sm);
+  }
+
+  .ds-tokens__values {
+    display: grid;
+    gap: var(--spacing-xs);
+    margin-top: var(--spacing-sm);
+  }
+
+  .ds-tokens__value {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-xs);
+  }
+</style>
