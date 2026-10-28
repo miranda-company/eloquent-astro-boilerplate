@@ -25,7 +25,6 @@ export interface SiteConfig {
     designSystemHomepage: boolean;
     wireframe: boolean;
   };
-  navigation: Array<{ label: string; href: string }>;
   legal: {
     navigationLabel: string;
     tableOfContentsLabel: string;
@@ -60,10 +59,6 @@ export const siteConfig: SiteConfig = {
     designSystemHomepage: true,
     wireframe: true,
   },
-  navigation: [
-    { label: 'Inicio', href: '/' },
-    { label: 'Contacto', href: '/#contacto' },
-  ],
   legal: {
     navigationLabel: 'Legal',
     tableOfContentsLabel: 'En esta página',

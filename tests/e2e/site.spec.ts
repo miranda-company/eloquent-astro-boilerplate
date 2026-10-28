@@ -496,6 +496,15 @@ for (const route of legalRoutes)
     await page.goto(route);
     await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
     await expect(page.locator('main h1')).toHaveCount(1);
+    await expect(page.locator('body > header nav')).toHaveCount(0);
+    await expect(page.locator('body > header .site-header__logo-link')).toHaveAttribute(
+      'href',
+      '/',
+    );
+    await expect(page.locator('body > header .site-header__logo')).toHaveAttribute(
+      'src',
+      '/brand/brand-logo.svg',
+    );
     await expect(page.locator('article')).toHaveCount(1);
     const layoutRegionsHaveWrappers = await page
       .locator('.legal-page > header, .legal-page > section')

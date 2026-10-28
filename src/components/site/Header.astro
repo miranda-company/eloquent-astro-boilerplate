@@ -1,10 +1,5 @@
 ---
 import { siteConfig } from '../../config/client-config';
-
-interface Props {
-  showNavigation?: boolean;
-}
-const { showNavigation = true } = Astro.props;
 ---
 
 <header class="site-header wire">
@@ -20,20 +15,6 @@ const { showNavigation = true } = Astro.props;
         decoding="async"
       />
     </a>
-    {showNavigation && (
-      <nav aria-label="Principal">
-        <ul class="site-header__nav-list">
-          <li>
-            <a href="/">Inicio</a>
-          </li>
-          {siteConfig.navigation.slice(1).map((item) => (
-            <li>
-              <a href={item.href}>{item.label}</a>
-            </li>
-          ))}
-        </ul>
-      </nav>
-    )}
   </div>
 </header>
 
@@ -55,28 +36,6 @@ const { showNavigation = true } = Astro.props;
     display: block;
     width: auto;
     height: 2rem;
-  }
-
-  .site-header__nav-list {
-    display: flex;
-    flex-wrap: nowrap;
-    align-items: center;
-    gap: var(--spacing-3);
-    margin: 0;
-    padding: 0;
-    font-size: var(--font-size-sm);
-    list-style: none;
-  }
-
-  .site-header__nav-list {
-    display: flex;
-    flex-wrap: nowrap;
-    align-items: center;
-    gap: var(--spacing-3);
-    margin: 0;
-    padding: 0;
-    font-size: var(--font-size-sm);
-    list-style: none;
   }
 
   .site-header--sticky {

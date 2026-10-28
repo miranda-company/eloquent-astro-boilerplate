@@ -14,7 +14,6 @@ interface Props {
   image?: string;
   ogType?: 'website' | 'article';
   noindex?: boolean;
-  showNavigation?: boolean;
   structuredData?: Record<string, unknown> | Array<Record<string, unknown>>;
 }
 const {
@@ -23,7 +22,6 @@ const {
   image = siteConfig.seo.defaultOgImage,
   ogType = 'website',
   noindex = false,
-  showNavigation = true,
   structuredData,
 } = Astro.props;
 const canonical = new URL(Astro.url.pathname, siteConfig.url).toString();
@@ -66,7 +64,7 @@ const figmaTokenStyles = getFigmaTokenStyles();
     <a class="skip-link" href="#contenido">
       Saltar al contenido
     </a>
-    <Header showNavigation={showNavigation} />
+    <Header />
     <main id="contenido" tabindex="-1">
       <slot />
       <ScrollControls />
