@@ -45,6 +45,13 @@ const { stickyHeader, backToTop } = siteConfig.features;
     pointer-events: auto;
     transform: none;
   }
+
+  @media (prefers-reduced-motion: reduce) {
+    .back-to-top--enhanced {
+      transition: none;
+      transform: none;
+    }
+  }
 </style>
 
 {(stickyHeader || backToTop) && <script define:vars={{ stickyHeader, backToTop }}>

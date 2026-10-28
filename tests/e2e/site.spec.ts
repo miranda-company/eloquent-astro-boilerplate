@@ -449,6 +449,31 @@ test('design-system homepage is noindex, keyboard-accessible, and has no default
   await page.locator('html').evaluate((element) => element.classList.add('site--wireframe'));
   await expect(page.locator('body')).toHaveAttribute('id', 'top');
   await expect(page.locator('.back-to-top')).toHaveAttribute('href', '#top');
+  await expect(page.locator('a.back-to-top')).toHaveAttribute('aria-label', 'Volver arriba');
+  await expect(page.locator('button.back-to-top')).toHaveCount(0);
+  const backToTopTokens = await page.locator('.back-to-top').evaluate((link) => {
+    const styles = getComputedStyle(link);
+    const rootStyles = getComputedStyle(document.documentElement);
+    const colorProbe = document.createElement('div');
+    colorProbe.style.backgroundColor = 'var(--color-surface-brand)';
+    document.body.append(colorProbe);
+    const backgroundToken = getComputedStyle(colorProbe).backgroundColor;
+    colorProbe.remove();
+    return {
+      borderWidth: styles.borderTopWidth,
+      borderWidthToken: rootStyles.getPropertyValue('--border-size-sm').trim(),
+      borderRadius: styles.borderTopLeftRadius,
+      borderRadiusToken: rootStyles.getPropertyValue('--radius-3xl').trim(),
+      background: styles.backgroundColor,
+      backgroundToken,
+      width: styles.width,
+      widthToken: rootStyles.getPropertyValue('--spacing-5').trim(),
+    };
+  });
+  expect(backToTopTokens.borderWidth).toBe(backToTopTokens.borderWidthToken);
+  expect(backToTopTokens.borderRadius).toBe(backToTopTokens.borderRadiusToken);
+  expect(backToTopTokens.background).toBe(backToTopTokens.backgroundToken);
+  expect(backToTopTokens.width).toBe(backToTopTokens.widthToken);
   await expect(page.locator('body > header nav')).toHaveCount(0);
   await expect(page.locator('.wrapper').first()).toHaveCSS('padding-left', '64px');
   await expect(page.locator('.wrapper').first()).toHaveCSS('padding-top', '0px');
@@ -564,8 +589,27 @@ test('site header remains usable without JavaScript', async ({ browser }) => {
   await expect(header.locator('.site-header__logo-link')).toHaveAttribute('href', '/');
   await expect(header.locator('.site-header__logo')).toBeVisible();
   await expect(header).toHaveCSS('position', 'relative');
+  const backToTop = page.locator('a.back-to-top');
+  await expect(backToTop).toBeVisible();
+  await expect(backToTop).toHaveAttribute('href', '#top');
 
   await page.close();
+});
+
+test('back-to-top control is hidden until needed and honors reduced motion', async ({ page }) => {
+  await page.goto('/');
+  const backToTop = page.locator('a.back-to-top');
+  await expect(backToTop).toHaveClass(/back-to-top--enhanced/);
+  await expect(backToTop).toHaveCSS('visibility', 'hidden');
+
+  await page.evaluate(() => window.scrollTo(0, 700));
+  await expect(backToTop).toHaveClass(/back-to-top--visible/);
+  await expect(backToTop).toHaveCSS('visibility', 'visible');
+  await expect(backToTop).toHaveAccessibleName('Volver arriba');
+  await expect(backToTop).toHaveCSS('transition-duration', '0.16s, 0.16s, 0.16s');
+
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await expect(backToTop).toHaveCSS('transition-duration', '0s');
 });
 
 test('site header has balanced vertical logo spacing across viewport sizes', async ({ page }) => {
