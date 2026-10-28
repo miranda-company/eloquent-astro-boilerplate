@@ -2,10 +2,14 @@
 import { getFigmaTokenCollections, getFigmaTokenCssName } from '../../config/figma-tokens-adapter';
 
 const fontTokens = getFigmaTokenCollections().find(({ name }) => name === 'Font tokens');
+const colorTokens = getFigmaTokenCollections().find(({ name }) => name === 'Color tokens');
 const fontSizeTokens =
   fontTokens?.variables.filter(({ name }) => name.startsWith('font-size-')) ?? [];
+const semanticColorTokens = colorTokens?.variables ?? [];
 
 if (fontSizeTokens.length === 0) throw new Error('Missing Figma font-size tokens for preview');
+if (semanticColorTokens.length === 0)
+  throw new Error('Missing Figma semantic color tokens for preview');
 
 function formatValue(value: string | number, type: string, name: string): string {
   if (typeof value !== 'number') return value;
@@ -33,6 +37,7 @@ function formatValue(value: string | number, type: string, name: string): string
     <p class="ds-tokens__description">
       This are the variables from the figma file and their corresponding css classes.
     </p>
+    <h3 class="ds-tokens__group-title">Font sizes</h3>
     <div class="ds-tokens__font-sizes-grid">
       {fontSizeTokens.map((token) => (
         <div class="ds-tokens__card">
@@ -41,8 +46,8 @@ function formatValue(value: string | number, type: string, name: string): string
           </p>
           <div class="ds-tokens__details">
             <p class="ds-tokens__figma-name">
-              Figma variable name:
-              <code>{token.name}</code>
+              Figma name:
+              <code> {token.name}</code>
             </p>
             <ul class="ds-tokens__values">
               {Object.entries(token.modes).map(([mode, value]) => (
@@ -52,13 +57,54 @@ function formatValue(value: string | number, type: string, name: string): string
               ))}
             </ul>
           </div>
-          <p
-            class="ds-tokens__sample"
-            style={`font-size: var(${getFigmaTokenCssName(token.name)})`}
-            aria-label={`Example using ${getFigmaTokenCssName(token.name)}`}
-          >
-            Aa
+          <div class="ds-tokens__samples">
+            {Object.entries(token.modes).map(([mode, value]) => (
+              <div class="ds-tokens__sample">
+                <span class="ds-tokens__sample-mode">{mode}</span>
+                <p
+                  class="ds-tokens__sample-text"
+                  style={`font-size: ${formatValue(value, token.type, token.name)}`}
+                >
+                  Aa
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+    <h3 class="ds-tokens__group-title">Semantic colors</h3>
+    <div class="ds-tokens__semantic-colors-grid">
+      {semanticColorTokens.map((token) => (
+        <div class="ds-tokens__card">
+          <p class="ds-tokens__css-name">
+            <code>{getFigmaTokenCssName(token.name)}</code>
           </p>
+          <div class="ds-tokens__details">
+            <p class="ds-tokens__figma-name">
+              Figma name:
+              <code> {token.name}</code>
+            </p>
+            <ul class="ds-tokens__values">
+              {Object.entries(token.modes).map(([mode, value]) => (
+                <li class="ds-tokens__value">
+                  <span>{mode}:</span> <code>{formatValue(value, token.type, token.name)}</code>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div class="ds-tokens__color-examples">
+            {Object.entries(token.modes).map(([mode, value]) => (
+              <div class="ds-tokens__color-example">
+                <span class="ds-tokens__color-mode">{mode}</span>
+                <div
+                  class="ds-tokens__color-sample"
+                  style={`background-color: ${value}`}
+                  aria-hidden="true"
+                ></div>
+              </div>
+            ))}
+          </div>
         </div>
       ))}
     </div>
@@ -66,11 +112,16 @@ function formatValue(value: string | number, type: string, name: string): string
 </section>
 
 <style>
-  .ds-tokens__font-sizes-grid {
+  .ds-tokens__font-sizes-grid,
+  .ds-tokens__semantic-colors-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
     gap: var(--spacing-md);
     margin-top: var(--spacing-md);
+  }
+
+  .ds-tokens__group-title {
+    margin-top: var(--spacing-xl);
   }
 
   .ds-tokens__card {
@@ -85,7 +136,7 @@ function formatValue(value: string | number, type: string, name: string): string
 
   .ds-tokens__css-name {
     margin: 0;
-    font-size: var(--font-size-lg);
+    font-size: var(--font-size-md);
     line-height: var(--font-leading-lg);
   }
 
@@ -96,7 +147,6 @@ function formatValue(value: string | number, type: string, name: string): string
 
   .ds-tokens__values {
     display: grid;
-    gap: var(--spacing-xs);
     color: var(--color-text-secondary);
     font-size: var(--font-size-sm);
   }
@@ -107,9 +157,47 @@ function formatValue(value: string | number, type: string, name: string): string
     gap: var(--spacing-xs);
   }
 
+  .ds-tokens__samples {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--spacing-sm);
+  }
+
   .ds-tokens__sample {
+    display: grid;
+    gap: var(--spacing-xs);
+  }
+
+  .ds-tokens__sample-mode {
+    color: var(--color-text-secondary);
+    font-size: var(--font-size-sm);
+  }
+
+  .ds-tokens__sample-text {
     margin: 0;
     color: var(--color-text-default);
     line-height: 1.2;
+  }
+
+  .ds-tokens__color-examples {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--spacing-sm);
+  }
+
+  .ds-tokens__color-example {
+    display: grid;
+    gap: var(--spacing-xs);
+  }
+
+  .ds-tokens__color-mode {
+    color: var(--color-text-secondary);
+    font-size: var(--font-size-sm);
+  }
+
+  .ds-tokens__color-sample {
+    min-height: var(--spacing-5);
+    border: 1px solid var(--color-border-secondary);
+    border-radius: var(--radius-sm);
   }
 </style>

@@ -30,7 +30,7 @@ test('design-system homepage is noindex, keyboard-accessible, and has no default
     .locator('.ds-tokens__font-sizes-grid')
     .evaluate((grid) => getComputedStyle(grid).gridTemplateColumns.split(' ').length);
   expect(desktopGridColumns).toBeGreaterThan(1);
-  await expect(page.locator('.ds-tokens__css-name code')).toHaveText([
+  await expect(page.locator('.ds-tokens__font-sizes-grid .ds-tokens__css-name code')).toHaveText([
     '--font-size-xs',
     '--font-size-sm',
     '--font-size-md',
@@ -43,7 +43,7 @@ test('design-system homepage is noindex, keyboard-accessible, and has no default
     '--font-size-6xl',
     '--font-size-7xl',
   ]);
-  await expect(page.locator('.ds-tokens__figma-name code')).toHaveText([
+  await expect(page.locator('.ds-tokens__font-sizes-grid .ds-tokens__figma-name code')).toHaveText([
     'font-size-xs',
     'font-size-sm',
     'font-size-md',
@@ -56,14 +56,70 @@ test('design-system homepage is noindex, keyboard-accessible, and has no default
     'font-size-6xl',
     'font-size-7xl',
   ]);
-  await expect(page.locator('.ds-tokens__value').first()).toHaveText('desktop: 8px');
-  await expect(page.locator('.ds-tokens__value').nth(3)).toHaveText('desktop: 24px');
-  await expect(page.locator('.ds-tokens__details > .ds-tokens__figma-name')).toHaveCount(11);
-  await expect(page.locator('.ds-tokens__details > .ds-tokens__values')).toHaveCount(11);
-  const sampleFontSizes = await page
-    .locator('.ds-tokens__sample')
-    .evaluateAll((samples) => samples.map((sample) => getComputedStyle(sample).fontSize));
-  expect(sampleFontSizes).toEqual([
+  await expect(page.locator('.ds-tokens__font-sizes-grid .ds-tokens__value').first()).toHaveText(
+    'desktop: 8px',
+  );
+  await expect(
+    page
+      .locator('.ds-tokens__font-sizes-grid > .ds-tokens__card')
+      .nth(3)
+      .locator('.ds-tokens__value')
+      .first(),
+  ).toHaveText('desktop: 24px');
+  await expect(
+    page.locator('.ds-tokens__font-sizes-grid .ds-tokens__details > .ds-tokens__figma-name'),
+  ).toHaveCount(11);
+  await expect(
+    page.locator('.ds-tokens__font-sizes-grid .ds-tokens__details > .ds-tokens__values'),
+  ).toHaveCount(11);
+  await expect(page.getByRole('heading', { level: 3, name: 'Semantic colors' })).toBeVisible();
+  await expect(page.locator('.ds-tokens__semantic-colors-grid')).toHaveCSS('display', 'grid');
+  await expect(page.locator('.ds-tokens__semantic-colors-grid > .ds-tokens__card')).toHaveCount(17);
+  await expect(
+    page.locator('.ds-tokens__semantic-colors-grid .ds-tokens__css-name code'),
+  ).toHaveText([
+    '--color-text-default',
+    '--color-text-secondary',
+    '--color-text-brand',
+    '--color-surface-default',
+    '--color-surface-secondary',
+    '--color-surface-brand',
+    '--color-border-default',
+    '--color-border-secondary',
+    '--color-wire',
+    '--color-text-inverse',
+    '--color-surface-inverse',
+    '--color-border-inverse',
+    '--color-border-brand',
+    '--color-icon-brand',
+    '--color-icon-secondary',
+    '--color-icon-inverse',
+    '--color-icon-default',
+  ]);
+  await expect(page.locator('.ds-tokens__semantic-colors-grid .ds-tokens__values')).toHaveCount(17);
+  await expect(
+    page.locator('.ds-tokens__semantic-colors-grid .ds-tokens__color-sample'),
+  ).toHaveCount(34);
+  await expect(
+    page.locator('.ds-tokens__semantic-colors-grid .ds-tokens__color-mode').first(),
+  ).toHaveText('light-mode');
+  await expect(
+    page.locator('.ds-tokens__semantic-colors-grid .ds-tokens__color-mode').nth(1),
+  ).toHaveText('dark-mode');
+  await expect(
+    page.locator('.ds-tokens__semantic-colors-grid .ds-tokens__color-sample').first(),
+  ).toHaveCSS('background-color', 'rgb(34, 34, 34)');
+  await expect(
+    page.locator('.ds-tokens__semantic-colors-grid .ds-tokens__color-sample').nth(1),
+  ).toHaveCSS('background-color', 'rgb(229, 229, 229)');
+  const desktopSampleFontSizes = await page
+    .locator('.ds-tokens__font-sizes-grid .ds-tokens__sample:first-child')
+    .evaluateAll((samples) =>
+      samples.map(
+        (sample) => getComputedStyle(sample.querySelector('.ds-tokens__sample-text')!).fontSize,
+      ),
+    );
+  expect(desktopSampleFontSizes).toEqual([
     '8px',
     '12px',
     '18px',
@@ -75,6 +131,60 @@ test('design-system homepage is noindex, keyboard-accessible, and has no default
     '64px',
     '72px',
     '80px',
+  ]);
+  const fontSizeSamplesByMode = await page.locator('.ds-tokens__card').evaluateAll((cards) =>
+    cards.slice(0, 11).map((card) =>
+      [...card.querySelectorAll('.ds-tokens__sample')].map((sample) => ({
+        mode: sample.querySelector('.ds-tokens__sample-mode')?.textContent?.trim(),
+        fontSize: getComputedStyle(sample.querySelector('.ds-tokens__sample-text')!).fontSize,
+      })),
+    ),
+  );
+  expect(fontSizeSamplesByMode).toEqual([
+    [
+      { mode: 'desktop', fontSize: '8px' },
+      { mode: 'mobile', fontSize: '12px' },
+    ],
+    [
+      { mode: 'desktop', fontSize: '12px' },
+      { mode: 'mobile', fontSize: '16px' },
+    ],
+    [
+      { mode: 'desktop', fontSize: '18px' },
+      { mode: 'mobile', fontSize: '18px' },
+    ],
+    [
+      { mode: 'desktop', fontSize: '24px' },
+      { mode: 'mobile', fontSize: '24px' },
+    ],
+    [
+      { mode: 'desktop', fontSize: '32px' },
+      { mode: 'mobile', fontSize: '32px' },
+    ],
+    [
+      { mode: 'desktop', fontSize: '40px' },
+      { mode: 'mobile', fontSize: '40px' },
+    ],
+    [
+      { mode: 'desktop', fontSize: '48px' },
+      { mode: 'mobile', fontSize: '48px' },
+    ],
+    [
+      { mode: 'desktop', fontSize: '56px' },
+      { mode: 'mobile', fontSize: '56px' },
+    ],
+    [
+      { mode: 'desktop', fontSize: '64px' },
+      { mode: 'mobile', fontSize: '64px' },
+    ],
+    [
+      { mode: 'desktop', fontSize: '72px' },
+      { mode: 'mobile', fontSize: '72px' },
+    ],
+    [
+      { mode: 'desktop', fontSize: '80px' },
+      { mode: 'mobile', fontSize: '80px' },
+    ],
   ]);
   await expect(page.locator('main h1')).toHaveCount(1);
   await expect(page.locator('body > header')).toHaveCount(1);
