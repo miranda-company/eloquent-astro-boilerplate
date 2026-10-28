@@ -18,16 +18,18 @@ The design-system preview is intentionally `noindex`; it must remain free of str
 
 ## Landmark and component choices
 
-| Element     | Use it for                                                                                                                     | Do not use it for                                                    |
-| ----------- | ------------------------------------------------------------------------------------------------------------------------------ | -------------------------------------------------------------------- |
-| `<header>`  | Site-wide or section introductory content                                                                                      | A generic styling wrapper                                            |
-| `<main>`    | The page's unique primary content; one per document                                                                            | Nested component content                                             |
-| `<nav>`     | A group of navigational links, normally a list                                                                                 | A single unrelated link or an action toolbar                         |
-| `<article>` | Self-contained content that still makes sense when shared or syndicated: a legal document, post, testimonial, or repeated card | Every visual box                                                     |
-| `<section>` | A themed portion of content with its own heading                                                                               | A layout-only wrapper or a headingless visual band                   |
-| `<aside>`   | Complementary or tangential content, such as related links or a notice                                                         | Core page content                                                    |
-| `<footer>`  | Site or section footer information                                                                                             | A generic bottom-aligned wrapper                                     |
-| `<div>`     | Layout, decoration, or grouping with no semantic equivalent                                                                    | Landmarks, list items, cards with standalone meaning, or definitions |
+| Element     | Use it for                                                                                                  | Do not use it for                                                    |
+| ----------- | ----------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------- |
+| `<header>`  | Site-wide or section introductory content                                                                   | A generic styling wrapper                                            |
+| `<main>`    | The page's unique primary content; one per document                                                         | Nested component content                                             |
+| `<nav>`     | A group of navigational links, normally a list                                                              | A single unrelated link or an action toolbar                         |
+| `<article>` | A self-contained, independently meaningful piece of content, such as a legal document, post, or testimonial | A card that is only a visual grouping or styling container           |
+| `<section>` | A themed portion of content with its own heading                                                            | A layout-only wrapper or a headingless visual band                   |
+| `<aside>`   | Complementary or tangential content, such as related links or a notice                                      | Core page content                                                    |
+| `<footer>`  | Site or section footer information                                                                          | A generic bottom-aligned wrapper                                     |
+| `<div>`     | Layout, decoration, or grouping with no semantic equivalent                                                 | Landmarks, list items, cards with standalone meaning, or definitions |
+
+Choose elements for the meaning of their content, never just for their appearance. A repeated card is not automatically an `<article>`: use `<article>` only when that card's content makes sense independently of the surrounding page and could reasonably be shared or reused as a standalone item. If the card is only a visual grouping, use `<div>` and style it with classes. Apply this same test to every semantic element; do not use landmarks or content elements as generic styling wrappers.
 
 Use `<address>` for an organisation's contact details. Use `<ul>` or `<ol>` for a list of peer items; each item belongs in an `<li>`. Use `<figure>` and `<figcaption>` when an image, chart, or illustration needs a visible caption.
 

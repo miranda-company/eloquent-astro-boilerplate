@@ -18,6 +18,7 @@
 - Keep build-time breakpoints in `src/styles/global.css`, not client configuration.
 - Use `.wrapper` for shared horizontal layout. Keep the Figma `max-width-2xl` size separate from `spacing-wrapper-padding`; defaults are `1440px` maximum width, `64px` desktop padding, and `32px` mobile padding. Keep the responsive breakpoint in authored CSS.
 - Structure top-level content as section/header/footer for vertical spacing, then a `.wrapper` for horizontal padding and centering, then the content. Give both the outer region and inner wrapper a BEM class alongside shared `.section` and `.wrapper` layout classes. Keep vertical padding off `.wrapper`.
+- Choose HTML elements for the content's meaning, not for visual styling. Use `<article>` only for self-contained content that makes sense independently and could be shared as a standalone item; use `<div>` for cards or containers that are only visual groupings. Do not use semantic elements as generic styling wrappers.
 - Name authored CSS classes with BEM: `block`, `block__element`, and `block--modifier`. Use component-scoped or shared authored CSS rather than utility-class styling.
 - Update `docs/design-system.md` and the design-system preview when changing the token model, component conventions, or visual reference.
 - Follow the mandatory semantic, metadata, AEO/GEO, media, and JSON-LD rules in [`docs/DOM_ARCHITECTURE.md`](docs/DOM_ARCHITECTURE.md). Read it before changing a page, layout, or rendered-content component.

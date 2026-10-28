@@ -2,9 +2,9 @@
 import { getFigmaTokenCollections, getFigmaTokenCssName } from '../../config/figma-tokens-adapter';
 
 const fontTokens = getFigmaTokenCollections().find(({ name }) => name === 'Font tokens');
-const sampleToken = fontTokens?.variables.find(({ name }) => name === 'font-size-xs');
+const sampleToken = fontTokens?.variables.find(({ name }) => name === 'font-size-lg');
 
-if (!sampleToken) throw new Error('Missing Figma token for preview: font-size-xs');
+if (!sampleToken) throw new Error('Missing Figma token for preview: font-size-lg');
 
 function formatValue(value: string | number, type: string, name: string): string {
   if (typeof value !== 'number') return value;
@@ -33,22 +33,25 @@ function formatValue(value: string | number, type: string, name: string): string
       This are the variables from the figma file and their corresponding css classes.
     </p>
     <div class="ds-tokens__grid">
-      <article class="ds-tokens__card" aria-labelledby="ds-token-font-size-xs">
-        <h3 class="ds-tokens__token-name" id="ds-token-font-size-xs">
-          {sampleToken.name}
-        </h3>
+      <div class="ds-tokens__card">
         <p class="ds-tokens__css-name">
-          CSS custom property: <code>{getFigmaTokenCssName(sampleToken.name)}</code>
+          <code>{getFigmaTokenCssName(sampleToken.name)}</code>
         </p>
-        <ul class="ds-tokens__values">
-          {Object.entries(sampleToken.modes).map(([mode, value]) => (
-            <li class="ds-tokens__value">
-              <span>{mode}:</span>{' '}
-              <code>{formatValue(value, sampleToken.type, sampleToken.name)}</code>
-            </li>
-          ))}
-        </ul>
-      </article>
+        <div class="ds-tokens__details">
+          <p class="ds-tokens__figma-name">
+            Figma variable name:
+            <code>{sampleToken.name}</code>
+          </p>
+          <ul class="ds-tokens__values">
+            {Object.entries(sampleToken.modes).map(([mode, value]) => (
+              <li class="ds-tokens__value">
+                <span>{mode}:</span>{' '}
+                <code>{formatValue(value, sampleToken.type, sampleToken.name)}</code>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -68,19 +71,22 @@ function formatValue(value: string | number, type: string, name: string): string
     background: var(--color-surface-default);
   }
 
-  .ds-tokens__token-name {
+  .ds-tokens__css-name {
+    margin: 0;
     font-size: var(--font-size-lg);
-    line-height: var(--font-leading-xl);
+    line-height: var(--font-leading-lg);
   }
 
-  .ds-tokens__css-name {
-    margin-top: var(--spacing-sm);
+  .ds-tokens__figma-name {
+    color: var(--color-text-secondary);
+    font-size: var(--font-size-sm);
   }
 
   .ds-tokens__values {
     display: grid;
     gap: var(--spacing-xs);
-    margin-top: var(--spacing-sm);
+    color: var(--color-text-secondary);
+    font-size: var(--font-size-sm);
   }
 
   .ds-tokens__value {
