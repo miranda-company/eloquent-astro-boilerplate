@@ -507,6 +507,7 @@ test('design-system homepage is noindex, keyboard-accessible, and has no default
     'href',
     'https://example.com/',
   );
+  await expect(page.locator('link[rel="icon"]')).toHaveAttribute('href', '/brand/brand-icon.svg');
   await expect(page.locator('meta[property="og:url"]')).toHaveAttribute(
     'content',
     'https://example.com/',

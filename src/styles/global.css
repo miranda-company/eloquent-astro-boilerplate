@@ -105,7 +105,6 @@ h2 {
 
 .section {
   width: 100%;
-  padding-block: var(--spacing-section-default);
   padding: var(--spacing-section-default) 0;
 }
 
