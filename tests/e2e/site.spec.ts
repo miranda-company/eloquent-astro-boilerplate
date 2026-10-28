@@ -387,11 +387,19 @@ test('design-system homepage is noindex, keyboard-accessible, and has no default
     return result;
   });
   await expect(page.locator('.site-header')).toHaveCSS('padding-top', '16px');
+  await expect(page.locator('.site-header')).toHaveCSS('border-bottom-width', wireBorder.width);
+  await expect(page.locator('.site-header__logo')).toHaveCSS('height', '32px');
   await expect(page.locator('.site-footer')).toHaveCSS('padding-top', '40px');
   await expect(page.locator('main > section').first()).toHaveCSS('padding-top', '80px');
   await expect(page.locator('html')).toHaveClass(/(?:^|\s)site(?:\s|$)/);
   await expect(page.locator('html')).toHaveClass(/site--sticky-header/);
   await expect(page.locator('html')).toHaveClass(/site--wireframe/);
+  await expect(page.locator('.site-header')).toHaveCSS('border-bottom-color', wireBorder.color);
+  await page.locator('html').evaluate((element) => element.classList.remove('site--wireframe'));
+  await expect(page.locator('.site-header')).toHaveCSS('border-bottom-color', 'rgb(163, 163, 163)');
+  await expect(page.locator('.site-header')).toHaveCSS('border-top-width', '0px');
+  await expect(page.locator('.site-header__wrapper')).toHaveCSS('border-width', '0px');
+  await page.locator('html').evaluate((element) => element.classList.add('site--wireframe'));
   await expect(page.locator('body')).toHaveAttribute('id', 'top');
   await expect(page.locator('.back-to-top')).toHaveAttribute('href', '#top');
   await expect(page.locator('body > header nav')).toHaveCount(0);
@@ -399,6 +407,9 @@ test('design-system homepage is noindex, keyboard-accessible, and has no default
   await expect(page.locator('.wrapper').first()).toHaveCSS('padding-top', '0px');
   await expect(page.locator('.wrapper').first()).toHaveCSS('border-width', wireBorder.width);
   await expect(page.locator('.wrapper').first()).toHaveCSS('border-color', wireBorder.color);
+  await expect(page.locator('.site-header')).toHaveCSS('border-top-width', wireBorder.width);
+  await expect(page.locator('.site-header')).toHaveCSS('border-top-color', wireBorder.color);
+  await expect(page.locator('.site-header__wrapper')).toHaveCSS('border-width', wireBorder.width);
   await expect(page.locator('.design-system-preview__intro')).toHaveCSS(
     'border-width',
     wireBorder.width,
@@ -439,6 +450,12 @@ test('design-system homepage is noindex, keyboard-accessible, and has no default
   await page.keyboard.press('Enter');
   await expect(page.locator('#contenido')).toBeFocused();
   await expect(page.locator('html')).toHaveCSS('--font-family-body', '"Helvetica Neue"');
+  await page.evaluate(() => window.scrollTo(0, 300));
+  await expect(page.locator('.site-header')).toHaveClass(/site-header--sticky/);
+  await expect(page.locator('.site-header')).toHaveCSS('position', 'sticky');
+  await page.evaluate(() => window.scrollTo(0, 0));
+  await expect(page.locator('.site-header')).not.toHaveClass(/site-header--sticky/);
+  await expect(page.locator('.site-header')).toHaveCSS('position', 'relative');
   await page.setViewportSize({ width: 767, height: 900 });
   await expect(page.locator('.wrapper').first()).toHaveCSS('padding-left', '64px');
   expect(
@@ -489,6 +506,19 @@ test('design-system homepage is noindex, keyboard-accessible, and has no default
       .locator('.legal-page__grid')
       .evaluate((element) => getComputedStyle(element).gridTemplateColumns.split(' ').length),
   ).toBe(2);
+});
+
+test('site header remains usable without JavaScript', async ({ browser }) => {
+  const page = await browser.newPage({ javaScriptEnabled: false });
+  await page.goto('/');
+
+  const header = page.locator('body > header');
+  await expect(header).toBeVisible();
+  await expect(header.locator('.site-header__logo-link')).toHaveAttribute('href', '/');
+  await expect(header.locator('.site-header__logo')).toBeVisible();
+  await expect(header).toHaveCSS('position', 'relative');
+
+  await page.close();
 });
 
 for (const route of legalRoutes)

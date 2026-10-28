@@ -116,7 +116,10 @@ h2 {
   padding-inline: var(--spacing-wrapper-default);
 }
 
-.wire {
+.site--wireframe .section,
+.site--wireframe .site-header,
+.site--wireframe .site-footer,
+.site--wireframe .wrapper {
   border: var(--wire-size) solid var(--color-wire);
 }
 

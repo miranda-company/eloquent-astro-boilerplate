@@ -2,8 +2,8 @@
 import { siteConfig } from '../../config/client-config';
 ---
 
-<header class="site-header wire">
-  <div class="site-header__wrapper wrapper wire">
+<header class="site-header">
+  <div class="site-header__wrapper wrapper">
     <a class="site-header__logo-link" href="/">
       <img
         class="site-header__logo"
@@ -23,9 +23,14 @@ import { siteConfig } from '../../config/client-config';
     position: relative;
     z-index: 20;
     min-height: var(--spacing-8);
-    padding-block: var(--spacing-2);
-    border-bottom: 1px solid color-mix(in srgb, var(--color-text-default) 10%, transparent);
+    padding-block: var(--spacing-sm);
+    border-bottom: var(--wire-size) solid var(--color-border-secondary);
     background: var(--color-surface-default);
+  }
+
+  .site-header__wrapper {
+    display: flex;
+    align-items: center;
   }
 
   .site-header__logo-link {
@@ -35,7 +40,7 @@ import { siteConfig } from '../../config/client-config';
   .site-header__logo {
     display: block;
     width: auto;
-    height: 2rem;
+    height: var(--spacing-4);
   }
 
   .site-header--sticky {
