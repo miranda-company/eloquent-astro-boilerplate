@@ -29,13 +29,13 @@ Keep token names stable across client projects. A client rebrand changes primiti
 
 ## Current Figma collections
 
-The current minimum system contains 129 variables in five collections:
+The current minimum system contains 133 variables in five collections:
 
 - **Font tokens:** family, size, weight, line-height, and letter-spacing scales.
 - **Primitives:** generic color ramps, neutral colors, spacing values, and radii.
 - **Color tokens:** semantic text, surface, icon, and border roles with light and dark modes.
 - **Spacing tokens:** semantic spacing roles with desktop and mobile modes.
-- **Global size tokens:** wrapper and content maximum widths plus wire size.
+- **Global size tokens:** wrapper and content maximum widths, wire size, and non-wire border sizes.
 
 The preview displays font-size, semantic-color, primitive-color, spacing, and global-size tokens with their exported values and modes. Other font and primitive variables remain available in the snapshot and generated CSS but are not currently given dedicated preview grids. The export contains resolved values, not alias references.
 
@@ -63,7 +63,7 @@ Do not silently invent tokens for properties absent from this minimal system. Fo
 
 Prefer semantic tokens when choosing design values. For spacing, use semantic roles such as `--spacing-xs`, `--spacing-sm`, `--spacing-md`, and `--spacing-lg` when they express the intended spacing. Use a numeric primitive such as `--spacing-3` only when no semantic spacing token represents the required value or role; do not choose a primitive just because its number is familiar. Apply the same principle to other token categories: prefer semantic roles where available, and use primitives when a semantic role does not fit.
 
-Use the Figma semantic roles for colors. Examples:
+Use the Figma semantic roles for colors and border sizes. Use `--border-size-sm` for standard borders, and choose a larger border-size token only when the design calls for a heavier border. Reserve `--wire-size` for the shared wireframe modifier. Examples:
 
 ```css
 .button--primary {
@@ -73,11 +73,13 @@ Use the Figma semantic roles for colors. Examples:
 }
 
 .card {
-  border: 1px solid var(--color-border-secondary);
+  border: var(--border-size-sm) solid var(--color-border-secondary);
   background: var(--color-surface-default);
   padding: var(--spacing-md);
 }
 ```
+
+Do not use `--wire-size` for component borders outside wireframe mode. The Figma `border-size-*` tokens provide the thickness scale for ordinary borders.
 
 Do not reintroduce the removed `--color-primary`, `--space-*`, `--shadow-*`, or `--wrapper-gutter-*` tokens as compatibility aliases. Change call sites to the approved exported token names. Keep component styles authored and scoped as before; the token migration does not imply a component-sync workflow.
 

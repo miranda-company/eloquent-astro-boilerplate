@@ -135,7 +135,7 @@ const enabled = siteConfig.features.contactForm && Boolean(endpoint);
     display: block;
     width: 100%;
     padding: var(--spacing-1) var(--spacing-2);
-    border: 1px solid var(--color-border-secondary);
+    border: var(--border-size-sm) solid var(--color-border-secondary);
     border-radius: var(--radius-md);
     background: var(--color-surface-default);
     color: var(--color-text-default);
@@ -153,7 +153,8 @@ const enabled = siteConfig.features.contactForm && Boolean(endpoint);
   .contact-section__fallback {
     margin-top: var(--spacing-3);
     padding: var(--spacing-2);
-    border: 1px solid color-mix(in srgb, var(--color-text-default) 15%, transparent);
+    border: var(--border-size-sm) solid
+      color-mix(in srgb, var(--color-text-default) 15%, transparent);
     border-radius: var(--radius-md);
     background: var(--color-surface-default);
     font-size: var(--font-size-sm);

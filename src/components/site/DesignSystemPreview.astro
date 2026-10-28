@@ -222,7 +222,9 @@ function formatValue(value: string | number, type: string, name: string): string
                       'ds-tokens__global-size-sample',
                       token.name.startsWith('max-width-')
                         ? 'ds-tokens__global-size-sample--max-width'
-                        : 'ds-tokens__global-size-sample--wire-size',
+                        : token.name === 'wire-size'
+                          ? 'ds-tokens__global-size-sample--wire-size'
+                          : 'ds-tokens__global-size-sample--border-size',
                     ]}
                     style={
                       token.name.startsWith('max-width-') && typeof value === 'number'
@@ -265,7 +267,7 @@ function formatValue(value: string | number, type: string, name: string): string
     flex-direction: column;
     gap: var(--spacing-sm);
     padding: var(--spacing-md);
-    border: 1px solid var(--color-border-secondary);
+    border: var(--border-size-sm) solid var(--color-border-secondary);
     border-radius: var(--radius-md);
     background: var(--color-surface-default);
   }
@@ -333,13 +335,13 @@ function formatValue(value: string | number, type: string, name: string): string
 
   .ds-tokens__color-sample {
     min-height: var(--spacing-5);
-    border: 1px solid var(--color-border-secondary);
+    border: var(--border-size-sm) solid var(--color-border-secondary);
     border-radius: var(--radius-sm);
   }
 
   .ds-tokens__primitive-color-swatch {
     min-height: var(--spacing-5);
-    border: 1px solid var(--color-border-secondary);
+    border: var(--border-size-sm) solid var(--color-border-secondary);
     border-radius: var(--radius-sm);
   }
 
@@ -407,6 +409,10 @@ function formatValue(value: string | number, type: string, name: string): string
   }
 
   .ds-tokens__global-size-sample--wire-size {
+    width: 100%;
+  }
+
+  .ds-tokens__global-size-sample--border-size {
     width: 100%;
   }
 </style>

@@ -45,7 +45,8 @@ const { title, features } = Astro.props;
 
   .marketing-features__card {
     padding: var(--spacing-3);
-    border: 1px solid color-mix(in srgb, var(--color-text-default) 10%, transparent);
+    border: var(--border-size-sm) solid
+      color-mix(in srgb, var(--color-text-default) 10%, transparent);
     border-radius: var(--radius-md);
   }
 

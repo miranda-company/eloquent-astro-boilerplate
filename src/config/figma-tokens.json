@@ -136,6 +136,10 @@
     "max-width-lg": { "desktop": 920 },
     "max-width-md": { "desktop": 768 },
     "max-width-sm": { "desktop": 480 },
-    "wire-size": { "desktop": 1 }
+    "wire-size": { "desktop": 1 },
+    "border-size-sm": { "desktop": 1 },
+    "border-size-md": { "desktop": 2 },
+    "border-size-lg": { "desktop": 4 },
+    "border-size-xl": { "desktop": 8 }
   }
 }

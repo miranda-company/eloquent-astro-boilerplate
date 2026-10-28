@@ -14,7 +14,7 @@ describe('Figma design tokens', () => {
     );
   });
 
-  it('contains the five Figma collections and all 129 variables', () => {
+  it('contains the five Figma collections and all 133 variables', () => {
     const collections = getFigmaTokenCollections();
 
     expect(collections.map(({ name }) => name)).toEqual([
@@ -25,7 +25,7 @@ describe('Figma design tokens', () => {
       'Global size tokens',
     ]);
     expect(collections.reduce((count, collection) => count + collection.variables.length, 0)).toBe(
-      129,
+      133,
     );
   });
 
@@ -40,6 +40,7 @@ describe('Figma design tokens', () => {
       type: 'FLOAT',
       modes: { desktop: 18 },
     });
+
     expect(colors.variables.find(({ name }) => name === 'color-text-default')).toMatchObject({
       type: 'COLOR',
       modes: { 'light-mode': '#222222', 'dark-mode': '#e5e5e5' },
@@ -47,6 +48,29 @@ describe('Figma design tokens', () => {
     expect(spacing.variables.find(({ name }) => name === 'spacing-wrapper-default')).toMatchObject({
       modes: { desktop: 64, mobile: 18 },
     });
+  });
+
+  it('emits the Figma border-size tokens for non-wire borders', () => {
+    const globalSizes = getFigmaTokenCollections().find(
+      ({ name }) => name === 'Global size tokens',
+    )!;
+
+    expect(
+      globalSizes.variables
+        .filter(({ name }) => name.startsWith('border-size-'))
+        .map(({ name, modes }) => [name, modes.desktop]),
+    ).toEqual([
+      ['border-size-sm', 1],
+      ['border-size-md', 2],
+      ['border-size-lg', 4],
+      ['border-size-xl', 8],
+    ]);
+
+    const styles = getFigmaTokenStyles();
+    expect(styles).toContain('--border-size-sm: 1px;');
+    expect(styles).toContain('--border-size-md: 2px;');
+    expect(styles).toContain('--border-size-lg: 4px;');
+    expect(styles).toContain('--border-size-xl: 8px;');
   });
 
   it('orders primitive color palettes by palette and shade', () => {

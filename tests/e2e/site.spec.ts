@@ -25,6 +25,36 @@ test('design-system homepage is noindex, keyboard-accessible, and has no default
   await expect(page.locator('.ds-tokens__font-sizes-grid > article.ds-tokens__card')).toHaveCount(
     0,
   );
+  const cardTokens = await page
+    .locator('.ds-tokens__card')
+    .first()
+    .evaluate((card) => {
+      const styles = getComputedStyle(card);
+      const rootStyles = getComputedStyle(document.documentElement);
+      return {
+        borderWidth: styles.borderTopWidth,
+        borderWidthToken: rootStyles.getPropertyValue('--border-size-sm').trim(),
+        borderRadius: styles.borderTopLeftRadius,
+        borderRadiusToken: rootStyles.getPropertyValue('--radius-md').trim(),
+      };
+    });
+  expect(cardTokens.borderWidth).toBe(cardTokens.borderWidthToken);
+  expect(cardTokens.borderRadius).toBe(cardTokens.borderRadiusToken);
+  const swatchTokens = await page
+    .locator('.ds-tokens__color-sample')
+    .first()
+    .evaluate((swatch) => {
+      const styles = getComputedStyle(swatch);
+      const rootStyles = getComputedStyle(document.documentElement);
+      return {
+        borderWidth: styles.borderTopWidth,
+        borderWidthToken: rootStyles.getPropertyValue('--border-size-sm').trim(),
+        borderRadius: styles.borderTopLeftRadius,
+        borderRadiusToken: rootStyles.getPropertyValue('--radius-sm').trim(),
+      };
+    });
+  expect(swatchTokens.borderWidth).toBe(swatchTokens.borderWidthToken);
+  expect(swatchTokens.borderRadius).toBe(swatchTokens.borderRadiusToken);
   await expect(page.locator('.ds-tokens__font-sizes-grid')).toHaveCSS('display', 'grid');
   const desktopGridColumns = await page
     .locator('.ds-tokens__font-sizes-grid')
@@ -255,7 +285,7 @@ test('design-system homepage is noindex, keyboard-accessible, and has no default
   ]);
   await expect(page.getByRole('heading', { level: 3, name: 'Global size tokens' })).toBeVisible();
   await expect(page.locator('.ds-tokens__global-size-grid')).toHaveCSS('display', 'grid');
-  await expect(page.locator('.ds-tokens__global-size-grid > .ds-tokens__card')).toHaveCount(6);
+  await expect(page.locator('.ds-tokens__global-size-grid > .ds-tokens__card')).toHaveCount(10);
   await expect(page.locator('.ds-tokens__global-size-grid .ds-tokens__css-name code')).toHaveText([
     '--max-width-2xl',
     '--max-width-xl',
@@ -263,10 +293,14 @@ test('design-system homepage is noindex, keyboard-accessible, and has no default
     '--max-width-md',
     '--max-width-sm',
     '--wire-size',
+    '--border-size-sm',
+    '--border-size-md',
+    '--border-size-lg',
+    '--border-size-xl',
   ]);
   await expect(
     page.locator('.ds-tokens__global-size-grid .ds-tokens__global-size-sample'),
-  ).toHaveCount(6);
+  ).toHaveCount(10);
   const globalSizeSamples = await page
     .locator('.ds-tokens__global-size-grid > .ds-tokens__card')
     .evaluateAll((cards) =>
@@ -287,6 +321,10 @@ test('design-system homepage is noindex, keyboard-accessible, and has no default
     { mode: 'desktop', width: '53.33%', height: '8px' },
     { mode: 'desktop', width: '33.33%', height: '8px' },
     { mode: 'desktop', width: '100%', height: '1px' },
+    { mode: 'desktop', width: '100%', height: '1px' },
+    { mode: 'desktop', width: '100%', height: '2px' },
+    { mode: 'desktop', width: '100%', height: '4px' },
+    { mode: 'desktop', width: '100%', height: '8px' },
   ]);
   const desktopSampleFontSizes = await page
     .locator('.ds-tokens__font-sizes-grid .ds-tokens__sample:first-child')
@@ -386,6 +424,14 @@ test('design-system homepage is noindex, keyboard-accessible, and has no default
     probe.remove();
     return result;
   });
+  const standardBorderWidth = await page.evaluate(() => {
+    const probe = document.createElement('div');
+    probe.style.border = 'var(--border-size-sm) solid transparent';
+    document.body.append(probe);
+    const width = getComputedStyle(probe).borderTopWidth;
+    probe.remove();
+    return width;
+  });
   await expect(page.locator('.site-header')).toHaveCSS('padding-top', '16px');
   await expect(page.locator('.site-header')).toHaveCSS('border-bottom-width', wireBorder.width);
   await expect(page.locator('.site-header__logo')).toHaveCSS('height', '32px');
@@ -396,6 +442,7 @@ test('design-system homepage is noindex, keyboard-accessible, and has no default
   await expect(page.locator('html')).toHaveClass(/site--wireframe/);
   await expect(page.locator('.site-header')).toHaveCSS('border-bottom-color', wireBorder.color);
   await page.locator('html').evaluate((element) => element.classList.remove('site--wireframe'));
+  await expect(page.locator('.site-header')).toHaveCSS('border-bottom-width', standardBorderWidth);
   await expect(page.locator('.site-header')).toHaveCSS('border-bottom-color', 'rgb(163, 163, 163)');
   await expect(page.locator('.site-header')).toHaveCSS('border-top-width', '0px');
   await expect(page.locator('.site-header__wrapper')).toHaveCSS('border-width', '0px');
