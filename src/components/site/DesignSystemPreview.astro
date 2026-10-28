@@ -2,9 +2,10 @@
 import { getFigmaTokenCollections, getFigmaTokenCssName } from '../../config/figma-tokens-adapter';
 
 const fontTokens = getFigmaTokenCollections().find(({ name }) => name === 'Font tokens');
-const sampleToken = fontTokens?.variables.find(({ name }) => name === 'font-size-lg');
+const fontSizeTokens =
+  fontTokens?.variables.filter(({ name }) => name.startsWith('font-size-')) ?? [];
 
-if (!sampleToken) throw new Error('Missing Figma token for preview: font-size-lg');
+if (fontSizeTokens.length === 0) throw new Error('Missing Figma font-size tokens for preview');
 
 function formatValue(value: string | number, type: string, name: string): string {
   if (typeof value !== 'number') return value;
@@ -32,32 +33,40 @@ function formatValue(value: string | number, type: string, name: string): string
     <p class="ds-tokens__description">
       This are the variables from the figma file and their corresponding css classes.
     </p>
-    <div class="ds-tokens__grid">
-      <div class="ds-tokens__card">
-        <p class="ds-tokens__css-name">
-          <code>{getFigmaTokenCssName(sampleToken.name)}</code>
-        </p>
-        <div class="ds-tokens__details">
-          <p class="ds-tokens__figma-name">
-            Figma variable name:
-            <code>{sampleToken.name}</code>
+    <div class="ds-tokens__font-sizes-grid">
+      {fontSizeTokens.map((token) => (
+        <div class="ds-tokens__card">
+          <p class="ds-tokens__css-name">
+            <code>{getFigmaTokenCssName(token.name)}</code>
           </p>
-          <ul class="ds-tokens__values">
-            {Object.entries(sampleToken.modes).map(([mode, value]) => (
-              <li class="ds-tokens__value">
-                <span>{mode}:</span>{' '}
-                <code>{formatValue(value, sampleToken.type, sampleToken.name)}</code>
-              </li>
-            ))}
-          </ul>
+          <div class="ds-tokens__details">
+            <p class="ds-tokens__figma-name">
+              Figma variable name:
+              <code>{token.name}</code>
+            </p>
+            <ul class="ds-tokens__values">
+              {Object.entries(token.modes).map(([mode, value]) => (
+                <li class="ds-tokens__value">
+                  <span>{mode}:</span> <code>{formatValue(value, token.type, token.name)}</code>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <p
+            class="ds-tokens__sample"
+            style={`font-size: var(${getFigmaTokenCssName(token.name)})`}
+            aria-label={`Example using ${getFigmaTokenCssName(token.name)}`}
+          >
+            Aa
+          </p>
         </div>
-      </div>
+      ))}
     </div>
   </div>
 </section>
 
 <style>
-  .ds-tokens__grid {
+  .ds-tokens__font-sizes-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
     gap: var(--spacing-md);
@@ -65,6 +74,9 @@ function formatValue(value: string | number, type: string, name: string): string
   }
 
   .ds-tokens__card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
     padding: var(--spacing-md);
     border: 1px solid var(--color-border-secondary);
     border-radius: var(--radius-md);
@@ -93,5 +105,11 @@ function formatValue(value: string | number, type: string, name: string): string
     display: flex;
     flex-wrap: wrap;
     gap: var(--spacing-xs);
+  }
+
+  .ds-tokens__sample {
+    margin: 0;
+    color: var(--color-text-default);
+    line-height: 1.2;
   }
 </style>

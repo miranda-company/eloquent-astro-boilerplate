@@ -20,14 +20,62 @@ test('design-system homepage is noindex, keyboard-accessible, and has no default
       'This are the variables from the figma file and their corresponding css classes.',
     ),
   ).toBeVisible();
-  await expect(page.locator('.ds-tokens__grid > .ds-tokens__card')).toHaveCount(1);
-  await expect(page.locator('.ds-tokens__grid > div.ds-tokens__card')).toHaveCount(1);
-  await expect(page.locator('.ds-tokens__grid > article.ds-tokens__card')).toHaveCount(0);
-  await expect(page.locator('.ds-tokens__css-name code')).toHaveText('--font-size-lg');
-  await expect(page.locator('.ds-tokens__figma-name code')).toHaveText('font-size-lg');
-  await expect(page.locator('.ds-tokens__value')).toHaveText('desktop: 24px');
-  await expect(page.locator('.ds-tokens__details > .ds-tokens__figma-name')).toHaveCount(1);
-  await expect(page.locator('.ds-tokens__details > .ds-tokens__values')).toHaveCount(1);
+  await expect(page.locator('.ds-tokens__font-sizes-grid > .ds-tokens__card')).toHaveCount(11);
+  await expect(page.locator('.ds-tokens__font-sizes-grid > div.ds-tokens__card')).toHaveCount(11);
+  await expect(page.locator('.ds-tokens__font-sizes-grid > article.ds-tokens__card')).toHaveCount(
+    0,
+  );
+  await expect(page.locator('.ds-tokens__font-sizes-grid')).toHaveCSS('display', 'grid');
+  const desktopGridColumns = await page
+    .locator('.ds-tokens__font-sizes-grid')
+    .evaluate((grid) => getComputedStyle(grid).gridTemplateColumns.split(' ').length);
+  expect(desktopGridColumns).toBeGreaterThan(1);
+  await expect(page.locator('.ds-tokens__css-name code')).toHaveText([
+    '--font-size-xs',
+    '--font-size-sm',
+    '--font-size-md',
+    '--font-size-lg',
+    '--font-size-xl',
+    '--font-size-2xl',
+    '--font-size-3xl',
+    '--font-size-4xl',
+    '--font-size-5xl',
+    '--font-size-6xl',
+    '--font-size-7xl',
+  ]);
+  await expect(page.locator('.ds-tokens__figma-name code')).toHaveText([
+    'font-size-xs',
+    'font-size-sm',
+    'font-size-md',
+    'font-size-lg',
+    'font-size-xl',
+    'font-size-2xl',
+    'font-size-3xl',
+    'font-size-4xl',
+    'font-size-5xl',
+    'font-size-6xl',
+    'font-size-7xl',
+  ]);
+  await expect(page.locator('.ds-tokens__value').first()).toHaveText('desktop: 8px');
+  await expect(page.locator('.ds-tokens__value').nth(3)).toHaveText('desktop: 24px');
+  await expect(page.locator('.ds-tokens__details > .ds-tokens__figma-name')).toHaveCount(11);
+  await expect(page.locator('.ds-tokens__details > .ds-tokens__values')).toHaveCount(11);
+  const sampleFontSizes = await page
+    .locator('.ds-tokens__sample')
+    .evaluateAll((samples) => samples.map((sample) => getComputedStyle(sample).fontSize));
+  expect(sampleFontSizes).toEqual([
+    '8px',
+    '12px',
+    '18px',
+    '24px',
+    '32px',
+    '40px',
+    '48px',
+    '56px',
+    '64px',
+    '72px',
+    '80px',
+  ]);
   await expect(page.locator('main h1')).toHaveCount(1);
   await expect(page.locator('body > header')).toHaveCount(1);
   await expect(page.locator('body > main#contenido')).toHaveCount(1);
@@ -109,6 +157,10 @@ test('design-system homepage is noindex, keyboard-accessible, and has no default
   await expect(page.locator('.wrapper').first()).toHaveCSS('padding-left', '64px');
   await page.setViewportSize({ width: 390, height: 844 });
   await expect(page.locator('.wrapper').first()).toHaveCSS('padding-left', '32px');
+  const mobileGridColumns = await page
+    .locator('.ds-tokens__font-sizes-grid')
+    .evaluate((grid) => getComputedStyle(grid).gridTemplateColumns.split(' ').length);
+  expect(mobileGridColumns).toBe(1);
   await page.setViewportSize({ width: 1600, height: 900 });
   await expect(page.locator('.wrapper').first()).toHaveCSS('max-width', '1440px');
   expect(
