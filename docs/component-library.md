@@ -42,7 +42,7 @@ The starter homepage uses `MarketingFeatures.astro` for a three-card feature sec
 2. Link the approved Figma frame/component and record its design owner and review status in the table above.
 3. Define the smallest typed content interface that covers the intended use. Keep page copy and client identity in content/configuration, not in the reusable module.
 4. Use semantic HTML and an explicit content contract. A caller should not need to know internal layout or styling details.
-5. Use BEM classes, Figma-derived CSS custom properties, and the available spacing/shape variables. Keep component-specific CSS with the Astro module and import genuinely shared styles such as buttons from their dedicated stylesheet; reserve `src/styles/global.css` for document-wide foundations and shared layout.
+5. Use BEM classes, Figma-derived CSS custom properties, and the available spacing/shape variables. Use the shared `.stack` primitive for vertical flex groups that need the default gutter gap; keep other layout and spacing choices component-specific. Keep component-specific CSS with the Astro module and import genuinely shared styles such as buttons from their dedicated stylesheet; reserve `src/styles/global.css` for document-wide foundations and shared layout.
 6. Review the implementation with design at compact, medium, expanded, large, and extra-large widths. Verify keyboard, focus, heading hierarchy, contrast, and reduced-motion requirements where relevant.
 7. Add deterministic tests for externally visible behavior and styles. Update this catalog and [design-system.md](design-system.md) when the token model or conventions change.
 

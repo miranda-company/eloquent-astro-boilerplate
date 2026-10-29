@@ -41,7 +41,7 @@ function formatValue(value: string | number, type: string, name: string): string
 ---
 
 <section class="design-system-preview__intro section" aria-labelledby="design-system-preview-title">
-  <div class="design-system-preview__wrapper wrapper">
+  <div class="design-system-preview__wrapper wrapper stack">
     <h1 class="design-system-preview__title" id="design-system-preview-title">
       Design System
     </h1>
@@ -50,7 +50,7 @@ function formatValue(value: string | number, type: string, name: string): string
 </section>
 
 <section class="ds-tokens section" aria-labelledby="ds-tokens-title">
-  <div class="ds-tokens__wrapper wrapper">
+  <div class="ds-tokens__wrapper wrapper stack">
     <h2 class="ds-tokens__title" id="ds-tokens-title">
       Tokens
     </h2>
@@ -60,7 +60,7 @@ function formatValue(value: string | number, type: string, name: string): string
     <h3 class="ds-tokens__group-title">Font sizes</h3>
     <div class="ds-tokens__font-sizes-grid">
       {fontSizeTokens.map((token) => (
-        <div class="ds-tokens__card">
+        <div class="ds-tokens__card stack">
           <p class="ds-tokens__css-name">
             <code>{getFigmaTokenCssName(token.name)}</code>
           </p>
@@ -96,7 +96,7 @@ function formatValue(value: string | number, type: string, name: string): string
     <h3 class="ds-tokens__group-title">Semantic colors</h3>
     <div class="ds-tokens__semantic-colors-grid">
       {semanticColorTokens.map((token) => (
-        <div class="ds-tokens__card">
+        <div class="ds-tokens__card stack">
           <p class="ds-tokens__css-name">
             <code>{getFigmaTokenCssName(token.name)}</code>
           </p>
@@ -131,7 +131,7 @@ function formatValue(value: string | number, type: string, name: string): string
     <h3 class="ds-tokens__group-title">Primitive colors</h3>
     <div class="ds-tokens__primitive-colors-grid">
       {primitiveColorTokens.map((token) => (
-        <div class="ds-tokens__card">
+        <div class="ds-tokens__card stack">
           <p class="ds-tokens__css-name">
             <code>{getFigmaTokenCssName(token.name)}</code>
           </p>
@@ -159,7 +159,7 @@ function formatValue(value: string | number, type: string, name: string): string
     <h3 class="ds-tokens__group-title">Spacing</h3>
     <div class="ds-tokens__spacing-grid">
       {spacingTokens.map((token) => (
-        <div class="ds-tokens__card">
+        <div class="ds-tokens__card stack">
           <p class="ds-tokens__css-name">
             <code>{getFigmaTokenCssName(token.name)}</code>
           </p>
@@ -195,7 +195,7 @@ function formatValue(value: string | number, type: string, name: string): string
     <h3 class="ds-tokens__group-title">Global size tokens</h3>
     <div class="ds-tokens__global-size-grid">
       {globalSizeTokens.map((token) => (
-        <div class="ds-tokens__card">
+        <div class="ds-tokens__card stack">
           <p class="ds-tokens__css-name">
             <code>{getFigmaTokenCssName(token.name)}</code>
           </p>
@@ -263,9 +263,6 @@ function formatValue(value: string | number, type: string, name: string): string
   }
 
   .ds-tokens__card {
-    display: flex;
-    flex-direction: column;
-    gap: var(--spacing-sm);
     padding: var(--spacing-md);
     border: var(--border-size-sm) solid var(--color-border-secondary);
     border-radius: var(--radius-md);

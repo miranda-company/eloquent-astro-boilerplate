@@ -63,6 +63,17 @@ Do not silently invent tokens for properties absent from this minimal system. Fo
 
 Prefer semantic tokens when choosing design values. For spacing, use semantic roles such as `--spacing-xs`, `--spacing-sm`, `--spacing-md`, and `--spacing-lg` when they express the intended spacing. Use a numeric primitive such as `--spacing-3` only when no semantic spacing token represents the required value or role; do not choose a primitive just because its number is familiar. Apply the same principle to other token categories: prefer semantic roles where available, and use primitives when a semantic role does not fit.
 
+Use the shared `.stack` layout primitive for a vertical flex group whose children need the default gutter spacing:
+
+```html
+<div class="stack">
+  <div>First item</div>
+  <div>Second item</div>
+</div>
+```
+
+`.stack` uses `--spacing-gutter-default`, which adapts to the configured mobile value. Keep groups with a different layout or intentional spacing in their component styles rather than applying the default stack indiscriminately.
+
 Use the Figma semantic roles for colors and border sizes. Use `--border-size-sm` for standard borders, and choose a larger border-size token only when the design calls for a heavier border. Reserve `--wire-size` for the shared wireframe modifier. Examples:
 
 ```css

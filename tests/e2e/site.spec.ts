@@ -39,6 +39,46 @@ test('production wireframe aid stays off until the root modifier is applied', as
   await expect(wrapper).toHaveCSS('border-width', '0px');
 });
 
+test('stack layout uses the default responsive gutter token', async ({ page }) => {
+  await page.goto('/');
+  const getStackStyles = () =>
+    page.evaluate(() => {
+      const rootStyles = getComputedStyle(document.documentElement);
+      const stacks = [
+        document.querySelector('.design-system-preview__wrapper'),
+        ...document.querySelectorAll('.ds-tokens__card'),
+      ];
+      return {
+        gapToken: rootStyles.getPropertyValue('--spacing-gutter-default').trim(),
+        stacks: stacks.map((stack) => {
+          if (!stack) throw new Error('Missing design-system preview stack');
+          const styles = getComputedStyle(stack);
+          return {
+            hasStackClass: stack.classList.contains('stack'),
+            display: styles.display,
+            direction: styles.flexDirection,
+            gap: styles.rowGap,
+          };
+        }),
+      };
+    });
+  const desktopStackStyles = await getStackStyles();
+  await page.setViewportSize({ width: 375, height: 812 });
+  const mobileStackStyles = await getStackStyles();
+  for (const viewportStyles of [desktopStackStyles, mobileStackStyles]) {
+    expect(viewportStyles.stacks.length).toBeGreaterThan(1);
+    expect(
+      viewportStyles.stacks.every(
+        (stack) =>
+          stack.hasStackClass &&
+          stack.display === 'flex' &&
+          stack.direction === 'column' &&
+          stack.gap === viewportStyles.gapToken,
+      ),
+    ).toBe(true);
+  }
+});
+
 test('design-system homepage is noindex, keyboard-accessible, and has no default third-party requests', async ({
   page,
 }) => {
@@ -488,19 +528,10 @@ test('design-system homepage is noindex, keyboard-accessible, and has no default
   await expect(page.locator('body > header nav')).toHaveCount(0);
   await expect(page.locator('.wrapper').first()).toHaveCSS('padding-left', '64px');
   await expect(page.locator('.wrapper').first()).toHaveCSS('padding-top', '0px');
-  await expect(page.locator('.wrapper').first()).toHaveCSS('border-width', wireBorder.width);
-  await expect(page.locator('.wrapper').first()).toHaveCSS('border-color', wireBorder.color);
-  await expect(page.locator('.site-header')).toHaveCSS('border-top-width', wireBorder.width);
-  await expect(page.locator('.site-header')).toHaveCSS('border-top-color', wireBorder.color);
-  await expect(page.locator('.site-header__wrapper')).toHaveCSS('border-width', wireBorder.width);
-  await expect(page.locator('.design-system-preview__intro')).toHaveCSS(
-    'border-width',
-    wireBorder.width,
-  );
-  await expect(page.locator('.design-system-preview__intro')).toHaveCSS(
-    'border-color',
-    wireBorder.color,
-  );
+  await expect(page.locator('.wrapper').first()).toHaveCSS('border-width', '0px');
+  await expect(page.locator('.site-header')).toHaveCSS('border-top-width', '0px');
+  await expect(page.locator('.site-header__wrapper')).toHaveCSS('border-width', '0px');
+  await expect(page.locator('.design-system-preview__intro')).toHaveCSS('border-width', '0px');
   await expect(page.locator('.wrapper').first()).toHaveCSS('outline-style', 'none');
   await expect(page.locator('.site-footer__inner')).toHaveCSS('display', 'grid');
   await expect(page.locator('.back-to-top')).toHaveCSS('position', 'fixed');
