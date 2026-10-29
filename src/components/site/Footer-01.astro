@@ -258,14 +258,14 @@ const contactItems = [
     gap: var(--spacing-gutter-default);
   }
 
-  @media (min-width: 768px) {
+  @media (--md) {
     .footer-01__info {
       grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(15rem, 1.5fr);
       gap: var(--spacing-xl);
     }
   }
 
-  @media (min-width: 1200px) {
+  @media (--xl) {
     .footer-01__wrapper {
       grid-template-columns: minmax(0, 35fr) minmax(0, 65fr);
     }

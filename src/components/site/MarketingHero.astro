@@ -66,7 +66,7 @@ const { title, headingLevel = 1, eyebrow, description, action } = Astro.props;
     margin-top: var(--spacing-4);
   }
 
-  @media (min-width: 576px) {
+  @media (--sm) {
     .marketing-hero__title {
       font-size: var(--font-size-6xl);
       line-height: var(--font-leading-6xl);

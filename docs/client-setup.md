@@ -60,7 +60,7 @@ Use GSAP or ScrollTrigger only when the client brief defines the motion intent, 
 
 ## 7. Review responsive behavior
 
-Breakpoints are authored CSS media queries, not values in `client-config.ts`. The shared wrapper rules live in `src/styles/global.css`; component-specific responsive rules stay beside their modules and use the same fixed thresholds. Do not duplicate breakpoints in client configuration. If the scale changes, review every responsive layout at compact, medium, expanded, large, and extra-large widths.
+Breakpoints are build-time custom-media aliases in `src/styles/breakpoints.css`, not values in `client-config.ts`. The shared wrapper rules live in `src/styles/global.css`; component-specific responsive rules stay beside their modules and use the same aliases. Start with compact base styles and add positive aliases such as `@media (--lg)` as the layout expands; use `--below-*` aliases only for rules that must apply strictly below a threshold. Do not duplicate breakpoints in client configuration. If the scale changes, update the aliases once and review every responsive layout at compact, medium, expanded, large, and extra-large widths.
 
 ## 8. Verify before handoff
 

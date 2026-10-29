@@ -1,0 +1,19 @@
+/*
+ * Mobile-first viewport breakpoints.
+ *
+ * These build-time custom-media aliases are the sole source for responsive
+ * layout thresholds. They are expanded during the CSS build and are not
+ * runtime CSS custom properties.
+ */
+
+@custom-media --sm (min-width: 576px);
+@custom-media --md (min-width: 768px);
+@custom-media --lg (min-width: 992px);
+@custom-media --xl (min-width: 1200px);
+@custom-media --xxl (min-width: 1400px);
+
+@custom-media --below-sm (max-width: 575.98px);
+@custom-media --below-md (max-width: 767.98px);
+@custom-media --below-lg (max-width: 991.98px);
+@custom-media --below-xl (max-width: 1199.98px);
+@custom-media --below-xxl (max-width: 1399.98px);

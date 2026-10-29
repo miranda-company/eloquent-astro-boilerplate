@@ -11,7 +11,7 @@ Its purpose is to make client-site delivery more consistent and easier to mainta
 - Figma is the source of truth for design tokens; a checked-in, typed variable snapshot emits CSS custom properties at build time.
 - Generic Figma primitive names and semantic color, typography, spacing, radius, and size variables remain stable across client rebrands.
 - A no-index design-system preview shows font-size, semantic-color, primitive-color, spacing, and global-size token grids with their mode values and CSS properties.
-- Shared responsive styles follow a mobile-first fixed-pixel breakpoint scale documented in `src/styles/global.css` and `docs/design-system.md`.
+- Shared responsive styles use the mobile-first custom-media aliases in `src/styles/breakpoints.css`; their thresholds are documented in `docs/design-system.md`.
 - Reusable Astro page patterns with typed MDX props, starting with a token-driven marketing hero linked to the Figma design reference.
 - Spanish starter content and a configurable legal-page layout with a table of contents, optional status notice, and optional summary facts.
 - A pre-optimised asset workflow: native responsive image markup with agency-prepared files copied unchanged from `public/images/`.

@@ -60,7 +60,7 @@ const { title, features } = Astro.props;
     font-size: var(--font-size-sm);
   }
 
-  @media (min-width: 992px) {
+  @media (--lg) {
     .marketing-features__grid {
       grid-template-columns: repeat(3, minmax(0, 1fr));
     }

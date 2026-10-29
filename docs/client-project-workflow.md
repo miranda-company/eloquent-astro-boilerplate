@@ -143,7 +143,7 @@ Edit `src/config/client-config.ts` first.
 4. Confirm font assets/licensing with the client and add the approved font-loading implementation when the Figma family is not locally available. Keep a generic sans-serif fallback.
 5. Use the internal preview to review primitive and semantic values and available color/spacing modes before page work begins.
 6. If the design requires a token absent from the minimal Figma system, add and approve it in Figma first; update the snapshot and code together.
-7. Keep breakpoints in authored CSS, not token or site configuration. The shared wrapper uses `max-width-2xl` and `spacing-wrapper-default` while its responsive breakpoint remains in `src/styles/global.css`.
+7. Keep breakpoint aliases in authored CSS, not token or site configuration. `src/styles/breakpoints.css` is the shared source; the wrapper uses `max-width-2xl` and `spacing-wrapper-default` while its responsive rule stays in `src/styles/global.css`.
 
 ### 4. Review the internal design system
 

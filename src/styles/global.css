@@ -146,16 +146,7 @@ h2 {
   border: var(--wire-size) solid var(--color-wire);
 }
 
-/*
- * Mobile-first breakpoints:
- * - sm: 576px
- * - md: 768px
- * - lg: 992px
- * - xl: 1200px
- * - xxl: 1400px
- */
-
-@media (max-width: 575.98px) {
+@media (--below-sm) {
   :root {
     --spacing-none: var(--spacing-none-mobile);
     --spacing-xs: var(--spacing-xs-mobile);

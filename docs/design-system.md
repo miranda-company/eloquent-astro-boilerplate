@@ -6,14 +6,15 @@ The internal design-system preview is the root page while the boilerplate is bei
 
 ## Token source and implementation
 
-| Concern                                                           | Source                                          | Responsibility                                                    |
-| ----------------------------------------------------------------- | ----------------------------------------------- | ----------------------------------------------------------------- |
-| Approved tokens, names, values, and modes                         | Figma Design System file                        | Authoritative design decisions                                    |
-| Checked-in snapshot                                               | `src/config/figma-tokens.json`                  | Figma variable export grouped by collection, with values per mode |
-| Token validation, CSS names, and mode output                      | `src/config/figma-tokens-adapter.ts`            | Converts the export to static CSS custom properties               |
-| CSS reset, base rules, responsive wrapper layout, and breakpoints | `src/styles/global.css`                         | Structural site-wide CSS; not a duplicate token source            |
-| Site identity, URLs, brand assets, feature flags, and navigation  | `src/config/client-config.ts`                   | Non-design-token site configuration                               |
-| Rendered token reference                                          | `src/components/site/DesignSystemPreview.astro` | Displays variable names, CSS names, values, and modes             |
+| Concern                                                          | Source                                          | Responsibility                                                    |
+| ---------------------------------------------------------------- | ----------------------------------------------- | ----------------------------------------------------------------- |
+| Approved tokens, names, values, and modes                        | Figma Design System file                        | Authoritative design decisions                                    |
+| Checked-in snapshot                                              | `src/config/figma-tokens.json`                  | Figma variable export grouped by collection, with values per mode |
+| Token validation, CSS names, and mode output                     | `src/config/figma-tokens-adapter.ts`            | Converts the export to static CSS custom properties               |
+| CSS reset, base rules, and responsive wrapper layout             | `src/styles/global.css`                         | Structural site-wide CSS; not a duplicate token source            |
+| Responsive breakpoint aliases                                    | `src/styles/breakpoints.css`                    | Build-time custom-media source for authored responsive CSS        |
+| Site identity, URLs, brand assets, feature flags, and navigation | `src/config/client-config.ts`                   | Non-design-token site configuration                               |
+| Rendered token reference                                         | `src/components/site/DesignSystemPreview.astro` | Displays variable names, CSS names, values, and modes             |
 
 `BaseLayout.astro` emits the generated token CSS in the document head. A site build does not call Figma or require credentials, so output remains static, repeatable, and buildable offline. `global.css` must not define fallback values for tokens already in the Figma export.
 
@@ -42,7 +43,7 @@ The preview displays font-size, semantic-color, primitive-color, spacing, and gl
 ## Modes and numeric values
 
 - Color tokens use the first exported mode (`light-mode`) as the generated CSS value. The `dark-mode` values remain visible in the preview and export but are not activated by the adapter.
-- Spacing tokens use `desktop` by default. The token adapter emits Figma mobile values as companion variables (for example, `--spacing-xs-mobile`), and `src/styles/global.css` activates them below the `sm` breakpoint of `576px`. Responsive styles use these mobile-first minimum-width breakpoints as needed:
+- Spacing tokens use `desktop` by default. The token adapter emits Figma mobile values as companion variables (for example, `--spacing-xs-mobile`), and `src/styles/global.css` activates them through the `--below-sm` breakpoint alias. Responsive styles use these mobile-first aliases as needed:
 
   | Name  | Starts at |
   | ----- | --------: |
@@ -52,10 +53,10 @@ The preview displays font-size, semantic-color, primitive-color, spacing, and gl
   | `xl`  |  `1200px` |
   | `xxl` |  `1400px` |
 
-  Base styles apply below `sm`; use `min-width` queries at the named thresholds for larger layouts. When a rule must target only the range below `sm`, use `max-width: 575.98px` so it does not overlap the `576px` threshold. These names describe viewport-width breakpoints, not specific device types. The `.wrapper` uses `spacing-wrapper-default` and `max-width-2xl`; top-level sections use `spacing-section-default`.
+  Base styles apply below `--sm`; use the matching positive aliases for larger layouts. When a rule must target the range below a threshold, use its `--below-*` counterpart so ranges do not overlap. These names describe viewport-width breakpoints, not specific device types. The `.wrapper` uses `spacing-wrapper-default` and `max-width-2xl`; top-level sections use `spacing-section-default`.
 
 - Figma numeric values do not encode CSS units. The adapter treats dimensional `FLOAT` tokens as CSS pixels. Font weights remain unitless. String font-family values are emitted as quoted CSS strings.
-- Use the shared fixed-pixel breakpoints documented in `src/styles/global.css` for media queries in global and component styles. The token adapter provides mode values but does not choose when a mode becomes active. Breakpoints are implementation layout rules, not variables in the current Figma file.
+- Use the shared aliases in `src/styles/breakpoints.css` for media queries in global and component styles. The token adapter provides mode values but does not choose when a mode becomes active. These aliases compile to the documented fixed-pixel thresholds; they are implementation layout rules, not runtime CSS custom properties or variables in the current Figma file.
 
 Do not silently invent tokens for properties absent from this minimal system. For example, it currently has no shadow, error-state, hover, or dedicated on-brand text variables. If a design needs one, add and approve it in Figma first; then update the checked-in export and code together.
 
@@ -108,7 +109,30 @@ The JSON snapshot is generated input, not a second authority. Do not edit token 
 
 ## Breakpoints and motion
 
-The starter is mobile-first. Shared wrapper rules use fixed CSS breakpoints, and component-specific responsive rules stay with their owning stylesheets. Runtime variables cannot control media queries; do not duplicate breakpoints in client configuration.
+The starter is mobile-first. `src/styles/breakpoints.css` defines the shared `--sm`, `--md`, `--lg`, `--xl`, and `--xxl` custom-media aliases; use them in both shared and component-specific responsive rules. The aliases compile at build time, so runtime CSS custom properties cannot control media queries. Do not duplicate breakpoints in client configuration.
+
+### Using breakpoint aliases
+
+1. Start with the compact layout as the unqualified base style.
+2. Use the positive alias when a layout starts at a named threshold:
+
+   ```css
+   .feature-grid {
+     grid-template-columns: 1fr;
+   }
+
+   @media (--lg) {
+     .feature-grid {
+       grid-template-columns: repeat(3, minmax(0, 1fr));
+     }
+   }
+   ```
+
+3. Use `--below-sm`, `--below-md`, `--below-lg`, `--below-xl`, or `--below-xxl` only when a rule must apply strictly below that threshold. Do not write raw viewport values in a component or shared stylesheet.
+4. Keep a component's responsive rules in its scoped stylesheet. The alias definition belongs only in `src/styles/breakpoints.css`; components consume aliases but never redeclare them.
+5. Keep feature or preference queries independent, for example `@media (prefers-reduced-motion: reduce)`. They are not viewport breakpoint aliases.
+
+When a client-approved breakpoint scale changes, update `src/styles/breakpoints.css` once, then review all responsive layouts at compact, medium, expanded, large, and extra-large widths. Run `pnpm run verify` and `pnpm run test:e2e`; the production build must contain expanded media queries, not `@media (--...)` aliases.
 
 GSAP and ScrollTrigger are available for approved component-level motion, but they are not part of the Figma token set or the default site bundle. Read [animation](animation.md) before using them. Respect reduced-motion preferences and preserve usable static content.
 

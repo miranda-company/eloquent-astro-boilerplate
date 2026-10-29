@@ -16,6 +16,7 @@ This is a static-first Astro starter for content-led marketing sites. It ships s
 | `src/content/`                       | Local Markdown and MDX source content                                                                                    |
 | `src/content.config.ts`              | Content Collection loader and Zod schema                                                                                 |
 | `src/styles/global.css`              | Reset/base rules, focus defaults, shared layout foundations, and responsive wrapper rules                                |
+| `src/styles/breakpoints.css`         | Shared build-time custom-media aliases for responsive viewport thresholds                                                |
 | `src/styles/button.css`              | Shared button base and variants imported by their consumers                                                              |
 | `public/brand/`                      | Public SVG logo and icon placeholders                                                                                    |
 | `tests/`                             | Unit configuration tests and browser smoke/accessibility tests                                                           |
@@ -32,7 +33,7 @@ At client kickoff, move the preview to `/design-system` and restore `/` as the m
 
 `client-config.ts` is the typed home for client identity and operational decisions that are safe to expose in static output. Figma is the source of truth for design tokens; `figma-tokens.json` is its checked-in export, and `figma-tokens-adapter.ts` validates it and emits mode-aware CSS custom properties at build time. Component styles consume Figma-derived variables such as `var(--color-text-default)`, never client hex values. `.wrapper` uses Figma's `max-width-2xl` and `spacing-wrapper-default` variables.
 
-Breakpoints are intentionally excluded from client configuration: authored CSS media queries are their source of truth. The shared wrapper rules live in `global.css`; responsive details stay with the owning module and use the same fixed thresholds.
+Breakpoints are intentionally excluded from client configuration: `breakpoints.css` is their build-time source of truth. The shared wrapper rules live in `global.css`; responsive details stay with the owning module and use the same custom-media aliases.
 
 ## Metadata and structured data
 
