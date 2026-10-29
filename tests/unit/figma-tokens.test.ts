@@ -14,7 +14,7 @@ describe('Figma design tokens', () => {
     );
   });
 
-  it('contains the five Figma collections and all 133 variables', () => {
+  it('contains the five Figma collections and all 135 variables', () => {
     const collections = getFigmaTokenCollections();
 
     expect(collections.map(({ name }) => name)).toEqual([
@@ -25,7 +25,7 @@ describe('Figma design tokens', () => {
       'Global size tokens',
     ]);
     expect(collections.reduce((count, collection) => count + collection.variables.length, 0)).toBe(
-      133,
+      135,
     );
   });
 

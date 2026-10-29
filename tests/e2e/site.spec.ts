@@ -221,7 +221,7 @@ test('design-system homepage is noindex, keyboard-accessible, and has no default
   await expect(page.getByRole('heading', { level: 3, name: 'Primitive colors' })).toBeVisible();
   await expect(page.locator('.ds-tokens__primitive-colors-grid')).toHaveCSS('display', 'grid');
   await expect(page.locator('.ds-tokens__primitive-colors-grid > .ds-tokens__card')).toHaveCount(
-    36,
+    38,
   );
   await expect(
     page.locator('.ds-tokens__primitive-colors-grid .ds-tokens__css-name code'),
@@ -235,6 +235,8 @@ test('design-system homepage is noindex, keyboard-accessible, and has no default
     '--color-neutral-700',
     '--color-neutral-800',
     '--color-neutral-900',
+    '--color-neutral-black',
+    '--color-neutral-white',
     '--color-palette-1-100',
     '--color-palette-1-200',
     '--color-palette-1-300',
@@ -265,12 +267,12 @@ test('design-system homepage is noindex, keyboard-accessible, and has no default
   ]);
   await expect(
     page.locator('.ds-tokens__primitive-colors-grid .ds-tokens__primitive-color-swatch'),
-  ).toHaveCount(36);
+  ).toHaveCount(38);
   await expect(
     page.locator('.ds-tokens__primitive-colors-grid .ds-tokens__primitive-color-swatch').first(),
-  ).toHaveCSS('background-color', 'rgb(255, 255, 255)');
+  ).toHaveCSS('background-color', 'rgb(250, 250, 250)');
   await expect(
-    page.locator('.ds-tokens__primitive-colors-grid .ds-tokens__primitive-color-swatch').nth(9),
+    page.locator('.ds-tokens__primitive-colors-grid .ds-tokens__primitive-color-swatch').nth(11),
   ).toHaveCSS('background-color', 'rgb(255, 250, 235)');
   await expect(
     page.locator('.ds-tokens__primitive-colors-grid .ds-tokens__primitive-color-swatch').last(),
@@ -351,7 +353,7 @@ test('design-system homepage is noindex, keyboard-accessible, and has no default
       { mode: 'mobile', width: '18px' },
     ],
     [
-      { mode: 'desktop', width: '32px' },
+      { mode: 'desktop', width: '24px' },
       { mode: 'mobile', width: '16px' },
     ],
     [

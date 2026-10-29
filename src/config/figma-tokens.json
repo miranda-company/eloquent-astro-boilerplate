@@ -33,7 +33,7 @@
     "font-leading-7xl": { "desktop": 80, "mobile": 80 }
   },
   "primitives": {
-    "color-neutral-100": { "mode-1": "#ffffff" },
+    "color-neutral-100": { "mode-1": "#fafafa" },
     "color-neutral-200": { "mode-1": "#e5e5e5" },
     "color-neutral-300": { "mode-1": "#c9c9c9" },
     "color-neutral-400": { "mode-1": "#a3a3a3" },
@@ -41,7 +41,7 @@
     "color-neutral-600": { "mode-1": "#606060" },
     "color-neutral-700": { "mode-1": "#3e3e3e" },
     "color-neutral-800": { "mode-1": "#222222" },
-    "color-neutral-900": { "mode-1": "#000000" },
+    "color-neutral-900": { "mode-1": "#1c1c1c" },
     "color-palette-1-500": { "mode-1": "#fbcf57" },
     "color-palette-1-100": { "mode-1": "#fffaeb" },
     "color-palette-1-200": { "mode-1": "#fff8e3" },
@@ -94,20 +94,22 @@
     "radius-xl": { "mode-1": 32 },
     "radius-2xl": { "mode-1": 128 },
     "radius-3xl": { "mode-1": 360 },
-    "spacing-2-25": { "mode-1": 18 }
+    "spacing-2-25": { "mode-1": 18 },
+    "color-neutral-white": { "mode-1": "#ffffff" },
+    "color-neutral-black": { "mode-1": "#000000" }
   },
   "color-tokens": {
     "color-text-default": { "light-mode": "#222222", "dark-mode": "#e5e5e5" },
-    "color-text-secondary": { "light-mode": "#606060", "dark-mode": "#a3a3a3" },
+    "color-text-secondary": { "light-mode": "#3e3e3e", "dark-mode": "#c9c9c9" },
     "color-text-brand": { "light-mode": "#ffc21c", "dark-mode": "#ffc21c" },
-    "color-surface-default": { "light-mode": "#e5e5e5", "dark-mode": "#222222" },
-    "color-surface-secondary": { "light-mode": "#a3a3a3", "dark-mode": "#a3a3a3" },
+    "color-surface-default": { "light-mode": "#fafafa", "dark-mode": "#1c1c1c" },
+    "color-surface-secondary": { "light-mode": "#c9c9c9", "dark-mode": "#606060" },
     "color-surface-brand": { "light-mode": "#ffc21c", "dark-mode": "#ffc21c" },
     "color-border-default": { "light-mode": "#222222", "dark-mode": "#e5e5e5" },
     "color-border-secondary": { "light-mode": "#a3a3a3", "dark-mode": "#a3a3a3" },
     "color-wire": { "light-mode": "#0055ff", "dark-mode": "#0055ff" },
     "color-text-inverse": { "light-mode": "#e5e5e5", "dark-mode": "#222222" },
-    "color-surface-inverse": { "light-mode": "#222222", "dark-mode": "#e5e5e5" },
+    "color-surface-inverse": { "light-mode": "#1c1c1c", "dark-mode": "#fafafa" },
     "color-border-inverse": { "light-mode": "#e5e5e5", "dark-mode": "#222222" },
     "color-border-brand": { "light-mode": "#ffc21c", "dark-mode": "#ffc21c" },
     "color-icon-brand": { "light-mode": "#ffc21c", "dark-mode": "#ffc21c" },
@@ -127,7 +129,7 @@
     "spacing-4xl": { "desktop": 120, "mobile": 80 },
     "spacing-5xl": { "desktop": 240, "mobile": 120 },
     "spacing-wrapper-default": { "desktop": 64, "mobile": 18 },
-    "spacing-gutter-default": { "desktop": 32, "mobile": 16 },
+    "spacing-gutter-default": { "desktop": 24, "mobile": 16 },
     "spacing-section-default": { "desktop": 80, "mobile": 40 }
   },
   "global-size-tokens": {
