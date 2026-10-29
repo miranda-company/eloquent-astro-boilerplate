@@ -89,26 +89,33 @@ function declarationsForMode(collection: TokenCollection, mode: string): string[
 }
 
 function declarationsForCollections(): string[] {
-  return Object.values(tokens).flatMap((collection) => {
-    const mode = collectionModes(collection)[0];
+  return Object.entries(tokens).flatMap(([name, collection]) => {
+    const mode = name === 'spacing-tokens' ? 'mobile' : collectionModes(collection)[0];
     if (!mode) throw new Error('Figma token collection must contain at least one mode');
     return declarationsForMode(collection, mode);
+  });
+}
+
+function spacingDeclarationsForMode(mode: 'tablet' | 'desktop'): string[] {
+  const spacingCollection = tokens['spacing-tokens'];
+  if (!spacingCollection) return [];
+
+  return Object.entries(spacingCollection).map(([name, values]) => {
+    const value = values[mode];
+    if (value === undefined)
+      throw new Error(`Missing ${mode} value for Figma spacing token: ${name}`);
+    return `${cssName(`${name}-${mode}`)}: ${cssValue(name, value)};`;
   });
 }
 
 export function getFigmaTokenStyles(): string {
   validateFigmaTokenSnapshot();
 
-  const spacingCollection = tokens['spacing-tokens'];
-  const mobileDeclarations = spacingCollection
-    ? Object.entries(spacingCollection).map(([name, values]) => {
-        const value = values.mobile ?? values[Object.keys(values)[0]!];
-        if (value === undefined) throw new Error(`Missing mobile value for Figma token: ${name}`);
-        return `${cssName(`${name}-mobile`)}: ${cssValue(name, value)};`;
-      })
-    : [];
-
-  return `:root {\n${[...declarationsForCollections(), ...mobileDeclarations].join('\n')}\n}`;
+  return `:root {\n${[
+    ...declarationsForCollections(),
+    ...spacingDeclarationsForMode('tablet'),
+    ...spacingDeclarationsForMode('desktop'),
+  ].join('\n')}\n}`;
 }
 
 export function getFigmaTokenCollections() {
@@ -153,6 +160,14 @@ export function validateFigmaTokenSnapshot(): void {
 
       if (Object.keys(values).length === 0) {
         throw new Error(`Figma token has no mode values: ${name}`);
+      }
+
+      if (collectionName === 'spacing-tokens') {
+        for (const mode of ['mobile', 'tablet', 'desktop']) {
+          if (values[mode] === undefined) {
+            throw new Error(`Missing ${mode} value for Figma spacing token: ${name}`);
+          }
+        }
       }
     }
   }

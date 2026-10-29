@@ -46,7 +46,7 @@ describe('Figma design tokens', () => {
       modes: { 'light-mode': '#222222', 'dark-mode': '#e5e5e5' },
     });
     expect(spacing.variables.find(({ name }) => name === 'spacing-wrapper-default')).toMatchObject({
-      modes: { desktop: 64, mobile: 18 },
+      modes: { desktop: 64, mobile: 18, tablet: 32 },
     });
   });
 
@@ -114,7 +114,7 @@ describe('Figma design tokens', () => {
     ]);
   });
 
-  it('validates tokens and emits desktop and mobile spacing values without activating dark mode', () => {
+  it('validates tokens and emits mobile base spacing with tablet and desktop values without activating dark mode', () => {
     expect(() => validateFigmaTokenSnapshot()).not.toThrow();
 
     const styles = getFigmaTokenStyles();
@@ -123,8 +123,9 @@ describe('Figma design tokens', () => {
     expect(styles).not.toContain('prefers-color-scheme');
     expect(styles).not.toContain('--color-text-default: #e5e5e5;');
     expect(styles).not.toContain('@media');
-    expect(styles).toContain('--spacing-wrapper-default: 64px;');
-    expect(styles).toContain('--spacing-wrapper-default-mobile: 18px;');
+    expect(styles).toContain('--spacing-wrapper-default: 18px;');
+    expect(styles).toContain('--spacing-wrapper-default-tablet: 32px;');
+    expect(styles).toContain('--spacing-wrapper-default-desktop: 64px;');
     expect(styles).toContain('--font-family-body: "Helvetica Neue";');
     expect(styles).toContain('--font-weight-bold: 700;');
   });

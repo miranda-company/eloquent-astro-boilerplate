@@ -298,7 +298,7 @@ test('design-system homepage is noindex, keyboard-accessible, and has no default
     '--spacing-xxs',
   ]);
   await expect(page.locator('.ds-tokens__spacing-grid .ds-tokens__values')).toHaveCount(14);
-  await expect(page.locator('.ds-tokens__spacing-grid .ds-tokens__spacing-sample')).toHaveCount(28);
+  await expect(page.locator('.ds-tokens__spacing-grid .ds-tokens__spacing-sample')).toHaveCount(42);
   const spacingSamplesByMode = await page
     .locator('.ds-tokens__spacing-grid > .ds-tokens__card')
     .evaluateAll((cards) =>
@@ -313,58 +313,72 @@ test('design-system homepage is noindex, keyboard-accessible, and has no default
     [
       { mode: 'desktop', width: '0px' },
       { mode: 'mobile', width: '0px' },
+      { mode: 'tablet', width: '0px' },
     ],
     [
       { mode: 'desktop', width: '8px' },
       { mode: 'mobile', width: '4px' },
+      { mode: 'tablet', width: '4px' },
     ],
     [
       { mode: 'desktop', width: '16px' },
       { mode: 'mobile', width: '8px' },
+      { mode: 'tablet', width: '8px' },
     ],
     [
       { mode: 'desktop', width: '24px' },
       { mode: 'mobile', width: '16px' },
+      { mode: 'tablet', width: '16px' },
     ],
     [
       { mode: 'desktop', width: '32px' },
       { mode: 'mobile', width: '24px' },
+      { mode: 'tablet', width: '24px' },
     ],
     [
       { mode: 'desktop', width: '40px' },
       { mode: 'mobile', width: '32px' },
+      { mode: 'tablet', width: '32px' },
     ],
     [
       { mode: 'desktop', width: '56px' },
       { mode: 'mobile', width: '40px' },
+      { mode: 'tablet', width: '40px' },
     ],
     [
       { mode: 'desktop', width: '80px' },
       { mode: 'mobile', width: '56px' },
+      { mode: 'tablet', width: '56px' },
     ],
     [
       { mode: 'desktop', width: '120px' },
       { mode: 'mobile', width: '80px' },
+      { mode: 'tablet', width: '80px' },
     ],
     [
       { mode: 'desktop', width: '240px' },
       { mode: 'mobile', width: '120px' },
+      { mode: 'tablet', width: '120px' },
     ],
     [
       { mode: 'desktop', width: '64px' },
       { mode: 'mobile', width: '18px' },
+      { mode: 'tablet', width: '32px' },
     ],
     [
       { mode: 'desktop', width: '24px' },
       { mode: 'mobile', width: '16px' },
+      { mode: 'tablet', width: '16px' },
     ],
     [
       { mode: 'desktop', width: '80px' },
       { mode: 'mobile', width: '40px' },
+      { mode: 'tablet', width: '56px' },
     ],
     [
       { mode: 'desktop', width: '4px' },
       { mode: 'mobile', width: '4px' },
+      { mode: 'tablet', width: '4px' },
     ],
   ]);
   await expect(page.getByRole('heading', { level: 3, name: 'Global size tokens' })).toBeVisible();
@@ -580,7 +594,7 @@ test('design-system homepage is noindex, keyboard-accessible, and has no default
   await expect(page.locator('.site-header')).not.toHaveClass(/site-header--sticky/);
   await expect(page.locator('.site-header')).toHaveCSS('position', 'relative');
   await page.setViewportSize({ width: 767, height: 900 });
-  await expect(page.locator('.wrapper').first()).toHaveCSS('padding-left', '64px');
+  await expect(page.locator('.wrapper').first()).toHaveCSS('padding-left', '18px');
   expect(
     await page
       .locator('.footer-01__wrapper')
@@ -592,6 +606,7 @@ test('design-system homepage is noindex, keyboard-accessible, and has no default
       .evaluate((element) => getComputedStyle(element).gridTemplateColumns.split(' ').length),
   ).toBe(1);
   await page.setViewportSize({ width: 768, height: 900 });
+  await expect(page.locator('.wrapper').first()).toHaveCSS('padding-left', '32px');
   expect(
     await page
       .locator('.footer-01__wrapper')
@@ -608,8 +623,9 @@ test('design-system homepage is noindex, keyboard-accessible, and has no default
   ).toBe(1);
   await expect(page.locator('.footer-01__info')).toHaveCSS('grid-template-columns', /.+ .+ .+/);
   await expect(page.locator('.footer-01__contact')).toHaveCSS('grid-column-start', 'auto');
+  await expect(page.locator('.wrapper').first()).toHaveCSS('padding-left', '32px');
   await page.setViewportSize({ width: 576, height: 900 });
-  await expect(page.locator('.wrapper').first()).toHaveCSS('padding-left', '64px');
+  await expect(page.locator('.wrapper').first()).toHaveCSS('padding-left', '18px');
   await page.setViewportSize({ width: 575, height: 900 });
   await expect(page.locator('.wrapper').first()).toHaveCSS('padding-left', '18px');
   await page.setViewportSize({ width: 390, height: 844 });
@@ -618,8 +634,11 @@ test('design-system homepage is noindex, keyboard-accessible, and has no default
     .locator('.ds-tokens__font-sizes-grid')
     .evaluate((grid) => getComputedStyle(grid).gridTemplateColumns.split(' ').length);
   expect(mobileGridColumns).toBe(1);
+  await page.setViewportSize({ width: 1200, height: 900 });
+  await expect(page.locator('.wrapper').first()).toHaveCSS('padding-left', '64px');
   await page.setViewportSize({ width: 1600, height: 900 });
   await expect(page.locator('.wrapper').first()).toHaveCSS('max-width', '1440px');
+  await expect(page.locator('.wrapper').first()).toHaveCSS('padding-left', '64px');
   expect(
     await page
       .locator('.footer-01__wrapper')

@@ -35,7 +35,7 @@ The current minimum system contains 133 variables in five collections:
 - **Font tokens:** family, size, weight, line-height, and letter-spacing scales.
 - **Primitives:** generic color ramps, neutral colors, spacing values, and radii.
 - **Color tokens:** semantic text, surface, icon, and border roles with light and dark modes.
-- **Spacing tokens:** semantic spacing roles with desktop and mobile modes.
+- **Spacing tokens:** semantic spacing roles with mobile, tablet, and desktop modes.
 - **Global size tokens:** wrapper and content maximum widths, wire size, and non-wire border sizes.
 
 The preview displays font-size, semantic-color, primitive-color, spacing, and global-size tokens with their exported values and modes. Other font and primitive variables remain available in the snapshot and generated CSS but are not currently given dedicated preview grids. The export contains resolved values, not alias references.
@@ -43,7 +43,7 @@ The preview displays font-size, semantic-color, primitive-color, spacing, and gl
 ## Modes and numeric values
 
 - Color tokens use the first exported mode (`light-mode`) as the generated CSS value. The `dark-mode` values remain visible in the preview and export but are not activated by the adapter.
-- Spacing tokens use `desktop` by default. The token adapter emits Figma mobile values as companion variables (for example, `--spacing-xs-mobile`), and `src/styles/global.css` activates them through the `--below-sm` breakpoint alias. Responsive styles use these mobile-first aliases as needed:
+- Spacing tokens use `mobile` as the base value. The token adapter emits tablet and desktop companion variables (for example, `--spacing-xs-tablet` and `--spacing-xs-desktop`), while `src/styles/global.css` activates tablet values at `--md` and desktop values at `--xl`. Responsive styles use these mobile-first aliases as needed:
 
   | Name  | Starts at |
   | ----- | --------: |

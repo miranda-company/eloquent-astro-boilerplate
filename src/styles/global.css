@@ -146,20 +146,40 @@ h2 {
   border: var(--wire-size) solid var(--color-wire);
 }
 
-@media (--below-sm) {
+@media (--md) {
   :root {
-    --spacing-none: var(--spacing-none-mobile);
-    --spacing-xs: var(--spacing-xs-mobile);
-    --spacing-sm: var(--spacing-sm-mobile);
-    --spacing-md: var(--spacing-md-mobile);
-    --spacing-lg: var(--spacing-lg-mobile);
-    --spacing-xl: var(--spacing-xl-mobile);
-    --spacing-2xl: var(--spacing-2xl-mobile);
-    --spacing-3xl: var(--spacing-3xl-mobile);
-    --spacing-4xl: var(--spacing-4xl-mobile);
-    --spacing-5xl: var(--spacing-5xl-mobile);
-    --spacing-wrapper-default: var(--spacing-wrapper-default-mobile);
-    --spacing-gutter-default: var(--spacing-gutter-default-mobile);
-    --spacing-section-default: var(--spacing-section-default-mobile);
+    --spacing-none: var(--spacing-none-tablet);
+    --spacing-xs: var(--spacing-xs-tablet);
+    --spacing-sm: var(--spacing-sm-tablet);
+    --spacing-md: var(--spacing-md-tablet);
+    --spacing-lg: var(--spacing-lg-tablet);
+    --spacing-xl: var(--spacing-xl-tablet);
+    --spacing-2xl: var(--spacing-2xl-tablet);
+    --spacing-3xl: var(--spacing-3xl-tablet);
+    --spacing-4xl: var(--spacing-4xl-tablet);
+    --spacing-5xl: var(--spacing-5xl-tablet);
+    --spacing-wrapper-default: var(--spacing-wrapper-default-tablet);
+    --spacing-gutter-default: var(--spacing-gutter-default-tablet);
+    --spacing-section-default: var(--spacing-section-default-tablet);
+    --spacing-xxs: var(--spacing-xxs-tablet);
+  }
+}
+
+@media (--xl) {
+  :root {
+    --spacing-none: var(--spacing-none-desktop);
+    --spacing-xs: var(--spacing-xs-desktop);
+    --spacing-sm: var(--spacing-sm-desktop);
+    --spacing-md: var(--spacing-md-desktop);
+    --spacing-lg: var(--spacing-lg-desktop);
+    --spacing-xl: var(--spacing-xl-desktop);
+    --spacing-2xl: var(--spacing-2xl-desktop);
+    --spacing-3xl: var(--spacing-3xl-desktop);
+    --spacing-4xl: var(--spacing-4xl-desktop);
+    --spacing-5xl: var(--spacing-5xl-desktop);
+    --spacing-wrapper-default: var(--spacing-wrapper-default-desktop);
+    --spacing-gutter-default: var(--spacing-gutter-default-desktop);
+    --spacing-section-default: var(--spacing-section-default-desktop);
+    --spacing-xxs: var(--spacing-xxs-desktop);
   }
 }
