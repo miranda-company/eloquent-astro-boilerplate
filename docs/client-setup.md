@@ -27,7 +27,7 @@ Edit `src/config/client-config.ts` first.
 3. Use the internal preview to review the resulting CSS names, values, and modes. See [design-system.md](design-system.md) for the export and validation rules.
 4. Add missing token roles to Figma and get design approval before adding their values to code. Do not invent code-only tokens.
 5. Add approved fonts locally when required and verify their use with the Figma family tokens.
-6. Keep the approved Figma project link and direct component/frame links in [component-library.md](component-library.md). Component synchronization is a separate workflow.
+6. Keep the approved Figma project link and direct component/frame links in the relevant pattern document under `docs/component-library/`. Component synchronization is a separate workflow.
 
 ## 4. Add content and legal copy
 

@@ -721,7 +721,7 @@ for (const route of legalRoutes)
       );
     expect(layoutRegionsHaveWrappers).toBe(true);
     await expect(page.locator('body > footer address')).toHaveCount(1);
-    await expect(page.locator('body > footer nav ul > li')).toHaveCount(3);
+    await expect(page.locator('body > footer .footer-01__legal nav ul > li')).toHaveCount(3);
     await expect(page.locator('.legal-page__toc nav')).toHaveCount(1);
     await expect(page.locator('div.legal-page__toc')).toHaveCount(1);
     await expect(page.locator('.legal-page__toc a')).toHaveCount(4);

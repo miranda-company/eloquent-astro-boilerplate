@@ -202,7 +202,7 @@ Move to content and page work only when:
 
 Define or extend Content Collection schemas before adding new frontmatter fields. Build reusable, semantic components before composing repeated page patterns. Keep client configuration out of Markdown/MDX frontmatter.
 
-Follow [content authoring](content.md), [reusable component patterns](component-library.md), and [semantic DOM architecture](DOM_ARCHITECTURE.md). Compose approved Astro patterns from MDX using their typed content props. Keep the Figma frame, implementation, token usage, and verification mapped in the component catalog. For every public route, use `BaseLayout`, one `h1`, sequential headings, accurate metadata, and JSON-LD only when it truthfully represents visible indexable content.
+Follow [content authoring](content.md), the relevant pattern document under `docs/component-library/`, and [semantic DOM architecture](DOM_ARCHITECTURE.md). Compose approved Astro patterns from MDX using their typed content props. Keep each pattern's Figma frame, implementation, token usage, and verification expectations current in its own document. For every public route, use `BaseLayout`, one `h1`, sequential headings, accurate metadata, and JSON-LD only when it truthfully represents visible indexable content.
 
 ## Stage 4 — Build pages in vertical slices
 

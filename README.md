@@ -63,7 +63,7 @@ Then complete [the client setup checklist](docs/client-setup.md). Copy `.env.exa
 - [Client technical brief template](docs/templates/client-technical-brief.md)
 - [Content authoring](docs/content.md)
 - [Design system](docs/design-system.md)
-- [Reusable component patterns and Figma references](docs/component-library.md)
+- [Footer-01 reusable pattern](docs/component-library/footer-01.md)
 - [Semantic DOM, SEO, AEO, and GEO](docs/DOM_ARCHITECTURE.md)
 - [Integrations and privacy](docs/integrations.md)
 - [Animation](docs/animation.md)

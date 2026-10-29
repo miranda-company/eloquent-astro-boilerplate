@@ -23,6 +23,8 @@
 - Update `docs/design-system.md` and the design-system preview when changing the token model, component conventions, or visual reference.
 - Follow the mandatory semantic, metadata, AEO/GEO, media, and JSON-LD rules in [`docs/DOM_ARCHITECTURE.md`](docs/DOM_ARCHITECTURE.md). Read it before changing a page, layout, or rendered-content component.
 - Keep canonical, social metadata, and optional JSON-LD in `BaseLayout.astro`; do not duplicate document-head metadata in routes or components.
+- Add reusable components only for a proven, repeatable need. Each pattern requires an approved Figma reference, a clear typed content interface, semantic HTML, BEM classes, Figma-derived tokens, scoped styles, and deterministic coverage for public behavior.
+- Document every reusable pattern in its own lowercase kebab-case file at `docs/component-library/<pattern-name>.md`. Keep its Figma reference, implementation path, interface, semantic/accessibility rules, token and responsive behavior, assets, usage example, and verification expectations current.
 
 ## Content and integrations
 
