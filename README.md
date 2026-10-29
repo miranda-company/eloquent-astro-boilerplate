@@ -1,6 +1,8 @@
 # Eloquent Astro Boilerplate
 
-A static-first, white-label Astro starter for Spanish marketing sites. It combines strict TypeScript, local Markdown/MDX content, authored BEM CSS, semantic CSS custom-property tokens, accessible client-side enhancements, and a no-index design-system preview.
+A lightweight, static-first Astro starting point for Spanish marketing sites. It combines strict TypeScript, local Markdown/MDX content, authored BEM CSS, semantic CSS custom-property tokens, accessible client-side enhancements, and a no-index design-system preview.
+
+Its purpose is to make client-site delivery more consistent and easier to maintain. The boilerplate grows through a deliberately maintained library of reusable components and design patterns, letting the team assemble approved marketing sites faster without sacrificing semantic HTML, accessibility, or client-specific design decisions.
 
 ## What is included
 

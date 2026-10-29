@@ -1,6 +1,8 @@
 # Reusable component patterns
 
-The component library is a small set of semantic Astro modules that make approved, repeated page patterns faster to assemble without hiding their content or design decisions. Components use authored BEM CSS and the semantic custom properties documented in [design-system.md](design-system.md).
+The component library is a deliberately maintained set of semantic Astro modules and reusable design patterns. Its purpose is to make marketing-site delivery more consistent and easier while retaining room for each client's approved content and design decisions. As the library grows, it should help the team build faster and better without turning the boilerplate into a rigid site builder.
+
+Each component implements a concrete pattern—such as a footer, hero, or feature grid—and uses authored BEM CSS plus the semantic custom properties documented in [design-system.md](design-system.md). Add a pattern only when it represents a real, repeatable need with an approved design reference and a clear content interface.
 
 ## Figma relationship
 
