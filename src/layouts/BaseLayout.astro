@@ -1,6 +1,6 @@
 ---
 import ConsentManager from '../components/site/ConsentManager.astro';
-import Footer from '../components/site/Footer.astro';
+import Footer from '../components/site/Footer-01.astro';
 import Header from '../components/site/Header.astro';
 import JsonLd from '../components/seo/JsonLd.astro';
 import ScrollControls from '../components/site/ScrollControls.astro';
@@ -70,7 +70,25 @@ const figmaTokenStyles = getFigmaTokenStyles();
       <slot />
       <ScrollControls />
     </main>
-    <Footer />
+    <Footer
+      title="Footer-01 pattern"
+      description="Description."
+      pages={[
+        { label: 'Inicio', href: '/' },
+        { label: 'Servicios', href: '/servicios/' },
+        { label: 'Proyectos', href: '/proyectos/' },
+        { label: 'Sobre nosotros', href: '/sobre-nosotros/' },
+        { label: 'Contacto', href: '#contacto' },
+      ]}
+      socialLinks={[
+        { label: 'Instagram', href: 'https://www.instagram.com/' },
+        { label: 'LinkedIn', href: 'https://www.linkedin.com/' },
+        { label: 'Behance', href: 'https://www.behance.net/' },
+      ]}
+      phone="(+34) 600 000 000"
+      address="Calle de ejemplo, 123 · Madrid"
+      legalEntity="Nombre del cliente S.L."
+    />
     <ConsentManager />
   </body>
 </html>

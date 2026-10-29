@@ -221,12 +221,13 @@ test('design-system homepage is noindex, keyboard-accessible, and has no default
   await expect(page.getByRole('heading', { level: 3, name: 'Primitive colors' })).toBeVisible();
   await expect(page.locator('.ds-tokens__primitive-colors-grid')).toHaveCSS('display', 'grid');
   await expect(page.locator('.ds-tokens__primitive-colors-grid > .ds-tokens__card')).toHaveCount(
-    38,
+    39,
   );
   await expect(
     page.locator('.ds-tokens__primitive-colors-grid .ds-tokens__css-name code'),
   ).toHaveText([
     '--color-neutral-100',
+    '--color-neutral-150',
     '--color-neutral-200',
     '--color-neutral-300',
     '--color-neutral-400',
@@ -267,19 +268,19 @@ test('design-system homepage is noindex, keyboard-accessible, and has no default
   ]);
   await expect(
     page.locator('.ds-tokens__primitive-colors-grid .ds-tokens__primitive-color-swatch'),
-  ).toHaveCount(38);
+  ).toHaveCount(39);
   await expect(
     page.locator('.ds-tokens__primitive-colors-grid .ds-tokens__primitive-color-swatch').first(),
   ).toHaveCSS('background-color', 'rgb(250, 250, 250)');
   await expect(
-    page.locator('.ds-tokens__primitive-colors-grid .ds-tokens__primitive-color-swatch').nth(11),
+    page.locator('.ds-tokens__primitive-colors-grid .ds-tokens__primitive-color-swatch').nth(12),
   ).toHaveCSS('background-color', 'rgb(255, 250, 235)');
   await expect(
     page.locator('.ds-tokens__primitive-colors-grid .ds-tokens__primitive-color-swatch').last(),
   ).toHaveCSS('background-color', 'rgb(52, 60, 0)');
   await expect(page.getByRole('heading', { level: 3, name: 'Spacing' })).toBeVisible();
   await expect(page.locator('.ds-tokens__spacing-grid')).toHaveCSS('display', 'grid');
-  await expect(page.locator('.ds-tokens__spacing-grid > .ds-tokens__card')).toHaveCount(13);
+  await expect(page.locator('.ds-tokens__spacing-grid > .ds-tokens__card')).toHaveCount(14);
   await expect(page.locator('.ds-tokens__spacing-grid .ds-tokens__css-name code')).toHaveText([
     '--spacing-none',
     '--spacing-xs',
@@ -294,9 +295,10 @@ test('design-system homepage is noindex, keyboard-accessible, and has no default
     '--spacing-wrapper-default',
     '--spacing-gutter-default',
     '--spacing-section-default',
+    '--spacing-xxs',
   ]);
-  await expect(page.locator('.ds-tokens__spacing-grid .ds-tokens__values')).toHaveCount(13);
-  await expect(page.locator('.ds-tokens__spacing-grid .ds-tokens__spacing-sample')).toHaveCount(26);
+  await expect(page.locator('.ds-tokens__spacing-grid .ds-tokens__values')).toHaveCount(14);
+  await expect(page.locator('.ds-tokens__spacing-grid .ds-tokens__spacing-sample')).toHaveCount(28);
   const spacingSamplesByMode = await page
     .locator('.ds-tokens__spacing-grid > .ds-tokens__card')
     .evaluateAll((cards) =>
@@ -359,6 +361,10 @@ test('design-system homepage is noindex, keyboard-accessible, and has no default
     [
       { mode: 'desktop', width: '80px' },
       { mode: 'mobile', width: '40px' },
+    ],
+    [
+      { mode: 'desktop', width: '4px' },
+      { mode: 'mobile', width: '4px' },
     ],
   ]);
   await expect(page.getByRole('heading', { level: 3, name: 'Global size tokens' })).toBeVisible();
@@ -483,7 +489,7 @@ test('design-system homepage is noindex, keyboard-accessible, and has no default
   await expect(page.locator('body > main#contenido')).toHaveCount(1);
   await expect(page.locator('body > footer')).toHaveCount(1);
   await expect(page.locator('.site-header > .site-header__wrapper.wrapper')).toHaveCount(1);
-  await expect(page.locator('.site-footer > .wrapper > .site-footer__inner')).toHaveCount(1);
+  await expect(page.locator('.footer-01 > .footer-01__wrapper.wrapper')).toHaveCount(1);
   await expect(page.locator('main > section > .wrapper')).toHaveCount(2);
   await expect(
     page.locator(
@@ -495,7 +501,7 @@ test('design-system homepage is noindex, keyboard-accessible, and has no default
   );
   await expect(page.locator('.site-header')).toHaveCSS('padding-top', '16px');
   await expect(page.locator('.site-header__logo')).toHaveCSS('height', '32px');
-  await expect(page.locator('.site-footer')).toHaveCSS('padding-top', '40px');
+  await expect(page.locator('.footer-01')).toHaveCSS('padding-top', '40px');
   await expect(page.locator('main > section').first()).toHaveCSS('padding-top', '80px');
   await expect(page.locator('html')).toHaveClass(/(?:^|\s)site(?:\s|$)/);
   await expect(page.locator('html')).toHaveClass(/site--sticky-header/);
@@ -535,18 +541,18 @@ test('design-system homepage is noindex, keyboard-accessible, and has no default
   await expect(page.locator('.site-header__wrapper')).toHaveCSS('border-width', '0px');
   await expect(page.locator('.design-system-preview__intro')).toHaveCSS('border-width', '0px');
   await expect(page.locator('.wrapper').first()).toHaveCSS('outline-style', 'none');
-  await expect(page.locator('.site-footer__inner')).toHaveCSS('display', 'grid');
+  await expect(page.locator('.footer-01__wrapper')).toHaveCSS('display', 'grid');
   await expect(page.locator('.back-to-top')).toHaveCSS('position', 'fixed');
   await expect(page.locator('.container')).toHaveCount(0);
-  await expect(page.getByRole('link', { name: 'Nombre del cliente' })).toHaveAttribute('href', '/');
-  await expect(page.getByRole('img', { name: 'Nombre del cliente' })).toHaveAttribute(
-    'src',
-    '/brand/brand-logo.svg',
-  );
-  await expect(page.getByRole('img', { name: 'Nombre del cliente' })).toHaveAttribute(
-    'width',
-    '1620',
-  );
+  await expect(
+    page.locator('body > header').getByRole('link', { name: 'Nombre del cliente' }),
+  ).toHaveAttribute('href', '/');
+  await expect(
+    page.locator('body > header').getByRole('img', { name: 'Nombre del cliente' }),
+  ).toHaveAttribute('src', '/brand/brand-logo.svg');
+  await expect(
+    page.locator('body > header').getByRole('img', { name: 'Nombre del cliente' }),
+  ).toHaveAttribute('width', '1620');
   await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(
     'href',
     'https://example.com/',
@@ -577,19 +583,19 @@ test('design-system homepage is noindex, keyboard-accessible, and has no default
   await expect(page.locator('.wrapper').first()).toHaveCSS('padding-left', '64px');
   expect(
     await page
-      .locator('.site-footer__inner')
+      .locator('.footer-01__wrapper')
       .evaluate((element) => getComputedStyle(element).gridTemplateColumns.split(' ').length),
   ).toBe(1);
   await page.setViewportSize({ width: 768, height: 900 });
   expect(
     await page
-      .locator('.site-footer__inner')
+      .locator('.footer-01__wrapper')
       .evaluate((element) => getComputedStyle(element).gridTemplateColumns.split(' ').length),
   ).toBe(2);
   await page.setViewportSize({ width: 991, height: 900 });
   expect(
     await page
-      .locator('.site-footer__inner')
+      .locator('.footer-01__wrapper')
       .evaluate((element) => getComputedStyle(element).gridTemplateColumns.split(' ').length),
   ).toBe(2);
   await page.setViewportSize({ width: 576, height: 900 });
@@ -606,7 +612,7 @@ test('design-system homepage is noindex, keyboard-accessible, and has no default
   await expect(page.locator('.wrapper').first()).toHaveCSS('max-width', '1440px');
   expect(
     await page
-      .locator('.site-footer__inner')
+      .locator('.footer-01__wrapper')
       .evaluate((element) => getComputedStyle(element).gridTemplateColumns.split(' ').length),
   ).toBe(2);
   expect(thirdPartyRequests).toEqual([]);

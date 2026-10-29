@@ -1,0 +1,257 @@
+---
+import { siteConfig } from '../../config/client-config';
+
+export interface FooterLink {
+  label: string;
+  href: string;
+}
+
+interface Props {
+  title?: string;
+  description?: string;
+  pages?: FooterLink[];
+  socialLinks?: FooterLink[];
+  phone?: string;
+  address?: string;
+  legalEntity?: string;
+}
+
+const {
+  title,
+  description,
+  pages = [],
+  socialLinks = Object.entries(siteConfig.social).map(([label, href]) => ({ label, href })),
+  phone = siteConfig.contact.phone,
+  address,
+  legalEntity = siteConfig.name,
+} = Astro.props;
+
+const contactItems = [
+  {
+    value: siteConfig.contact.email,
+    href: `mailto:${siteConfig.contact.email}`,
+    icon: '/images/footer-01/contact-email.svg',
+    width: 20.305,
+    height: 16.305,
+  },
+  ...(phone
+    ? [
+        {
+          value: phone,
+          href: `tel:${phone.replaceAll(/[^+\d]/g, '')}`,
+          icon: '/images/footer-01/contact-phone.svg',
+          width: 18.305,
+          height: 18.305,
+        },
+      ]
+    : []),
+  ...(address
+    ? [
+        {
+          value: address,
+          icon: '/images/footer-01/contact-location.svg',
+          width: 18.305,
+          height: 18.305,
+        },
+      ]
+    : []),
+];
+---
+
+<footer class="footer-01 section">
+  <div class="footer-01__wrapper wrapper">
+    <div class="footer-01__identity">
+      <a class="footer-01__logo-link" href="/">
+        <img
+          class="footer-01__logo"
+          src={siteConfig.brand.logo}
+          width={siteConfig.brand.logoWidth}
+          height={siteConfig.brand.logoHeight}
+          alt={siteConfig.name}
+          loading="eager"
+          decoding="async"
+        />
+      </a>
+      <div class="footer-01__main-texts">
+        {title && <p class="footer-01__title">{title}</p>}
+        {description && <p class="footer-01__description">{description}</p>}
+      </div>
+    </div>
+
+    <div class="footer-01__content">
+      <div class="footer-01__info">
+        {pages.length > 0 && (
+          <nav class="footer-01__link-group stack-xs" aria-label="Páginas">
+            <p class="footer-01__info-label">Páginas</p>
+            <ul class="footer-01__link-list stack-xs">
+              {pages.map((page) => (
+                <li>
+                  <a href={page.href}>{page.label}</a>
+                </li>
+              ))}
+            </ul>
+          </nav>
+        )}
+        {socialLinks.length > 0 && (
+          <nav class="footer-01__link-group stack-xs" aria-label="Síguenos">
+            <p class="footer-01__info-label">Síguenos</p>
+            <ul class="footer-01__link-list stack-xs">
+              {socialLinks.map((socialLink) => (
+                <li>
+                  <a href={socialLink.href}>{socialLink.label}</a>
+                </li>
+              ))}
+            </ul>
+          </nav>
+        )}
+        <address class="footer-01__contact stack-xs">
+          <p class="footer-01__info-label">Contact</p>
+          <ul class="footer-01__contact-list stack-xs">
+            {contactItems.map((item) => (
+              <li class="footer-01__contact-item">
+                <img
+                  class="footer-01__contact-icon"
+                  src={item.icon}
+                  width={item.width}
+                  height={item.height}
+                  alt=""
+                  decoding="async"
+                />
+                {item.href ? <a href={item.href}>{item.value}</a> : <span>{item.value}</span>}
+              </li>
+            ))}
+          </ul>
+        </address>
+      </div>
+      <div class="footer-01__legal">
+        <nav aria-label={siteConfig.legal.navigationLabel}>
+          <ul class="footer-01__legal-list">
+            {siteConfig.legal.pages.map((page) => (
+              <li>
+                <a href={page.href}>{page.label}</a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+        <p class="footer-01__copyright">
+          © {new Date().getFullYear()} {legalEntity}
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .footer-01 {
+    padding-block: var(--spacing-xl);
+    background: var(--color-surface-default);
+  }
+
+  .footer-01__wrapper {
+    display: grid;
+    gap: var(--spacing-gutter-default);
+  }
+
+  .footer-01__identity,
+  .footer-01__content {
+    display: flex;
+    flex: 1 1 0;
+    flex-direction: column;
+    gap: var(--spacing-gutter-default);
+    min-width: 0;
+  }
+
+  .footer-01__main-texts {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xs);
+  }
+
+  .footer-01__logo-link {
+    width: 128px;
+  }
+
+  .footer-01__logo {
+    width: 100%;
+    height: auto;
+  }
+
+  .footer-01__title {
+    color: var(--color-text-secondary);
+    font-family: var(--font-family-title), sans-serif;
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-bold);
+    line-height: var(--font-leading-xl);
+  }
+
+  .footer-01__description {
+    color: var(--color-text-default);
+    font-size: var(--font-size-md);
+    line-height: var(--font-leading-lg);
+  }
+
+  .footer-01__info {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-gutter-default);
+  }
+
+  .footer-01__link-group,
+  .footer-01__contact {
+    min-width: max-content;
+  }
+
+  .footer-01__contact {
+    flex: 1 1 16rem;
+    font-style: normal;
+  }
+
+  .footer-01__info-label {
+    font-size: var(--font-size-lg);
+    line-height: var(--font-leading-xl);
+  }
+
+  .footer-01__link-list,
+  .footer-01__contact-list {
+    color: var(--color-text-secondary);
+    font-size: var(--font-size-md);
+    line-height: var(--font-leading-lg);
+  }
+
+  .footer-01__contact-list {
+    color: var(--color-text-default);
+  }
+
+  .footer-01__contact-item {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xxs);
+  }
+
+  .footer-01__contact-icon {
+    flex: 0 0 auto;
+  }
+
+  .footer-01__legal {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-gutter-default);
+    padding-block: var(--spacing-sm);
+    border-top: var(--border-size-sm) solid var(--color-border-secondary);
+    color: var(--color-text-secondary);
+    font-size: var(--font-size-sm);
+    line-height: var(--font-leading-md);
+  }
+
+  .footer-01__legal-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--spacing-gutter-default);
+  }
+
+  @media (min-width: 768px) {
+    .footer-01__wrapper {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+</style>

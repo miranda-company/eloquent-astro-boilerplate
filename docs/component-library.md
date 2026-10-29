@@ -8,10 +8,11 @@ The current visual source is the [Figma Design System project](https://www.figma
 
 For every approved pattern, record a direct Figma frame/component URL, its design approval status, the owning design contact, and the implementation below. The supplied link currently points to the general design-system page, not a specific hero frame. Add the approved frame link when the designer identifies it; do not claim pixel-level parity until it has been reviewed at the target viewports.
 
-| Pattern           | Figma reference                                                                                                                                             | Astro implementation                          | Content interface                                                        | Status                                            |
-| ----------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------- | ------------------------------------------------------------------------ | ------------------------------------------------- |
-| Marketing hero    | [Design-system file](https://www.figma.com/design/56g1RP9hV1uVFigLSQKHsC/Design-System?node-id=0-1&t=OgKJWWi7p2SpP6WS-1); specific approved hero frame: TBD | `src/components/site/MarketingHero.astro`     | Required title; optional eyebrow, description, action, and heading level | Initial implementation; visual approval pending   |
-| Homepage features | Figma frame: TBD                                                                                                                                            | `src/components/site/MarketingFeatures.astro` | Required section title and feature title/description pairs               | Existing starter pattern; visual approval pending |
+| Pattern           | Figma reference                                                                                                                                             | Astro implementation                          | Content interface                                                                                                       | Status                                            |
+| ----------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------- |
+| Marketing hero    | [Design-system file](https://www.figma.com/design/56g1RP9hV1uVFigLSQKHsC/Design-System?node-id=0-1&t=OgKJWWi7p2SpP6WS-1); specific approved hero frame: TBD | `src/components/site/MarketingHero.astro`     | Required title; optional eyebrow, description, action, and heading level                                                | Initial implementation; visual approval pending   |
+| Homepage features | Figma frame: TBD                                                                                                                                            | `src/components/site/MarketingFeatures.astro` | Required section title and feature title/description pairs                                                              | Existing starter pattern; visual approval pending |
+| Footer 01         | [Footer-01](https://www.figma.com/design/56g1RP9hV1uVFigLSQKHsC/Design-System?node-id=99-47&m=dev)                                                          | `src/components/site/Footer-01.astro`         | Configured brand, contact and legal details; optional title, description, page, social, address, and legal-entity props | Initial implementation; visual approval pending   |
 
 ## First pattern: marketing hero
 
@@ -35,6 +36,12 @@ The module owns its section markup and BEM styles. It consumes Figma semantic co
 ## Homepage feature grid
 
 The starter homepage uses `MarketingFeatures.astro` for a three-card feature section. Its interface accepts a section `title` and an array of feature `title`/`description` pairs. The module owns its section layout and card styles; keep the actual copy in the MDX page. Its current presentation is a starter example and still needs a direct approved Figma frame before claiming design parity.
+
+## Footer 01
+
+`Footer-01.astro` is a reusable footer pattern, distinct from the starter's existing shared footer. It uses configured brand, contact, and legal data by default. Supply its optional props for client-specific marketing copy, primary-page links, social links, a phone number, an address, or a legal-entity name. It intentionally omits empty navigation groups rather than rendering placeholder links.
+
+The three contact icons are final Figma assets in `public/images/footer-01/`. Keep them local and retain their intrinsic SVG dimensions. The component uses native navigation, list, and address semantics; its visual labels are Spanish to match the starter locale.
 
 ## Adding or changing a pattern
 
