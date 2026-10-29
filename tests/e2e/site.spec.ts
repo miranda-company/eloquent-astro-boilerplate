@@ -3,6 +3,42 @@ import AxeBuilder from '@axe-core/playwright';
 
 const legalRoutes = ['/aviso-legal/', '/politica-de-privacidad/', '/politica-de-cookies/'];
 
+test('production wireframe aid stays off until the root modifier is applied', async ({ page }) => {
+  await page.goto('/');
+  await expect(page.locator('html')).not.toHaveClass(/site--wireframe/);
+  const wireBorder = await page.evaluate(() => {
+    const probe = document.createElement('div');
+    probe.style.border = 'var(--wire-size) solid var(--color-wire)';
+    document.body.append(probe);
+    const computed = getComputedStyle(probe);
+    const result = { width: computed.borderTopWidth, color: computed.borderTopColor };
+    probe.remove();
+    return result;
+  });
+  const standardBorderWidth = await page.evaluate(() => {
+    const probe = document.createElement('div');
+    probe.style.border = 'var(--border-size-sm) solid transparent';
+    document.body.append(probe);
+    const width = getComputedStyle(probe).borderTopWidth;
+    probe.remove();
+    return width;
+  });
+  const header = page.locator('.site-header');
+  const wrapper = page.locator('.site-header__wrapper');
+  await expect(header).toHaveCSS('border-bottom-width', standardBorderWidth);
+  await expect(header).toHaveCSS('border-bottom-color', 'rgb(163, 163, 163)');
+  await expect(wrapper).toHaveCSS('border-width', '0px');
+  await page.locator('html').evaluate((element) => element.classList.add('site--wireframe'));
+  await expect(header).toHaveCSS('border-bottom-width', wireBorder.width);
+  await expect(header).toHaveCSS('border-bottom-color', wireBorder.color);
+  await expect(wrapper).toHaveCSS('border-width', wireBorder.width);
+  await page.locator('html').evaluate((element) => element.classList.remove('site--wireframe'));
+  await expect(header).toHaveCSS('border-bottom-width', standardBorderWidth);
+  await expect(header).toHaveCSS('border-bottom-color', 'rgb(163, 163, 163)');
+  await expect(header).toHaveCSS('border-top-width', '0px');
+  await expect(wrapper).toHaveCSS('border-width', '0px');
+});
+
 test('design-system homepage is noindex, keyboard-accessible, and has no default third-party requests', async ({
   page,
 }) => {
@@ -415,38 +451,13 @@ test('design-system homepage is noindex, keyboard-accessible, and has no default
   await expect(page.locator('main > section.ds-tokens > .ds-tokens__wrapper.wrapper')).toHaveCount(
     1,
   );
-  const wireBorder = await page.evaluate(() => {
-    const probe = document.createElement('div');
-    probe.style.border = 'var(--wire-size) solid var(--color-wire)';
-    document.body.append(probe);
-    const computed = getComputedStyle(probe);
-    const result = { width: computed.borderTopWidth, color: computed.borderTopColor };
-    probe.remove();
-    return result;
-  });
-  const standardBorderWidth = await page.evaluate(() => {
-    const probe = document.createElement('div');
-    probe.style.border = 'var(--border-size-sm) solid transparent';
-    document.body.append(probe);
-    const width = getComputedStyle(probe).borderTopWidth;
-    probe.remove();
-    return width;
-  });
   await expect(page.locator('.site-header')).toHaveCSS('padding-top', '16px');
-  await expect(page.locator('.site-header')).toHaveCSS('border-bottom-width', wireBorder.width);
   await expect(page.locator('.site-header__logo')).toHaveCSS('height', '32px');
   await expect(page.locator('.site-footer')).toHaveCSS('padding-top', '40px');
   await expect(page.locator('main > section').first()).toHaveCSS('padding-top', '80px');
   await expect(page.locator('html')).toHaveClass(/(?:^|\s)site(?:\s|$)/);
   await expect(page.locator('html')).toHaveClass(/site--sticky-header/);
-  await expect(page.locator('html')).toHaveClass(/site--wireframe/);
-  await expect(page.locator('.site-header')).toHaveCSS('border-bottom-color', wireBorder.color);
-  await page.locator('html').evaluate((element) => element.classList.remove('site--wireframe'));
-  await expect(page.locator('.site-header')).toHaveCSS('border-bottom-width', standardBorderWidth);
-  await expect(page.locator('.site-header')).toHaveCSS('border-bottom-color', 'rgb(163, 163, 163)');
-  await expect(page.locator('.site-header')).toHaveCSS('border-top-width', '0px');
-  await expect(page.locator('.site-header__wrapper')).toHaveCSS('border-width', '0px');
-  await page.locator('html').evaluate((element) => element.classList.add('site--wireframe'));
+  await expect(page.locator('html')).not.toHaveClass(/site--wireframe/);
   await expect(page.locator('body')).toHaveAttribute('id', 'top');
   await expect(page.locator('.back-to-top')).toHaveAttribute('href', '#top');
   await expect(page.locator('a.back-to-top')).toHaveAttribute('aria-label', 'Volver arriba');

@@ -115,4 +115,4 @@ Before approving a token update:
 4. Review the design-system preview at compact, medium, expanded, large, and extra-large widths.
 5. Run `pnpm run verify` and `pnpm run test:e2e`.
 
-Set `siteConfig.features.wireframe` to `false` before a production release.
+The wireframe aid is active only during development; production builds omit its root class even if `siteConfig.features.wireframe` is enabled. Set the flag to `false` after layout inspection and before a production release.

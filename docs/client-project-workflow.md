@@ -155,7 +155,7 @@ Use the root preview to review the complete system with the designer/client:
 - Buttons, cards, forms, states, focus styles, and contrast
 - Compact, medium, expanded, large, and extra-large layouts
 
-Use `siteConfig.features.wireframe = true` only for temporary layout inspection. Once the design system is approved, set it to `false`, record any intentional exceptions in the relevant documentation, and commit the configuration milestone.
+Use `siteConfig.features.wireframe = true` only for temporary layout inspection during development. The root wireframe class is omitted from production builds. Once the design system is approved, set the flag to `false`, record any intentional exceptions in the relevant documentation, and commit the configuration milestone.
 
 ### 5. Configure approved integrations only
 

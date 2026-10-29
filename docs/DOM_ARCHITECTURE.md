@@ -124,7 +124,7 @@ Use the block element class to identify the region or wrapper; use `.section` an
 
 The `.wrapper` maximum width comes from `--max-width-2xl`; horizontal padding comes from `--spacing-wrapper-default`. Top-level sections use `--spacing-section-default` for vertical padding.
 
-When `siteConfig.features.wireframe` is enabled, `site--wireframe` applies a border to each top-level section, the site header and footer, and each `.wrapper`. The border uses Figma's `--wire-size` and `--color-wire` tokens. Keep this as the shared wireframe modifier rather than adding a separate `.wire` class to every region.
+The wireframe aid is development-only. Set `siteConfig.features.wireframe` to `true` to add `site--wireframe` to the root element while running Astro in development; production builds omit the class even if the flag is enabled. The shared modifier outlines each top-level section, the site header and footer, and each `.wrapper`, using Figma's `--wire-size` and `--color-wire` tokens. Keep this as the shared wireframe modifier rather than adding a separate `.wire` class to every region. Turn the flag off after layout inspection is complete.
 
 Authored CSS class names use BEM: `block`, `block__element`, and `block--modifier`. For example, `.brand__mark--black` is the black variant of the `brand__mark` element. Keep styling in component-scoped or shared authored CSS, and use semantic custom properties for client-configurable values.
 
