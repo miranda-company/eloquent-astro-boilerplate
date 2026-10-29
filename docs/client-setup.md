@@ -77,7 +77,7 @@ Breakpoints are build-time custom-media aliases in `src/styles/breakpoints.css`,
 The boilerplate uses `/` as an internal, no-index preview. Once the public homepage is ready:
 
 1. Create `src/pages/design-system.astro` from the current `src/pages/index.astro` and keep `noindex` enabled.
-2. Replace `src/pages/index.astro` with the public homepage, usually by importing `MarketingHomepage.astro` or client-specific page components.
+2. Replace `src/pages/index.astro` with the public homepage using client-specific page components.
 3. Set `siteConfig.features.designSystemHomepage` to `false`. The sitemap then includes `/` and continues to exclude `/design-system/`.
 4. Update or add route tests, then run the full verification commands again.
 
