@@ -95,6 +95,12 @@ Do not use `--wire-size` for component borders outside wireframe mode. The Figma
 
 Do not reintroduce the removed `--color-primary`, `--space-*`, `--shadow-*`, or `--wrapper-gutter-*` tokens as compatibility aliases. Change call sites to the approved exported token names. Keep component styles authored and scoped as before; the token migration does not imply a component-sync workflow.
 
+## Icons
+
+[Lucide](https://lucide.dev/) is the icon library for functional interface icons. Select the approved icon in the Lucide Figma plugin, then use the matching named component from `@lucide/astro` in the implementation. Direct imports keep the static build tree-shaken and render the selected icon as inline SVG.
+
+Use the Figma-approved size and stroke settings, and let icons inherit their semantic `currentColor` from the owning component. Mark an icon decorative with `aria-hidden="true"` when adjacent text or an accessible parent control already conveys its meaning. For an icon-only action, give the interactive control an accessible name. Keep client logos, partner marks, and bespoke illustrations as approved local assets; Lucide does not replace them.
+
 ## Updating the snapshot
 
 When an approved Figma variable changes:
@@ -138,7 +144,7 @@ GSAP and ScrollTrigger are available for approved component-level motion, but th
 
 ## Brand assets
 
-Set `siteConfig.brand.logo` and `siteConfig.brand.icon` to public SVG paths, and keep their dimensions aligned with the SVG viewBox. Provide approved assets in `public/brand/` and confirm the header has meaningful alternative text through `siteConfig.name`.
+Set `siteConfig.brand.logo` and `siteConfig.brand.icon` to public SVG paths, and keep their dimensions aligned with the SVG viewBox. Provide approved assets in `public/brand/` and confirm the header has meaningful alternative text through `siteConfig.name`. Brand assets are distinct from functional Lucide icons.
 
 ## Review checklist
 

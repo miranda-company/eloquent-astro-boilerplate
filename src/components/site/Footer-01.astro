@@ -1,4 +1,5 @@
 ---
+import { Mail, MapPin, Phone } from '@lucide/astro';
 import { siteConfig } from '../../config/client-config';
 
 export interface FooterLink {
@@ -30,18 +31,14 @@ const contactItems = [
   {
     value: siteConfig.contact.email,
     href: `mailto:${siteConfig.contact.email}`,
-    icon: '/images/footer-01/contact-email.svg',
-    width: 20.305,
-    height: 16.305,
+    Icon: Mail,
   },
   ...(phone
     ? [
         {
           value: phone,
           href: `tel:${phone.replaceAll(/[^+\d]/g, '')}`,
-          icon: '/images/footer-01/contact-phone.svg',
-          width: 18.305,
-          height: 18.305,
+          Icon: Phone,
         },
       ]
     : []),
@@ -49,9 +46,7 @@ const contactItems = [
     ? [
         {
           value: address,
-          icon: '/images/footer-01/contact-location.svg',
-          width: 18.305,
-          height: 18.305,
+          Icon: MapPin,
         },
       ]
     : []),
@@ -107,16 +102,9 @@ const contactItems = [
         <address class="footer-01__contact stack-xs">
           <p class="footer-01__info-label">Contacto</p>
           <ul class="footer-01__contact-list stack-xs">
-            {contactItems.map((item) => (
+            {contactItems.map(({ Icon, ...item }) => (
               <li class="footer-01__contact-item">
-                <img
-                  class="footer-01__contact-icon"
-                  src={item.icon}
-                  width={item.width}
-                  height={item.height}
-                  alt=""
-                  decoding="async"
-                />
+                <Icon class="footer-01__contact-icon" size={24} aria-hidden="true" />
                 {item.href ? (
                   <a class="footer-01__contact-value" href={item.href}>
                     {item.value}

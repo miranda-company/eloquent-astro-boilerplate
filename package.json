@@ -46,6 +46,7 @@
     "zod": "^4.6.5"
   },
   "dependencies": {
+    "@lucide/astro": "^1.64.0",
     "gsap": "^3.15.0"
   }
 }

@@ -8,7 +8,7 @@ Footer 01 is a reusable responsive footer pattern for marketing sites. It groups
 
 - Figma: [Footer-01](https://www.figma.com/design/56g1RP9hV1uVFigLSQKHsC/Design-System?node-id=99-47&m=dev)
 - Astro component: `src/components/site/Footer-01.astro`
-- Local assets: `public/images/footer-01/contact-email.svg`, `contact-phone.svg`, and `contact-location.svg`
+- Contact icons: inline Lucide `Mail`, `Phone`, and `MapPin` components at 24px
 
 ## Interface and defaults
 
@@ -34,7 +34,7 @@ import Footer01 from '../components/site/Footer-01.astro';
 
 ## Implementation rules
 
-Keep the semantic `<footer>`, navigation lists, and contact `<address>` intact. The logo and contact icons are meaningful asset slots; retain their configured or intrinsic dimensions and use the local public assets. Keep visual labels in the configured site locale.
+Keep the semantic `<footer>`, navigation lists, and contact `<address>` intact. The logo remains a configured local asset with intrinsic dimensions. Contact icons are decorative Lucide SVGs: retain their approved 24px geometry and keep the contact value as the accessible name. Keep visual labels in the configured site locale.
 
 Use the component's scoped BEM styles and Figma-derived tokens. The outer footer uses `spacing-xl` and stacks through the shared `--xl` alias. Through the mobile and `--sm` ranges, the page, social, and contact groups form one column. From `--md` upward, they stay in three columns. At `--xl` and above, the wrapper becomes a 35% identity column and a 65% content column while retaining those three groups.
 

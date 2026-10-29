@@ -556,6 +556,19 @@ test('design-system homepage is noindex, keyboard-accessible, and has no default
   await expect(page.locator('.design-system-preview__intro')).toHaveCSS('border-width', '0px');
   await expect(page.locator('.wrapper').first()).toHaveCSS('outline-style', 'none');
   await expect(page.locator('.footer-01__wrapper')).toHaveCSS('display', 'grid');
+  const footerContactIcons = await page.locator('.footer-01__contact-icon').evaluateAll((icons) =>
+    icons.map((icon) => ({
+      ariaHidden: icon.getAttribute('aria-hidden'),
+      height: icon.getAttribute('height'),
+      tagName: icon.tagName,
+      width: icon.getAttribute('width'),
+    })),
+  );
+  expect(footerContactIcons).toEqual([
+    { ariaHidden: 'true', height: '24', tagName: 'svg', width: '24' },
+    { ariaHidden: 'true', height: '24', tagName: 'svg', width: '24' },
+    { ariaHidden: 'true', height: '24', tagName: 'svg', width: '24' },
+  ]);
   await expect(page.locator('.back-to-top')).toHaveCSS('position', 'fixed');
   await expect(page.locator('.container')).toHaveCount(0);
   await expect(
