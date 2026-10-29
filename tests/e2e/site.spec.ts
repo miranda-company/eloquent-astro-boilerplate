@@ -586,18 +586,28 @@ test('design-system homepage is noindex, keyboard-accessible, and has no default
       .locator('.footer-01__wrapper')
       .evaluate((element) => getComputedStyle(element).gridTemplateColumns.split(' ').length),
   ).toBe(1);
+  expect(
+    await page
+      .locator('.footer-01__info')
+      .evaluate((element) => getComputedStyle(element).gridTemplateColumns.split(' ').length),
+  ).toBe(1);
   await page.setViewportSize({ width: 768, height: 900 });
   expect(
     await page
       .locator('.footer-01__wrapper')
       .evaluate((element) => getComputedStyle(element).gridTemplateColumns.split(' ').length),
-  ).toBe(2);
+  ).toBe(1);
+  await expect(page.locator('.footer-01__info')).toHaveCSS('display', 'grid');
+  await expect(page.locator('.footer-01__info')).toHaveCSS('grid-template-columns', /.+ .+ .+/);
+  await expect(page.locator('.footer-01__contact')).toHaveCSS('grid-column-start', 'auto');
   await page.setViewportSize({ width: 991, height: 900 });
   expect(
     await page
       .locator('.footer-01__wrapper')
       .evaluate((element) => getComputedStyle(element).gridTemplateColumns.split(' ').length),
-  ).toBe(2);
+  ).toBe(1);
+  await expect(page.locator('.footer-01__info')).toHaveCSS('grid-template-columns', /.+ .+ .+/);
+  await expect(page.locator('.footer-01__contact')).toHaveCSS('grid-column-start', 'auto');
   await page.setViewportSize({ width: 576, height: 900 });
   await expect(page.locator('.wrapper').first()).toHaveCSS('padding-left', '64px');
   await page.setViewportSize({ width: 575, height: 900 });
@@ -615,6 +625,14 @@ test('design-system homepage is noindex, keyboard-accessible, and has no default
       .locator('.footer-01__wrapper')
       .evaluate((element) => getComputedStyle(element).gridTemplateColumns.split(' ').length),
   ).toBe(2);
+  const footerColumnWidths = await page
+    .locator('.footer-01__wrapper')
+    .evaluate((element) =>
+      getComputedStyle(element).gridTemplateColumns.split(' ').map(Number.parseFloat),
+    );
+  expect(footerColumnWidths[1] / footerColumnWidths[0]).toBeCloseTo(65 / 35, 2);
+  await expect(page.locator('.footer-01__info')).toHaveCSS('grid-template-columns', /.+ .+ .+/);
+  await expect(page.locator('.footer-01__contact')).toHaveCSS('grid-column-start', 'auto');
   expect(thirdPartyRequests).toEqual([]);
   await page.goto('/aviso-legal/');
   await page.setViewportSize({ width: 991, height: 900 });

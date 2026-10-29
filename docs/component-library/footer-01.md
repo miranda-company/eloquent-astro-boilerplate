@@ -36,7 +36,7 @@ import Footer01 from '../components/site/Footer-01.astro';
 
 Keep the semantic `<footer>`, navigation lists, and contact `<address>` intact. The logo and contact icons are meaningful asset slots; retain their configured or intrinsic dimensions and use the local public assets. Keep visual labels in the configured site locale.
 
-Use the component's scoped BEM styles and Figma-derived tokens. The outer footer uses `spacing-xl`; the wrapper becomes two equal columns from the `md` breakpoint (`768px`) and otherwise stacks. Keep responsive breakpoints in authored CSS, not client configuration.
+Use the component's scoped BEM styles and Figma-derived tokens. The outer footer uses `spacing-xl` and stacks through the `xl` breakpoint (`1200px`). Through the mobile and `sm` ranges, the page, social, and contact groups form one column. From `md` (`768px`) upward, they stay in three columns. At `xl` and above, the wrapper becomes a 35% identity column and a 65% content column while retaining those three groups. Keep responsive breakpoints in authored CSS, not client configuration.
 
 ## Verification
 

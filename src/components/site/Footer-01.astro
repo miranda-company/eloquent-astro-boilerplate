@@ -105,7 +105,7 @@ const contactItems = [
           </nav>
         )}
         <address class="footer-01__contact stack-xs">
-          <p class="footer-01__info-label">Contact</p>
+          <p class="footer-01__info-label">Contacto</p>
           <ul class="footer-01__contact-list stack-xs">
             {contactItems.map((item) => (
               <li class="footer-01__contact-item">
@@ -117,7 +117,13 @@ const contactItems = [
                   alt=""
                   decoding="async"
                 />
-                {item.href ? <a href={item.href}>{item.value}</a> : <span>{item.value}</span>}
+                {item.href ? (
+                  <a class="footer-01__contact-value" href={item.href}>
+                    {item.value}
+                  </a>
+                ) : (
+                  <span class="footer-01__contact-value">{item.value}</span>
+                )}
               </li>
             ))}
           </ul>
@@ -159,6 +165,7 @@ const contactItems = [
     flex-direction: column;
     gap: var(--spacing-gutter-default);
     min-width: 0;
+    padding-bottom: var(--spacing-lg);
   }
 
   .footer-01__main-texts {
@@ -191,18 +198,15 @@ const contactItems = [
   }
 
   .footer-01__info {
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
     gap: var(--spacing-gutter-default);
-  }
-
-  .footer-01__link-group,
-  .footer-01__contact {
-    min-width: max-content;
+    border-top: var(--border-size-sm) solid var(--color-border-default);
+    padding: var(--spacing-lg) 0;
   }
 
   .footer-01__contact {
-    flex: 1 1 16rem;
+    min-width: 0;
     font-style: normal;
   }
 
@@ -232,12 +236,17 @@ const contactItems = [
     flex: 0 0 auto;
   }
 
+  .footer-01__contact-value {
+    min-width: 0;
+    overflow-wrap: anywhere;
+  }
+
   .footer-01__legal {
     display: flex;
     flex-wrap: wrap;
     gap: var(--spacing-gutter-default);
-    padding-block: var(--spacing-sm);
-    border-top: var(--border-size-sm) solid var(--color-border-secondary);
+    padding-block: var(--spacing-md);
+    border-top: var(--border-size-sm) solid var(--color-border-default);
     color: var(--color-text-secondary);
     font-size: var(--font-size-sm);
     line-height: var(--font-leading-md);
@@ -250,8 +259,26 @@ const contactItems = [
   }
 
   @media (min-width: 768px) {
+    .footer-01__info {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(15rem, 1.5fr);
+      gap: var(--spacing-xl);
+    }
+  }
+
+  @media (min-width: 1200px) {
     .footer-01__wrapper {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
+      grid-template-columns: minmax(0, 35fr) minmax(0, 65fr);
+    }
+
+    .footer-01__identity,
+    .footer-01__content {
+      padding-bottom: var(--spacing-none);
+    }
+
+    .footer-01__info {
+      grid-template-columns: minmax(8rem, 1fr) minmax(8rem, 1fr) minmax(15rem, 2fr);
+      border-top: 0px;
+      padding-top: var(--spacing-none);
     }
   }
 </style>
