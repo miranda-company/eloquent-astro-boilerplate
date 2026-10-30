@@ -10,6 +10,7 @@ Its purpose is to make client-site delivery more consistent and easier to mainta
 - Typed client configuration in `src/config/client-config.ts`.
 - Figma is the source of truth for design tokens; a checked-in, typed variable snapshot emits CSS custom properties at build time.
 - Generic Figma primitive names and semantic color, typography, spacing, radius, and size variables remain stable across client rebrands.
+- Google Fonts generated from the approved Figma font-family and normal font-weight tokens, with `display=swap` and a system fallback.
 - A no-index design-system preview shows font-size, semantic-color, primitive-color, spacing, and global-size token grids with their mode values and CSS properties.
 - Shared responsive styles use the mobile-first custom-media aliases in `src/styles/breakpoints.css`; their thresholds are documented in `docs/design-system.md`.
 - Reusable Astro patterns with explicit typed interfaces, starting with Footer-01 linked to its Figma design reference.

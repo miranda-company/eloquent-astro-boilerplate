@@ -4,7 +4,7 @@ import Footer from '../components/site/Footer-01.astro';
 import Header from '../components/site/Header.astro';
 import JsonLd from '../components/seo/JsonLd.astro';
 import ScrollControls from '../components/site/ScrollControls.astro';
-import { getFigmaTokenStyles } from '../config/figma-tokens-adapter';
+import { getFigmaTokenStyles, getGoogleFontsStylesheetUrl } from '../config/figma-tokens-adapter';
 import { siteConfig } from '../config/client-config';
 import '../styles/global.css';
 
@@ -27,6 +27,7 @@ const {
 const canonical = new URL(Astro.url.pathname, siteConfig.url).toString();
 const socialImage = image ? new URL(image, siteConfig.url).toString() : undefined;
 const figmaTokenStyles = getFigmaTokenStyles();
+const googleFontsStylesheetUrl = getGoogleFontsStylesheetUrl();
 ---
 
 <!doctype html>
@@ -44,6 +45,9 @@ const figmaTokenStyles = getFigmaTokenStyles();
     <style is:global set:html={figmaTokenStyles}></style>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href={googleFontsStylesheetUrl} />
     <link rel="icon" href={siteConfig.brand.icon} type="image/svg+xml" />
     <meta name="description" content={description} />
     {noindex && <meta name="robots" content="noindex, nofollow" />}

@@ -35,6 +35,8 @@ At client kickoff, move the preview to `/design-system` and restore `/` as the m
 
 Breakpoints are intentionally excluded from client configuration: `breakpoints.css` is their build-time source of truth. The shared wrapper rules live in `global.css`; responsive details stay with the owning module and use the same custom-media aliases.
 
+Google Font family names and normal weights remain Figma tokens. `BaseLayout.astro` emits the generated preconnect and stylesheet links with `display=swap`; italic loading requires a future explicit Figma token contract.
+
 ## Metadata and structured data
 
 `BaseLayout.astro` owns the canonical URL, description, Open Graph metadata, and Twitter card metadata. It accepts an optional `image`, `ogType`, and `structuredData` prop so individual public routes can supply accurate page data without duplicating document-head markup. `structuredData` is intentionally suppressed on `noindex` pages.

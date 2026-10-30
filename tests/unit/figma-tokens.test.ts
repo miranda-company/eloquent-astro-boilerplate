@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import {
+  createGoogleFontsStylesheetUrl,
   getFigmaTokenCollections,
   getFigmaTokenCssName,
   getFigmaTokenSource,
@@ -126,7 +127,32 @@ describe('Figma design tokens', () => {
     expect(styles).toContain('--spacing-wrapper-default: 18px;');
     expect(styles).toContain('--spacing-wrapper-default-tablet: 32px;');
     expect(styles).toContain('--spacing-wrapper-default-desktop: 64px;');
-    expect(styles).toContain('--font-family-body: "Helvetica Neue";');
+    const bodyFamily = getFigmaTokenCollections()
+      .find(({ name }) => name === 'Font tokens')!
+      .variables.find(({ name }) => name === 'font-family-body')!.modes.desktop;
+    expect(typeof bodyFamily).toBe('string');
+    expect(styles).toContain(`--font-family-body: "${bodyFamily}";`);
     expect(styles).toContain('--font-weight-bold: 700;');
+  });
+
+  it('builds a deduplicated Google Fonts request from Figma font weights', () => {
+    const sameFamilyUrl = new URL(
+      createGoogleFontsStylesheetUrl(
+        { title: 'IBM Plex Mono', body: 'IBM Plex Mono' },
+        [700, 400, 700, 100, 900],
+      ),
+    );
+    expect(sameFamilyUrl.searchParams.getAll('family')).toEqual([
+      'IBM Plex Mono:wght@100;400;700;900',
+    ]);
+    expect(sameFamilyUrl.searchParams.get('display')).toBe('swap');
+
+    const distinctFamiliesUrl = new URL(
+      createGoogleFontsStylesheetUrl({ title: 'DM Sans', body: 'IBM Plex Mono' }, [400, 700]),
+    );
+    expect(distinctFamiliesUrl.searchParams.getAll('family')).toEqual([
+      'DM Sans:wght@400;700',
+      'IBM Plex Mono:wght@400;700',
+    ]);
   });
 });
