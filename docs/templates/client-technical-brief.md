@@ -49,7 +49,7 @@
 | Icon SVG path/source                | `[Path or URL]`                                                     |
 | Logo intrinsic dimensions           | `[width × height]`                                                  |
 | Icon intrinsic dimensions           | `[width × height]`                                                  |
-| Font family and source/licence      | `[System font / details]`                                           |
+| Google Font families and weights    | `[Figma families; approved normal weights]`                         |
 | Colour palette source               | `[Figma URL / file path]`                                           |
 | Approved component/frame links      | `[Direct Figma node links; include hero and key reusable patterns]` |
 | Design owner and approval status    | `[Name / role; Not started / In review / Approved]`                 |

@@ -1,7 +1,13 @@
+import { readFileSync } from 'node:fs';
+import { resolve } from 'node:path';
 import { expect, test } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
 
 const legalRoutes = ['/aviso-legal/', '/politica-de-privacidad/', '/politica-de-cookies/'];
+const figmaTokens = JSON.parse(
+  readFileSync(resolve(process.cwd(), 'src/config/figma-tokens.json'), 'utf8'),
+) as { 'font-tokens': { 'font-family-body': { desktop: string } } };
+const bodyFontFamily = figmaTokens['font-tokens']['font-family-body'].desktop;
 
 test('production wireframe aid stays off until the root modifier is applied', async ({ page }) => {
   await page.goto('/');
@@ -79,7 +85,7 @@ test('stack layout uses the default responsive gutter token', async ({ page }) =
   }
 });
 
-test('design-system homepage is noindex, keyboard-accessible, and has no default third-party requests', async ({
+test('design-system homepage is noindex, keyboard-accessible, and has no default analytics requests', async ({
   page,
 }) => {
   const thirdPartyRequests: string[] = [];
@@ -596,10 +602,19 @@ test('design-system homepage is noindex, keyboard-accessible, and has no default
   await expect(page.locator('meta[name="twitter:card"]')).toHaveAttribute('content', 'summary');
   await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content', 'noindex, nofollow');
   await expect(page.locator('script[type="application/ld+json"]')).toHaveCount(0);
+  await expect(
+    page.locator('link[rel="preconnect"][href="https://fonts.googleapis.com"]'),
+  ).toHaveCount(1);
+  await expect(
+    page.locator('link[rel="preconnect"][href="https://fonts.gstatic.com"]'),
+  ).toHaveCount(1);
+  await expect(
+    page.locator('link[rel="stylesheet"][href*="fonts.googleapis.com/css2"]'),
+  ).toHaveCount(1);
   await page.getByText('Saltar al contenido').focus();
   await page.keyboard.press('Enter');
   await expect(page.locator('#contenido')).toBeFocused();
-  await expect(page.locator('html')).toHaveCSS('--font-family-body', '"Helvetica Neue"');
+  await expect(page.locator('html')).toHaveCSS('--font-family-body', `"${bodyFontFamily}"`);
   await page.evaluate(() => window.scrollTo(0, 300));
   await expect(page.locator('.site-header')).toHaveClass(/site-header--sticky/);
   await expect(page.locator('.site-header')).toHaveCSS('position', 'sticky');

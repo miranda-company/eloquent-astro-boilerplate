@@ -8,6 +8,7 @@ const tokenSnapshotSchema = z.record(
 );
 type TokenValue = z.infer<typeof tokenValueSchema>;
 type TokenCollection = Record<string, Record<string, TokenValue>>;
+type FontRole = 'title' | 'body';
 
 const tokens = tokenSnapshotSchema.parse(tokenSnapshot);
 
@@ -139,6 +140,54 @@ export function getFigmaTokenSource(): string {
 
 export function getFigmaTokenCssName(name: string): string {
   return cssName(name);
+}
+
+function getFigmaFontFamilies(): Record<FontRole, string> {
+  const fontTokens = tokens['font-tokens'];
+  if (!fontTokens) throw new Error('Missing Figma font tokens');
+
+  return Object.fromEntries(
+    (['title', 'body'] as FontRole[]).map((role) => {
+      const family = fontTokens[`font-family-${role}`]?.desktop;
+      if (typeof family !== 'string' || !family) {
+        throw new Error(`Missing Figma font family token: font-family-${role}`);
+      }
+      return [role, family];
+    }),
+  ) as Record<FontRole, string>;
+}
+
+function getFigmaFontWeights(): number[] {
+  const fontTokens = tokens['font-tokens'];
+  if (!fontTokens) throw new Error('Missing Figma font tokens');
+
+  const weights = Object.entries(fontTokens)
+    .filter(([name]) => name.startsWith('font-weight-'))
+    .map(([, modes]) => modes.desktop)
+    .filter((value): value is number => typeof value === 'number');
+  if (weights.length === 0) throw new Error('Missing Figma font weight tokens');
+
+  return [...new Set(weights)].sort((left, right) => left - right);
+}
+
+export function createGoogleFontsStylesheetUrl(
+  families: Record<FontRole, string>,
+  weights: number[],
+): string {
+  const uniqueFamilies = [...new Set(Object.values(families))];
+  const uniqueWeights = [...new Set(weights)].sort((left, right) => left - right);
+
+  if (uniqueWeights.length === 0) throw new Error('Google Fonts requires at least one weight');
+
+  const params = new URLSearchParams({ display: 'swap' });
+  for (const family of uniqueFamilies) {
+    params.append('family', `${family}:wght@${uniqueWeights.join(';')}`);
+  }
+  return `https://fonts.googleapis.com/css2?${params.toString()}`;
+}
+
+export function getGoogleFontsStylesheetUrl(): string {
+  return createGoogleFontsStylesheetUrl(getFigmaFontFamilies(), getFigmaFontWeights());
 }
 
 export function validateFigmaTokenSnapshot(): void {

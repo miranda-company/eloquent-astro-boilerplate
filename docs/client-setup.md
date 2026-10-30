@@ -16,8 +16,8 @@ Edit `src/config/client-config.ts` first.
 1. Replace `public/brand/brand-logo.svg` and `public/brand/brand-icon.svg` with single-colour vector SVGs. Update `siteConfig.brand` if the names, paths, or intrinsic dimensions change.
 2. Prepare final web-ready raster derivatives before adding them to the project: choose format, dimensions, crop, and compression. Store them in `public/images/`; Astro copies these assets unchanged.
 3. Keep original source assets in the agency asset library, not in the public build. When you prepare responsive variants, add deliberate `srcset` and `sizes` values in the native `<img>` or `<picture>` markup.
-4. Confirm the font family variables in the approved Figma file and add the approved local font-loading implementation if required.
-5. Confirm the header logo, monochrome brand preview, and fallback typography render correctly.
+4. Confirm the title/body family and `font-weight-*` tokens in the approved Figma file. Keep only approved available normal Google Font weights in that snapshot; italic loading requires a separate Figma token contract.
+5. Confirm the header logo, monochrome brand preview, loaded Google Fonts, and fallback typography render correctly.
 6. Confirm the sticky header, back-to-top link, and in-page hash links work at the approved breakpoints. The back-to-top control must remain behind the cookie banner while consent is pending.
 
 ## 3. Configure tokens from Figma
@@ -26,7 +26,7 @@ Edit `src/config/client-config.ts` first.
 2. Replace `src/config/figma-tokens.json` with the approved Figma variable export. Preserve variable names and mode values; do not hand-edit token values in `client-config.ts`.
 3. Use the internal preview to review the resulting CSS names, values, and modes. See [design-system.md](design-system.md) for the export and validation rules.
 4. Add missing token roles to Figma and get design approval before adding their values to code. Do not invent code-only tokens.
-5. Add approved fonts locally when required and verify their use with the Figma family tokens.
+5. Verify the Figma font-family and weight tokens against the selected Google Font before export.
 6. Keep the approved Figma project link and direct component/frame links in the relevant pattern document under `docs/component-library/`. Component synchronization is a separate workflow.
 
 ## 4. Add content and legal copy

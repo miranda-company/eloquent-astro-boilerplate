@@ -140,7 +140,7 @@ Edit `src/config/client-config.ts` first.
 1. Treat the approved Figma variables as the source of truth for token names, values, and modes. Preserve the generic primitive names so client projects replace values without changing CSS references.
 2. Replace `src/config/figma-tokens.json` with the approved Figma export. Keep the checked-in data aligned with the variable collections; do not hand-edit token values in `client-config.ts` or add code-only roles.
 3. Keep site identity, URLs, contacts, and feature flags in `client-config.ts`; keep design-token values only in the Figma snapshot and emit their CSS properties through the token adapter.
-4. Confirm font assets/licensing with the client and add the approved font-loading implementation when the Figma family is not locally available. Keep a generic sans-serif fallback.
+4. Confirm the approved Google Font families and weights with the client. Keep families and normal weights in the Figma snapshot, verify each weight exists in Google Fonts, and retain the generic sans-serif fallback. Italics require a separate Figma token contract.
 5. Use the internal preview to review primitive and semantic values and available color/spacing modes before page work begins.
 6. If the design requires a token absent from the minimal Figma system, add and approve it in Figma first; update the snapshot and code together.
 7. Keep breakpoint aliases in authored CSS, not token or site configuration. `src/styles/breakpoints.css` is the shared source; the wrapper uses `max-width-2xl` and `spacing-wrapper-default` while its responsive rule stays in `src/styles/global.css`.

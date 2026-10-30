@@ -14,6 +14,10 @@ Copy `.env.example` to `.env` only when an approved integration needs it.
 
 These values are public by design. Never place API keys, secrets, provider private keys, or credentials in a `PUBLIC_` variable.
 
+## Google Fonts
+
+Google Fonts loads from the document head without analytics consent so approved typography is available during initial rendering. Figma supplies the `font-family-title`, `font-family-body`, and normal `font-weight-*` tokens used to build the request. Review this external request and confirm every selected weight is available for the selected family with the client’s privacy and legal owners before launch. Italics require a separate Figma token contract.
+
 ## Consent and analytics
 
 `ConsentManager.astro` stores the visitor choice in `localStorage` under `site-cookie-consent`. Optional analytics is loaded only when all of the following are true:
