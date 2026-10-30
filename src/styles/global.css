@@ -32,8 +32,16 @@ ul {
 }
 
 a {
-  color: inherit;
+  color: var(--color-text-link-default);
   text-decoration: inherit;
+}
+
+a:hover {
+  color: var(--color-text-link-hover);
+}
+
+a:active {
+  color: var(--color-text-link-active);
 }
 
 button,
@@ -63,7 +71,7 @@ table {
 }
 
 html.site--sticky-header {
-  scroll-padding-top: calc(var(--spacing-8) + var(--spacing-1));
+  scroll-padding-top: calc(var(--size-8) + var(--size-1));
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -99,7 +107,7 @@ h2 {
 }
 
 :focus-visible {
-  outline: 3px solid var(--color-wire);
+  outline: 3px solid var(--color-border-focus);
   outline-offset: 3px;
 }
 

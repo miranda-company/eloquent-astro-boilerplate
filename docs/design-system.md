@@ -30,15 +30,15 @@ Keep token names stable across client projects. A client rebrand changes primiti
 
 ## Current Figma collections
 
-The current minimum system contains 133 variables in five collections:
+The current system has five collections:
 
 - **Font tokens:** family, size, weight, line-height, and letter-spacing scales.
-- **Primitives:** generic color ramps, neutral colors, spacing values, and radii.
-- **Color tokens:** semantic text, surface, icon, and border roles with light and dark modes.
+- **Primitives:** generic color ramps, neutral colors, dimensions, and radii.
+- **Color tokens:** semantic text, surface, icon, border, and interactive roles with light and dark modes.
 - **Spacing tokens:** semantic spacing roles with mobile, tablet, and desktop modes.
 - **Global size tokens:** wrapper and content maximum widths, wire size, and non-wire border sizes.
 
-The preview displays font-size, semantic-color, primitive-color, spacing, and global-size tokens with their exported values and modes. Other font and primitive variables remain available in the snapshot and generated CSS but are not currently given dedicated preview grids. The export contains resolved values, not alias references.
+The preview displays font-size, semantic-color, primitive-color, primitive-dimension, spacing, and global-size tokens with their exported values and modes. Other font and primitive variables remain available in the snapshot and generated CSS but are not currently given dedicated preview grids. The export contains resolved values, not alias references.
 
 ## Modes and numeric values
 
@@ -60,11 +60,15 @@ The preview displays font-size, semantic-color, primitive-color, spacing, and gl
 - Google Font family names come from `font-family-title` and `font-family-body`; normal weights come from every `font-weight-*` token across both typography modes in the Figma snapshot. The generated stylesheet uses `display=swap` and retains the system `sans-serif` fallback. Keep only approved available Google Font weights in Figma. Italic loading requires a future explicit Figma token contract.
 - Use the shared aliases in `src/styles/breakpoints.css` for media queries in global and component styles. The token adapter provides mode values but does not choose when a mode becomes active. These aliases compile to the documented fixed-pixel thresholds; they are implementation layout rules, not runtime CSS custom properties or variables in the current Figma file.
 
-Do not silently invent tokens for properties absent from this minimal system. For example, it currently has no shadow, error-state, hover, or dedicated on-brand text variables. If a design needs one, add and approve it in Figma first; then update the checked-in export and code together.
+Do not silently invent tokens for properties absent from the approved system. It currently has no shadow or error-state roles. If a design needs one, add and approve it in Figma first; then update the checked-in export and code together.
+
+The [token inventory](token-inventory.md) records proposed reusable interaction, size, opacity, and motion roles. It is a Figma-ready decision aid, not an approved token source or a substitute for the exported snapshot.
 
 ## Consuming tokens
 
-Prefer semantic tokens when choosing design values. For spacing, use semantic roles such as `--spacing-xs`, `--spacing-sm`, `--spacing-md`, and `--spacing-lg` when they express the intended spacing. Use a numeric primitive such as `--spacing-3` only when no semantic spacing token represents the required value or role; do not choose a primitive just because its number is familiar. Apply the same principle to other token categories: prefer semantic roles where available, and use primitives when a semantic role does not fit.
+Prefer semantic tokens when choosing design values. For spacing, use semantic roles such as `--spacing-xs`, `--spacing-sm`, `--spacing-md`, and `--spacing-lg` when they express the intended spacing. Use a numeric primitive dimension such as `--size-3` only when no semantic role represents the required value or role; do not choose a primitive just because its number is familiar. Apply the same principle to other token categories: prefer semantic roles where available, and use primitives when a semantic role does not fit.
+
+Use `color-text-link-default`, `color-text-link-hover`, and `color-text-link-active` for standard text links. Use `color-surface-action-primary`, its hover and active companions, and `color-text-action-primary` for primary actions. Use `color-border-focus` for visible keyboard focus. Do not apply a text-link role to an icon-only link when an approved icon interaction role exists; the current system has no such state role, so icon-only links inherit the standard link treatment.
 
 ## Layout primitives
 
@@ -113,6 +117,8 @@ When an approved Figma variable changes:
 3. Run the token tests and review the snapshot diff against the Figma file and the preview.
 4. Update CSS consumers only when token names or intended usage change. If a required design role is missing, add it to Figma rather than creating a code-only token.
 5. Run `pnpm run verify` and relevant Playwright coverage.
+
+`pnpm run verify` includes a token-consumer contract that compares every production `var(--...)` reference with the adapter's emitted variables. If an import renamed or removed a consumed token, migrate the source deliberately; do not add a compatibility alias.
 
 The JSON snapshot is generated input, not a second authority. Do not edit token values directly in the snapshot or `client-config.ts`.
 

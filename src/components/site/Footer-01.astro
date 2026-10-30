@@ -106,7 +106,7 @@ const contactItems = [
           <ul class="footer-01__contact-list stack-xs">
             {contactItems.map(({ Icon, ...item }) => (
               <li class="footer-01__contact-item">
-                <Icon class="footer-01__contact-icon" size={24} aria-hidden="true" />
+                <Icon class="footer-01__contact-icon" aria-hidden="true" />
                 {item.href ? (
                   <a class="footer-01__contact-value" href={item.href}>
                     {item.value}
@@ -228,6 +228,8 @@ const contactItems = [
   }
 
   .footer-01__contact-icon {
+    width: var(--size-icon-md);
+    height: var(--size-icon-md);
     flex: 0 0 auto;
   }
 
@@ -257,7 +259,7 @@ const contactItems = [
     padding: 0;
     border: 0;
     background: transparent;
-    color: inherit;
+    color: var(--color-text-link-default);
     cursor: pointer;
     font: inherit;
     text-decoration: underline;
@@ -265,8 +267,16 @@ const contactItems = [
   }
 
   .footer-01__consent-button:focus-visible {
-    outline: var(--border-size-sm) solid currentColor;
+    outline: var(--border-size-sm) solid var(--color-border-focus);
     outline-offset: var(--spacing-xxs);
+  }
+
+  .footer-01__consent-button:hover {
+    color: var(--color-text-link-hover);
+  }
+
+  .footer-01__consent-button:active {
+    color: var(--color-text-link-active);
   }
 
   @media (--md) {

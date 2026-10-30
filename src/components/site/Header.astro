@@ -24,7 +24,7 @@ import { siteConfig } from '../../config/client-config';
     align-items: center;
     position: relative;
     z-index: 20;
-    min-height: var(--spacing-8);
+    min-height: var(--size-8);
     padding-block: var(--spacing-sm);
     border-bottom: var(--border-size-sm) solid var(--color-border-secondary);
     background: var(--color-surface-default);
@@ -42,7 +42,7 @@ import { siteConfig } from '../../config/client-config';
   .site-header__logo {
     display: block;
     width: auto;
-    height: var(--spacing-4);
+    height: var(--size-4);
   }
 
   .site-header--sticky {
@@ -55,7 +55,7 @@ import { siteConfig } from '../../config/client-config';
   @keyframes site-header-enter {
     from {
       opacity: 0;
-      transform: translateY(calc(var(--spacing-2) * -1));
+      transform: translateY(calc(var(--size-2) * -1));
     }
 
     to {

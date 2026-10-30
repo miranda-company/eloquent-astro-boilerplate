@@ -1,38 +1,53 @@
 ---
+import { ArrowUp } from '@lucide/astro';
 import { siteConfig } from '../../config/client-config';
 
 const { stickyHeader, backToTop } = siteConfig.features;
 ---
 
 {backToTop && (
-  <a class="back-to-top" href="#top" aria-label="Volver arriba">
-    <span aria-hidden="true">↑</span>
-  </a>
+  <div class="scroll-controls__container wrapper">
+    <a class="back-to-top" href="#top" aria-label="Volver arriba">
+      <ArrowUp class="back-to-top__icon" aria-hidden="true" />
+    </a>
+  </div>
 )}
 
 <style>
-  .back-to-top {
+  .scroll-controls__container {
     position: fixed;
-    right: var(--spacing-wrapper-default);
-    bottom: var(--spacing-2);
+    inset-inline: 0;
+    bottom: var(--size-2);
     z-index: 30;
+    display: flex;
+    justify-content: flex-end;
+    pointer-events: none;
+  }
+
+  .back-to-top {
     display: inline-grid;
-    width: var(--spacing-5);
-    height: var(--spacing-5);
+    width: var(--size-control-md);
+    height: var(--size-control-md);
     place-items: center;
     border: var(--border-size-sm) solid var(--color-border-secondary);
     border-radius: var(--radius-3xl);
-    background: var(--color-surface-brand);
-    color: var(--color-text-default);
+    background: var(--color-surface-action-primary);
+    color: var(--color-text-action-primary);
     font-size: var(--font-size-md);
     line-height: var(--font-leading-lg);
+    pointer-events: auto;
+  }
+
+  .back-to-top__icon {
+    width: var(--size-icon-md);
+    height: var(--size-icon-md);
   }
 
   .back-to-top--enhanced {
     visibility: hidden;
     opacity: 0;
     pointer-events: none;
-    transform: translateY(var(--spacing-2));
+    transform: translateY(var(--size-2));
     transition:
       opacity 160ms ease,
       transform 160ms ease,

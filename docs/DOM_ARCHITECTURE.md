@@ -90,7 +90,7 @@ When a client-specific form pattern is approved, use native form controls with v
 
 Optional integrations begin disabled. Consent UI and its footer action render only when `siteConfig.features.consentBanner` is enabled; configured legal documents remain navigation links, while the consent action stays outside the legal `<nav>`. `contactForm` and `PUBLIC_FORM_ENDPOINT` are configuration placeholders only until a client-specific form pattern is approved.
 
-`ScrollControls.astro` owns the optional sticky-header and back-to-top enhancements. The header stays present and usable without JavaScript. The control is an `<a href="#top">`, not a button, so it still returns a visitor to the top of the document without JavaScript. When JavaScript is available, a passive, animation-frame-throttled listener applies the `site-header--sticky` and `back-to-top--visible` BEM modifiers. Keep the `#top` target, visible focus state, and reduced-motion-safe scrolling behavior intact.
+`ScrollControls.astro` owns the optional sticky-header and back-to-top enhancements. The header stays present and usable without JavaScript. The control is an `<a href="#top">`, not a button, so it still returns a visitor to the top of the document without JavaScript. Its fixed `.wrapper` container keeps it aligned to the shared maximum width and responsive horizontal padding. When JavaScript is available, a passive, animation-frame-throttled listener applies the `site-header--sticky` and `back-to-top--visible` BEM modifiers. Keep the `#top` target, visible focus state, and reduced-motion-safe scrolling behavior intact.
 
 ## Motion
 

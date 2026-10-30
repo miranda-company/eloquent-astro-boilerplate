@@ -59,7 +59,7 @@ const {
                   href={socialLink.href}
                   aria-label={socialLink.label}
                 >
-                  <Link class="footer-02__social-icon" size={24} aria-hidden="true" />
+                  <Link class="footer-02__social-icon" aria-hidden="true" />
                 </a>
               </li>
             ))}
@@ -140,11 +140,12 @@ const {
 
   .footer-02__social-link {
     display: block;
-    color: var(--color-icon-default);
   }
 
   .footer-02__social-icon {
     display: block;
+    width: var(--size-icon-md);
+    height: var(--size-icon-md);
   }
 
   .footer-02__legal {
@@ -168,7 +169,7 @@ const {
     padding: 0;
     border: 0;
     background: transparent;
-    color: inherit;
+    color: var(--color-text-link-default);
     cursor: pointer;
     font: inherit;
     text-decoration: underline;
@@ -177,8 +178,16 @@ const {
 
   .footer-02__consent-button:focus-visible,
   .footer-02__social-link:focus-visible {
-    outline: var(--border-size-sm) solid currentColor;
+    outline: var(--border-size-sm) solid var(--color-border-focus);
     outline-offset: var(--spacing-xxs);
+  }
+
+  .footer-02__consent-button:hover {
+    color: var(--color-text-link-hover);
+  }
+
+  .footer-02__consent-button:active {
+    color: var(--color-text-link-active);
   }
 
   @media (--lg) {

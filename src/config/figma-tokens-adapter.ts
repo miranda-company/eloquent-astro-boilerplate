@@ -32,8 +32,11 @@ function sortPrimitiveTokens(
     const palette = name.match(/^color-palette-(\d+)-(\d+)$/);
     if (palette) return [0, Number(palette[1]), Number(palette[2])];
 
-    const spacing = name.match(/^spacing-(\d+(?:-\d+)?)$/);
-    if (spacing) return [1, Number(spacing[1]!.replace('-', '.'))];
+    const accent = name.match(/^color-accent-(\d+)$/);
+    if (accent) return [0, 4, Number(accent[1])];
+
+    const size = name.match(/^size-(\d+(?:-\d+)?)$/);
+    if (size) return [1, Number(size[1]!.replace('-', '.'))];
 
     const radius = name.match(/^radius-(sm|md|lg|xl|2xl|3xl)$/);
     if (radius) return [2, ['sm', 'md', 'lg', 'xl', '2xl', '3xl'].indexOf(radius[1]!)];
@@ -134,6 +137,23 @@ export function getFigmaTokenStyles(): string {
     ...spacingDeclarationsForMode('desktop'),
     ...fontDeclarationsForMode('desktop'),
   ].join('\n')}\n}`;
+}
+
+export function getFigmaTokenCssVariableNames(): Set<string> {
+  validateFigmaTokenSnapshot();
+
+  const names = new Set<string>();
+  for (const collection of Object.values(tokens)) {
+    for (const name of Object.keys(collection)) names.add(cssName(name));
+  }
+  for (const name of Object.keys(tokens['spacing-tokens'] ?? {})) {
+    names.add(cssName(`${name}-tablet`));
+    names.add(cssName(`${name}-desktop`));
+  }
+  for (const name of Object.keys(tokens['font-tokens'] ?? {}))
+    names.add(cssName(`${name}-desktop`));
+
+  return names;
 }
 
 export function getFigmaTokenCollections() {

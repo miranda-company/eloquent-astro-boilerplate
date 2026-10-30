@@ -13,9 +13,9 @@ const fontSizeTokens =
   fontTokens?.variables.filter(({ name }) => name.startsWith('font-size-')) ?? [];
 const semanticColorTokens = colorTokens?.variables ?? [];
 const primitiveColorTokens =
-  primitiveTokenCollection?.variables.filter(
-    ({ name }) => name.startsWith('color-neutral-') || name.startsWith('color-palette-'),
-  ) ?? [];
+  primitiveTokenCollection?.variables.filter(({ name }) => name.startsWith('color-')) ?? [];
+const primitiveDimensionTokens =
+  primitiveTokenCollection?.variables.filter(({ name }) => name.startsWith('size-')) ?? [];
 const spacingTokens = spacingTokenCollection?.variables ?? [];
 const globalSizeTokens = globalSizeTokenCollection?.variables ?? [];
 const maxGlobalWidth = Math.max(
@@ -30,6 +30,8 @@ if (semanticColorTokens.length === 0)
   throw new Error('Missing Figma semantic color tokens for preview');
 if (primitiveColorTokens.length === 0)
   throw new Error('Missing Figma primitive color tokens for preview');
+if (primitiveDimensionTokens.length === 0)
+  throw new Error('Missing Figma primitive dimension tokens for preview');
 if (spacingTokens.length === 0) throw new Error('Missing Figma spacing tokens for preview');
 if (globalSizeTokens.length === 0 || !Number.isFinite(maxGlobalWidth))
   throw new Error('Missing Figma global size tokens for preview');
@@ -37,6 +39,26 @@ if (globalSizeTokens.length === 0 || !Number.isFinite(maxGlobalWidth))
 function formatValue(value: string | number, type: string, name: string): string {
   if (typeof value !== 'number') return value;
   return type === 'FLOAT' && !name.startsWith('font-weight-') ? `${value}px` : String(value);
+}
+
+function globalSizeSampleKind(
+  name: string,
+): 'max-width' | 'wire-size' | 'border-size' | 'icon' | 'control' {
+  if (name.startsWith('max-width-')) return 'max-width';
+  if (name === 'wire-size') return 'wire-size';
+  if (name.startsWith('border-size-')) return 'border-size';
+  if (name.startsWith('size-icon-')) return 'icon';
+  return 'control';
+}
+
+function globalSizeSampleStyle(name: string, value: string | number, type: string): string {
+  if (name.startsWith('max-width-') && typeof value === 'number')
+    return `width: ${((value / maxGlobalWidth) * 100).toFixed(2)}%; height: var(--size-1)`;
+
+  const dimension = formatValue(value, type, name);
+  return name === 'wire-size' || name.startsWith('border-size-')
+    ? `width: 100%; height: ${dimension}`
+    : `width: ${dimension}; height: ${dimension}`;
 }
 ---
 
@@ -156,6 +178,42 @@ function formatValue(value: string | number, type: string, name: string): string
         </div>
       ))}
     </div>
+    <h3 class="ds-tokens__group-title">Primitive dimensions</h3>
+    <div class="ds-tokens__primitive-dimensions-grid grid">
+      {primitiveDimensionTokens.map((token) => (
+        <div class="ds-tokens__card stack">
+          <p class="ds-tokens__css-name">
+            <code>{getFigmaTokenCssName(token.name)}</code>
+          </p>
+          <div class="ds-tokens__details">
+            <p class="ds-tokens__figma-name">
+              Figma name:
+              <code> {token.name}</code>
+            </p>
+            <ul class="ds-tokens__values">
+              {Object.entries(token.modes).map(([mode, value]) => (
+                <li class="ds-tokens__value">
+                  <span>{mode}:</span> <code>{formatValue(value, token.type, token.name)}</code>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div class="ds-tokens__dimension-examples">
+            {Object.entries(token.modes).map(([mode, value]) => (
+              <div class="ds-tokens__dimension-example">
+                <span class="ds-tokens__dimension-mode">{mode}</span>
+                <div class="ds-tokens__dimension-track" aria-hidden="true">
+                  <div
+                    class="ds-tokens__dimension-sample"
+                    style={`width: ${formatValue(value, token.type, token.name)}`}
+                  ></div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
     <h3 class="ds-tokens__group-title">Spacing</h3>
     <div class="ds-tokens__spacing-grid grid">
       {spacingTokens.map((token) => (
@@ -220,17 +278,9 @@ function formatValue(value: string | number, type: string, name: string): string
                   <div
                     class:list={[
                       'ds-tokens__global-size-sample',
-                      token.name.startsWith('max-width-')
-                        ? 'ds-tokens__global-size-sample--max-width'
-                        : token.name === 'wire-size'
-                          ? 'ds-tokens__global-size-sample--wire-size'
-                          : 'ds-tokens__global-size-sample--border-size',
+                      `ds-tokens__global-size-sample--${globalSizeSampleKind(token.name)}`,
                     ]}
-                    style={
-                      token.name.startsWith('max-width-') && typeof value === 'number'
-                        ? `width: ${((value / maxGlobalWidth) * 100).toFixed(2)}%`
-                        : `width: 100%; height: ${formatValue(value, token.type, token.name)}`
-                    }
+                    style={globalSizeSampleStyle(token.name, value, token.type)}
                   ></div>
                 </div>
               </div>
@@ -246,6 +296,7 @@ function formatValue(value: string | number, type: string, name: string): string
   .ds-tokens__font-sizes-grid,
   .ds-tokens__semantic-colors-grid,
   .ds-tokens__primitive-colors-grid,
+  .ds-tokens__primitive-dimensions-grid,
   .ds-tokens__spacing-grid,
   .ds-tokens__global-size-grid {
     grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
@@ -330,18 +381,23 @@ function formatValue(value: string | number, type: string, name: string): string
   }
 
   .ds-tokens__color-sample {
-    min-height: var(--spacing-5);
+    min-height: var(--size-5);
     border: var(--border-size-sm) solid var(--color-border-secondary);
     border-radius: var(--radius-sm);
   }
 
   .ds-tokens__primitive-color-swatch {
-    min-height: var(--spacing-5);
+    min-height: var(--size-5);
     border: var(--border-size-sm) solid var(--color-border-secondary);
     border-radius: var(--radius-sm);
   }
 
   .ds-tokens__spacing-examples {
+    display: grid;
+    gap: var(--spacing-sm);
+  }
+
+  .ds-tokens__dimension-examples {
     display: grid;
     gap: var(--spacing-sm);
   }
@@ -356,17 +412,37 @@ function formatValue(value: string | number, type: string, name: string): string
     font-size: var(--font-size-sm);
   }
 
+  .ds-tokens__dimension-mode {
+    color: var(--color-text-secondary);
+    font-size: var(--font-size-sm);
+  }
+
   .ds-tokens__spacing-track {
     width: 15rem;
     max-width: 100%;
-    min-height: var(--spacing-1);
+    min-height: var(--size-1);
+    overflow: hidden;
+    border-radius: var(--radius-sm);
+    background: var(--color-surface-secondary);
+  }
+
+  .ds-tokens__dimension-track {
+    width: 15rem;
+    max-width: 100%;
+    min-height: var(--size-1);
     overflow: hidden;
     border-radius: var(--radius-sm);
     background: var(--color-surface-secondary);
   }
 
   .ds-tokens__spacing-sample {
-    min-height: var(--spacing-1);
+    min-height: var(--size-1);
+    border-radius: var(--radius-sm);
+    background: var(--color-surface-brand);
+  }
+
+  .ds-tokens__dimension-sample {
+    min-height: var(--size-1);
     border-radius: var(--radius-sm);
     background: var(--color-surface-brand);
   }
@@ -390,7 +466,7 @@ function formatValue(value: string | number, type: string, name: string): string
     display: flex;
     align-items: center;
     width: 100%;
-    min-height: var(--spacing-1);
+    min-height: var(--size-1);
     border-radius: var(--radius-sm);
     background: var(--color-surface-secondary);
   }
@@ -401,7 +477,7 @@ function formatValue(value: string | number, type: string, name: string): string
   }
 
   .ds-tokens__global-size-sample--max-width {
-    height: var(--spacing-1);
+    height: var(--size-1);
   }
 
   .ds-tokens__global-size-sample--wire-size {
@@ -410,5 +486,9 @@ function formatValue(value: string | number, type: string, name: string): string
 
   .ds-tokens__global-size-sample--border-size {
     width: 100%;
+  }
+
+  .ds-tokens__global-size-sample--icon {
+    border-radius: 50%;
   }
 </style>

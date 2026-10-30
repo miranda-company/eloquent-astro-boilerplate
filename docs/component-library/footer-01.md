@@ -8,7 +8,7 @@ Footer 01 is a reusable responsive footer pattern for marketing sites. It groups
 
 - Figma: [Footer-01](https://www.figma.com/design/56g1RP9hV1uVFigLSQKHsC/Design-System?node-id=99-47&m=dev)
 - Astro component: `src/components/site/Footer-01.astro`
-- Contact icons: inline Lucide `Mail`, `Phone`, and `MapPin` components at 24px
+- Contact icons: inline Lucide `Mail`, `Phone`, and `MapPin` components using `size-icon-md` (24px)
 
 ## Interface and defaults
 
@@ -35,7 +35,7 @@ import Footer01 from '../components/site/Footer-01.astro';
 
 ## Implementation rules
 
-Keep the semantic `<footer>`, navigation lists, and contact `<address>` intact. The logo remains a configured local asset with intrinsic dimensions. Contact icons are decorative Lucide SVGs: retain their approved 24px geometry and keep the contact value as the accessible name. Keep visual labels in the configured site locale.
+Keep the semantic `<footer>`, navigation lists, and contact `<address>` intact. The logo remains a configured local asset with intrinsic dimensions. Contact icons are decorative Lucide SVGs: retain `size-icon-md` geometry and keep the contact value as the accessible name. Keep visual labels in the configured site locale.
 
 When `showConsentPreferences` is true, render the Spanish “Gestionar cookies” control as a `type="button"` outside the legal navigation. It carries `data-open-consent`, the stable contract consumed by `ConsentManager.astro`, so it reopens preferences without behaving like a document link. `BaseLayout.astro` passes `siteConfig.features.consentBanner`; keep the control absent when consent is disabled.
 

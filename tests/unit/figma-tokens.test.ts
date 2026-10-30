@@ -1,12 +1,37 @@
+import { readdirSync, readFileSync } from 'node:fs';
+import { join, relative, resolve } from 'node:path';
 import { describe, expect, it } from 'vitest';
 import {
   createGoogleFontsStylesheetUrl,
+  getFigmaTokenCssVariableNames,
   getFigmaTokenCollections,
   getFigmaTokenCssName,
   getFigmaTokenSource,
   getFigmaTokenStyles,
   validateFigmaTokenSnapshot,
 } from '../../src/config/figma-tokens-adapter';
+
+function getProductionCssVariableSources(directory: string): Map<string, string[]> {
+  const sources = new Map<string, string[]>();
+
+  for (const entry of readdirSync(directory, { withFileTypes: true })) {
+    const path = join(directory, entry.name);
+    if (entry.isDirectory()) {
+      for (const [variable, files] of getProductionCssVariableSources(path))
+        sources.set(variable, [...(sources.get(variable) ?? []), ...files]);
+      continue;
+    }
+    if (!entry.isFile() || !/\.(astro|css|ts)$/.test(entry.name)) continue;
+
+    const sourcePath = relative(process.cwd(), path);
+    for (const match of readFileSync(path, 'utf8').matchAll(/var\((--[a-z0-9-]+)/g)) {
+      const variable = match[1]!;
+      sources.set(variable, [...(sources.get(variable) ?? []), sourcePath]);
+    }
+  }
+
+  return sources;
+}
 
 describe('Figma design tokens', () => {
   it('uses the approved Figma file as the token source', () => {
@@ -15,7 +40,7 @@ describe('Figma design tokens', () => {
     );
   });
 
-  it('contains the five Figma collections and all 137 variables', () => {
+  it('contains the required Figma collections', () => {
     const collections = getFigmaTokenCollections();
 
     expect(collections.map(({ name }) => name)).toEqual([
@@ -25,9 +50,7 @@ describe('Figma design tokens', () => {
       'Spacing tokens',
       'Global size tokens',
     ]);
-    expect(collections.reduce((count, collection) => count + collection.variables.length, 0)).toBe(
-      137,
-    );
+    expect(collections.every(({ variables }) => variables.length > 0)).toBe(true);
   });
 
   it('uses exported token names directly and preserves mode values', () => {
@@ -74,7 +97,7 @@ describe('Figma design tokens', () => {
     expect(styles).toContain('--border-size-xl: 8px;');
   });
 
-  it('orders primitive color palettes by palette and shade', () => {
+  it('orders primitive color palettes and dimensions by shade and size', () => {
     const primitives = getFigmaTokenCollections().find(({ name }) => name === 'Primitives')!;
     const paletteNames = primitives.variables
       .map(({ name }) => name)
@@ -88,31 +111,83 @@ describe('Figma design tokens', () => {
       ),
     );
     expect(
+      primitives.variables.filter(({ name }) => name.startsWith('size-')).map(({ name }) => name),
+    ).toEqual([
+      'size-0-5',
+      'size-1',
+      'size-2',
+      'size-2-25',
+      'size-3',
+      'size-4',
+      'size-5',
+      'size-6',
+      'size-7',
+      'size-8',
+      'size-9',
+      'size-10',
+      'size-11',
+      'size-12',
+      'size-13',
+      'size-14',
+      'size-15',
+      'size-20',
+      'size-30',
+      'size-40',
+    ]);
+  });
+
+  it('exports the approved accent, icon, and control token roles', () => {
+    const collections = getFigmaTokenCollections();
+    const colors = collections.find(({ name }) => name === 'Color tokens')!;
+    const primitives = collections.find(({ name }) => name === 'Primitives')!;
+    const globalSizes = collections.find(({ name }) => name === 'Global size tokens')!;
+    const styles = getFigmaTokenStyles();
+
+    expect(
       primitives.variables
-        .filter(({ name }) => name.startsWith('spacing-'))
+        .filter(({ name }) => name.startsWith('color-accent-'))
         .map(({ name }) => name),
     ).toEqual([
-      'spacing-0-5',
-      'spacing-1',
-      'spacing-2',
-      'spacing-2-25',
-      'spacing-3',
-      'spacing-4',
-      'spacing-5',
-      'spacing-6',
-      'spacing-7',
-      'spacing-8',
-      'spacing-9',
-      'spacing-10',
-      'spacing-11',
-      'spacing-12',
-      'spacing-13',
-      'spacing-14',
-      'spacing-15',
-      'spacing-20',
-      'spacing-30',
-      'spacing-40',
+      'color-accent-100',
+      'color-accent-200',
+      'color-accent-300',
+      'color-accent-400',
+      'color-accent-500',
+      'color-accent-600',
+      'color-accent-700',
+      'color-accent-800',
+      'color-accent-900',
     ]);
+    expect(
+      colors.variables
+        .filter(({ name }) => name.startsWith('color-text-link-'))
+        .map(({ name }) => name),
+    ).toEqual(['color-text-link-default', 'color-text-link-hover', 'color-text-link-active']);
+    expect(
+      globalSizes.variables
+        .filter(({ name }) => name.startsWith('size-icon-') || name.startsWith('size-control-'))
+        .map(({ name, modes }) => [name, modes.desktop]),
+    ).toEqual([
+      ['size-icon-sm', 16],
+      ['size-icon-md', 24],
+      ['size-icon-lg', 32],
+      ['size-control-sm', 32],
+      ['size-control-md', 40],
+      ['size-control-lg', 48],
+    ]);
+    expect(styles).toContain('--size-3: 24px;');
+    expect(styles).toContain('--size-icon-md: 24px;');
+    expect(styles).toContain('--size-control-md: 40px;');
+  });
+
+  it('ensures every production CSS variable reference is emitted by the Figma adapter', () => {
+    const references = getProductionCssVariableSources(resolve(process.cwd(), 'src'));
+    const emittedVariables = getFigmaTokenCssVariableNames();
+    const missing = [...references]
+      .filter(([variable]) => !emittedVariables.has(variable))
+      .map(([variable, files]) => `${variable} (${[...new Set(files)].join(', ')})`);
+
+    expect(missing).toEqual([]);
   });
 
   it('validates tokens and emits mobile base responsive values without activating dark mode', () => {

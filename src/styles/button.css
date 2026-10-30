@@ -2,8 +2,8 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: var(--spacing-1);
-  padding: var(--spacing-2);
+  gap: var(--size-1);
+  padding: var(--size-2);
   border: var(--border-size-sm) solid transparent;
   border-radius: var(--radius-md);
   font: inherit;
@@ -12,8 +12,22 @@
 }
 
 .button--primary {
-  background: var(--color-surface-brand);
-  color: var(--color-text-default);
+  background: var(--color-surface-action-primary);
+  color: var(--color-text-action-primary);
+}
+
+.button--primary:hover {
+  background: var(--color-surface-action-primary-hover);
+}
+
+.button--primary:active {
+  background: var(--color-surface-action-primary-active);
+}
+
+.button--primary:disabled {
+  border-color: var(--color-border-disabled);
+  background: var(--color-surface-action-primary-disabled);
+  color: var(--color-text-disabled);
 }
 
 .button:disabled {

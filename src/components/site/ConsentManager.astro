@@ -22,7 +22,11 @@ const enabled =
       Usamos cookies opcionales para medir el uso del sitio. Puedes aceptarlas o rechazarlas.
     </p>
     <div class="consent-banner__actions">
-      <button class="button consent-banner__accept" type="button" data-consent="accepted">
+      <button
+        class="button button--primary consent-banner__accept"
+        type="button"
+        data-consent="accepted"
+      >
         Aceptar
       </button>
       <button class="button consent-banner__reject" type="button" data-consent="rejected">
@@ -84,12 +88,12 @@ const enabled =
 <style>
   .consent-banner {
     position: fixed;
-    inset-inline: var(--spacing-2);
-    bottom: var(--spacing-2);
+    inset-inline: var(--size-2);
+    bottom: var(--size-2);
     z-index: 40;
-    width: min(100% - 2 * var(--spacing-2), 36rem);
+    width: min(100% - 2 * var(--size-2), 36rem);
     margin-inline: auto;
-    padding: var(--spacing-2);
+    padding: var(--size-2);
     border-radius: var(--radius-md);
     background: var(--color-text-default);
     color: var(--color-surface-default);
@@ -105,25 +109,20 @@ const enabled =
   }
 
   .consent-banner__description {
-    margin: var(--spacing-0-5) 0 0;
+    margin: var(--size-0-5) 0 0;
     font-size: var(--font-size-sm);
   }
 
   .consent-banner__actions {
     display: flex;
     flex-wrap: wrap;
-    gap: var(--spacing-2);
-    margin-top: var(--spacing-2);
+    gap: var(--size-2);
+    margin-top: var(--size-2);
   }
 
   .consent-banner__accept,
   .consent-banner__reject {
-    padding: var(--spacing-1) var(--spacing-2);
-  }
-
-  .consent-banner__accept {
-    background: var(--color-surface-secondary);
-    color: var(--color-text-default);
+    padding: var(--size-1) var(--size-2);
   }
 
   .consent-banner__reject {

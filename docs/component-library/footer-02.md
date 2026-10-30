@@ -8,7 +8,7 @@ Footer 02 is a reusable, mobile-first marketing-site footer. It places brand ide
 
 - Reference: human-approved supplied image, “Captura de pantalla 2026-10-30 a las 8.52.47.png”
 - Astro component: `src/components/site/Footer-02.astro`
-- Social icons: decorative 24px Lucide `Link` placeholders, approved only for this validation pattern
+- Social icons: decorative Lucide `Link` placeholders using `size-icon-md` (24px), approved only for this validation pattern
 
 ## Interface and defaults
 
