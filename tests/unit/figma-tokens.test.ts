@@ -115,7 +115,7 @@ describe('Figma design tokens', () => {
     ]);
   });
 
-  it('validates tokens and emits mobile base spacing with tablet and desktop values without activating dark mode', () => {
+  it('validates tokens and emits mobile base responsive values without activating dark mode', () => {
     expect(() => validateFigmaTokenSnapshot()).not.toThrow();
 
     const styles = getFigmaTokenStyles();
@@ -127,12 +127,27 @@ describe('Figma design tokens', () => {
     expect(styles).toContain('--spacing-wrapper-default: 18px;');
     expect(styles).toContain('--spacing-wrapper-default-tablet: 32px;');
     expect(styles).toContain('--spacing-wrapper-default-desktop: 64px;');
+    expect(styles).toContain('--font-size-sm: 16px;');
+    expect(styles).toContain('--font-size-sm-desktop: 12px;');
+    expect(styles).toContain('--font-leading-lg: 24px;');
+    expect(styles).toContain('--font-leading-lg-desktop: 24px;');
     const bodyFamily = getFigmaTokenCollections()
       .find(({ name }) => name === 'Font tokens')!
       .variables.find(({ name }) => name === 'font-family-body')!.modes.desktop;
     expect(typeof bodyFamily).toBe('string');
     expect(styles).toContain(`--font-family-body: "${bodyFamily}";`);
     expect(styles).toContain('--font-weight-bold: 700;');
+    expect(styles).toContain('--font-weight-bold-desktop: 700;');
+  });
+
+  it('rejects incomplete responsive typography modes', () => {
+    expect(() =>
+      validateFigmaTokenSnapshot({
+        'font-tokens': {
+          'font-size-test': { mobile: 16 },
+        },
+      }),
+    ).toThrow('Missing desktop value for Figma font token: font-size-test');
   });
 
   it('builds a deduplicated Google Fonts request from Figma font weights', () => {
@@ -148,10 +163,14 @@ describe('Figma design tokens', () => {
     expect(sameFamilyUrl.searchParams.get('display')).toBe('swap');
 
     const distinctFamiliesUrl = new URL(
-      createGoogleFontsStylesheetUrl({ title: 'DM Sans', body: 'IBM Plex Mono' }, [400, 700]),
+      createGoogleFontsStylesheetUrl(
+        { title: ['DM Sans', 'Google Sans Flex'], body: 'IBM Plex Mono' },
+        [400, 700],
+      ),
     );
     expect(distinctFamiliesUrl.searchParams.getAll('family')).toEqual([
       'DM Sans:wght@400;700',
+      'Google Sans Flex:wght@400;700',
       'IBM Plex Mono:wght@400;700',
     ]);
   });

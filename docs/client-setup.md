@@ -16,7 +16,7 @@ Edit `src/config/client-config.ts` first.
 1. Replace `public/brand/brand-logo.svg` and `public/brand/brand-icon.svg` with single-colour vector SVGs. Update `siteConfig.brand` if the names, paths, or intrinsic dimensions change.
 2. Prepare final web-ready raster derivatives before adding them to the project: choose format, dimensions, crop, and compression. Store them in `public/images/`; Astro copies these assets unchanged.
 3. Keep original source assets in the agency asset library, not in the public build. When you prepare responsive variants, add deliberate `srcset` and `sizes` values in the native `<img>` or `<picture>` markup.
-4. Confirm the title/body family and `font-weight-*` tokens in the approved Figma file. Keep only approved available normal Google Font weights in that snapshot; italic loading requires a separate Figma token contract.
+4. Confirm every typography token has `mobile` and `desktop` values in the approved Figma file. Mobile is the base scale; desktop activates at `--lg`. Keep only approved available normal Google Font weights in that snapshot; italic loading requires a separate Figma token contract.
 5. Confirm the header logo, monochrome brand preview, loaded Google Fonts, and fallback typography render correctly.
 6. Confirm the sticky header, back-to-top link, and in-page hash links work at the approved breakpoints. The back-to-top control must remain behind the cookie banner while consent is pending.
 
