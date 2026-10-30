@@ -14,7 +14,7 @@ Footer 01 is a reusable responsive footer pattern for marketing sites. It groups
 
 `Footer-01.astro` accepts optional `title`, `description`, `pages`, `socialLinks`, `phone`, `address`, `legalEntity`, and `showConsentPreferences` props. `pages` and `socialLinks` use `{ label, href }` entries. `showConsentPreferences` defaults to `false`.
 
-The component reads the logo, email, legal navigation, and default legal entity from `siteConfig`. Social links default to `siteConfig.social`, and the phone defaults to `siteConfig.contact.phone`. Empty page and social-link groups are omitted rather than rendered as placeholders.
+The component reads the logo, email, legal navigation, and default legal entity from `siteConfig`. Its default pages use `siteConfig.navigation.footer`; social links use `siteConfig.social`; phone and address use `siteConfig.contact`. Empty page and social-link groups are omitted rather than rendered as placeholders.
 
 ```astro
 ---

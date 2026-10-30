@@ -12,6 +12,19 @@ function footerMarkup(html: string): string {
 }
 
 describe('Footer-01 consent preferences', () => {
+  it('uses configured shared footer and contact data by default', async () => {
+    const container = await AstroContainer.create();
+    const html = await container.renderToString(Footer01);
+    const footer = footerMarkup(html);
+
+    expect(footer).toContain('href="/servicios/"');
+    expect(footer).toContain('>Instagram</a>');
+    expect(footer).toContain('hola@example.com');
+    expect(footer).toContain('+34 600 000 000');
+    expect(footer).toContain('Calle de ejemplo, 123 · Madrid');
+    expect(footer).toContain('Nombre del cliente S.L.');
+  });
+
   it('renders the action when enabled', async () => {
     const container = await AstroContainer.create();
     const html = await container.renderToString(Footer01, {

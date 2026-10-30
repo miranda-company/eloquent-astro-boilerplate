@@ -74,24 +74,7 @@ const googleFontsStylesheetUrl = getGoogleFontsStylesheetUrl();
       <slot />
       <ScrollControls />
     </main>
-    <Footer
-      pages={[
-        { label: 'Inicio', href: '/' },
-        { label: 'Servicios', href: '/servicios/' },
-        { label: 'Proyectos', href: '/proyectos/' },
-        { label: 'Sobre nosotros', href: '/sobre-nosotros/' },
-        { label: 'Contacto', href: '#contacto' },
-      ]}
-      socialLinks={[
-        { label: 'Facebook', href: 'https://www.facebook.com/' },
-        { label: 'Instagram', href: 'https://www.instagram.com/' },
-        { label: 'X', href: 'https://x.com/' },
-        { label: 'LinkedIn', href: 'https://www.linkedin.com/' },
-        { label: 'YouTube', href: 'https://www.youtube.com/' },
-      ]}
-      legalEntity="Nombre del cliente S.L."
-      showConsentPreferences={siteConfig.features.consentBanner}
-    />
+    <Footer showConsentPreferences={siteConfig.features.consentBanner} />
     <ConsentManager />
   </body>
 </html>

@@ -1,11 +1,9 @@
 ---
 import { Link } from '@lucide/astro';
 import { siteConfig } from '../../config/client-config';
+import type { SiteLink } from '../../config/client-config';
 
-export interface Footer02Link {
-  label: string;
-  href: string;
-}
+export type Footer02Link = SiteLink;
 
 interface Props {
   pages?: Footer02Link[];
@@ -15,9 +13,9 @@ interface Props {
 }
 
 const {
-  pages = [],
-  socialLinks = Object.entries(siteConfig.social).map(([label, href]) => ({ label, href })),
-  legalEntity = siteConfig.name,
+  pages = siteConfig.navigation.footer,
+  socialLinks = siteConfig.social,
+  legalEntity = siteConfig.legal.entityName,
   showConsentPreferences = false,
 } = Astro.props;
 ---

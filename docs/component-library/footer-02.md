@@ -12,7 +12,7 @@ Footer 02 is a reusable, mobile-first marketing-site footer. It places brand ide
 
 ## Interface and defaults
 
-`Footer-02.astro` accepts optional `pages`, `socialLinks`, `legalEntity`, and `showConsentPreferences` props. Page and social entries use `{ label, href }`. Empty page and social groups are omitted. The logo, legal navigation, legal entity, and default social links come from `siteConfig`.
+`Footer-02.astro` accepts optional `pages`, `socialLinks`, `legalEntity`, and `showConsentPreferences` props. Page and social entries use `{ label, href }`. Empty page and social groups are omitted. The logo, legal navigation, legal entity, default footer pages, and default social links come from `siteConfig`.
 
 ```astro
 ---

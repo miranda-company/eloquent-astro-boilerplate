@@ -1,6 +1,11 @@
 export const supportedLocales = ['es'] as const;
 export type SupportedLocale = (typeof supportedLocales)[number];
 
+export interface SiteLink {
+  label: string;
+  href: string;
+}
+
 export interface SiteConfig {
   name: string;
   url: string;
@@ -13,8 +18,9 @@ export interface SiteConfig {
     iconHeight: number;
   };
   defaultLocale: SupportedLocale;
-  contact: { email: string; phone?: string };
-  social: Record<string, string>;
+  contact: { email: string; phone?: string; address?: string };
+  navigation: { header: SiteLink[]; footer: SiteLink[] };
+  social: SiteLink[];
   seo: { defaultTitle: string; defaultDescription: string; defaultOgImage?: string };
   features: {
     analytics: boolean;
@@ -26,9 +32,10 @@ export interface SiteConfig {
     wireframe: boolean;
   };
   legal: {
+    entityName: string;
     navigationLabel: string;
     tableOfContentsLabel: string;
-    pages: Array<{ label: string; href: string }>;
+    pages: SiteLink[];
   };
 }
 
@@ -44,8 +51,34 @@ export const siteConfig: SiteConfig = {
     iconHeight: 480,
   },
   defaultLocale: 'es',
-  contact: { email: 'hola@example.com' },
-  social: {},
+  contact: {
+    email: 'hola@example.com',
+    phone: '+34 600 000 000',
+    address: 'Calle de ejemplo, 123 · Madrid',
+  },
+  navigation: {
+    header: [
+      { label: 'Inicio', href: '/' },
+      { label: 'Servicios', href: '/servicios/' },
+      { label: 'Proyectos', href: '/proyectos/' },
+      { label: 'Sobre nosotros', href: '/sobre-nosotros/' },
+      { label: 'Contacto', href: '#contacto' },
+    ],
+    footer: [
+      { label: 'Inicio', href: '/' },
+      { label: 'Servicios', href: '/servicios/' },
+      { label: 'Proyectos', href: '/proyectos/' },
+      { label: 'Sobre nosotros', href: '/sobre-nosotros/' },
+      { label: 'Contacto', href: '#contacto' },
+    ],
+  },
+  social: [
+    { label: 'Facebook', href: 'https://www.facebook.com/' },
+    { label: 'Instagram', href: 'https://www.instagram.com/' },
+    { label: 'X', href: 'https://x.com/' },
+    { label: 'LinkedIn', href: 'https://www.linkedin.com/' },
+    { label: 'YouTube', href: 'https://www.youtube.com/' },
+  ],
   seo: {
     defaultTitle: 'Nombre del cliente',
     defaultDescription: 'Una descripción breve y clara del sitio web.',
@@ -60,6 +93,7 @@ export const siteConfig: SiteConfig = {
     wireframe: true,
   },
   legal: {
+    entityName: 'Nombre del cliente S.L.',
     navigationLabel: 'Legal',
     tableOfContentsLabel: 'En esta página',
     pages: [

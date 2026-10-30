@@ -2,6 +2,7 @@ import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { expect, test } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
+import { siteConfig } from '../../src/config/client-config';
 
 const legalRoutes = ['/aviso-legal/', '/politica-de-privacidad/', '/politica-de-cookies/'];
 const figmaTokens = JSON.parse(
@@ -588,6 +589,17 @@ test('design-system homepage is noindex, keyboard-accessible, and has no default
         ariaHidden === 'true' && height === sizeToken && tagName === 'svg' && width === sizeToken,
     ),
   ).toBe(true);
+  for (const link of siteConfig.navigation.footer) {
+    await expect(
+      page.locator('.footer-02__page-list').getByRole('link', { name: link.label }),
+    ).toHaveAttribute('href', link.href);
+  }
+  for (const link of siteConfig.social) {
+    await expect(
+      page.locator('.footer-02__social-list').getByRole('link', { name: link.label }),
+    ).toHaveAttribute('href', link.href);
+  }
+  await expect(page.locator('.footer-02__copyright')).toContainText(siteConfig.legal.entityName);
   const footerPageLink = page.locator('.footer-02__page-list a').first();
   const interactionColors = await page.evaluate(() => {
     const resolveColor = (token: string) => {

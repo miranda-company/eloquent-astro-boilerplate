@@ -119,7 +119,7 @@ Treat this stage as a configuration milestone, not a page-building exercise. The
 Edit `src/config/client-config.ts` first.
 
 1. Set `name` and the final canonical `url` using `https` and no path suffix.
-2. Add the client email, optional phone number, social links, and initial Spanish navigation items.
+2. Add the client email, optional phone number and address, ordered social links, separate header/footer navigation, and legal entity name. Shared site data belongs in `siteConfig`; page copy and pattern-specific marketing copy remain with their route or component.
 3. Set the default title and description. Use accurate, client-approved wording rather than generic marketing claims.
 4. Add `seo.defaultOgImage` only after a default social image is designed, exported, and available as a public site asset. Individual pages may later override it through `BaseLayout`.
 5. Review feature flags. Keep `analytics`, `contactForm`, and `consentBanner` disabled until their provider and privacy requirements are approved. Confirm whether the default enabled `stickyHeader` and `backToTop` controls suit the approved design. Keep `wireframe` enabled only while reviewing layouts.

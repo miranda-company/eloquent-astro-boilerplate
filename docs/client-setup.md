@@ -6,7 +6,7 @@ Use this checklist when duplicating the boilerplate for a client. The project de
 
 Edit `src/config/client-config.ts` first.
 
-- Set `name`, canonical `url`, contact details, social links, navigation, and SEO defaults. Add `seo.defaultOgImage` only when an approved default social image is available.
+- Set `name`, canonical `url`, contact details (including any address), ordered social links, separate header/footer navigation, legal entity name, and SEO defaults. Add `seo.defaultOgImage` only when an approved default social image is available. Shared site data belongs here; page copy and pattern-specific marketing copy do not.
 - Set `brand.logo` and `brand.icon` to approved public `.svg`, `.png`, `.jpg`, or `.jpeg` paths, and record their intrinsic `logoWidth`, `logoHeight`, `iconWidth`, and `iconHeight`.
 - Review feature flags. `analytics`, `contactForm`, and `consentBanner` are disabled in the untouched starter and control optional behavior only after approval. `stickyHeader` and `backToTop` are enabled by default; turn either off when the approved client design does not need it. `designSystemHomepage` keeps the temporary root preview out of the sitemap; `wireframe` is for temporary layout review only.
 - Keep feature flags explicit. A flag is not a substitute for required environment configuration.

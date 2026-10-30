@@ -28,13 +28,14 @@ describe('Footer-02', () => {
     expect(footer).toContain('Cliente S.L.');
   });
 
-  it('omits optional navigation and consent control by default', async () => {
+  it('uses configured shared footer data and omits the consent control by default', async () => {
     const container = await AstroContainer.create();
     const html = await container.renderToString(Footer02);
     const footer = footerMarkup(html);
 
-    expect(footer).not.toContain('footer-02__pages');
-    expect(footer).not.toContain('footer-02__social');
+    expect(footer).toContain('href="/servicios/"');
+    expect(footer).toContain('aria-label="Instagram"');
+    expect(footer).toContain('Nombre del cliente S.L.');
     expect(footer).not.toContain('footer-02__consent-button');
   });
 

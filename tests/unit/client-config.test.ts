@@ -16,6 +16,15 @@ describe('site configuration', () => {
     expect(siteConfig.brand.iconHeight).toBeGreaterThan(0);
   });
 
+  it('defines ordered shared navigation, social, and contact data', () => {
+    expect(siteConfig.navigation.header.length).toBeGreaterThan(0);
+    expect(siteConfig.navigation.footer.length).toBeGreaterThan(0);
+    expect(siteConfig.social.length).toBeGreaterThan(0);
+    expect(siteConfig.navigation.footer.every((link) => /^(\/|#)/.test(link.href))).toBe(true);
+    expect(siteConfig.social.every((link) => link.href.startsWith('https://'))).toBe(true);
+    expect(siteConfig.contact.address).toBeTruthy();
+  });
+
   it('defines a configurable wireframe mode', () => {
     expect(typeof siteConfig.features.wireframe).toBe('boolean');
   });
@@ -31,6 +40,7 @@ describe('site configuration', () => {
   it('configures the shared legal navigation in one place', () => {
     expect(siteConfig.legal.pages).toHaveLength(3);
     expect(siteConfig.legal.pages.every((page) => page.href.startsWith('/'))).toBe(true);
+    expect(siteConfig.legal.entityName).toBeTruthy();
     expect(siteConfig.legal.tableOfContentsLabel).toBe('En esta página');
   });
 });
