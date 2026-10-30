@@ -19,7 +19,7 @@ Playwright builds the site and serves `dist/`, so browser tests exercise the sta
 
 ## Existing coverage
 
-Browser coverage verifies the current design-system homepage, legal routes and their table-of-contents targets, skip link, header brand link, configured logo dimensions, Google Fonts document-head links, shell landmarks, single-page `h1` structure, canonical/social metadata, noindex JSON-LD suppression, token previews, BEM brand classes, responsive wrapper and stack gaps, inactive optional integrations, absence of default analytics requests, and baseline accessibility through axe. Unit coverage renders Footer-01 through Astro’s container API to verify its enabled and disabled consent-control contract, confirms the removed starter marketing sample remains absent, and verifies Google Fonts URL generation.
+Browser coverage verifies the current design-system homepage, legal routes and their table-of-contents targets, skip link, header brand link, configured logo dimensions, Google Fonts document-head links, shell landmarks, single-page `h1` structure, canonical/social metadata, noindex JSON-LD suppression, token previews, BEM brand classes, responsive wrapper and stack gaps, inactive optional integrations, absence of default analytics requests, and baseline accessibility through axe. Unit coverage renders Footer-01 and Footer-02 through Astro’s container API to verify their enabled and disabled consent-control contracts, confirms the removed starter marketing sample remains absent, and verifies Google Fonts URL generation.
 
 Unit coverage verifies site identity and brand configuration, the Figma token export and values, emitted CSS names and modes, wireframe feature configurability, and the GSAP/ScrollTrigger animation foundation.
 

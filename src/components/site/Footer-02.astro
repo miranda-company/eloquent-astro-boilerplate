@@ -1,0 +1,219 @@
+---
+import { Link } from '@lucide/astro';
+import { siteConfig } from '../../config/client-config';
+
+export interface Footer02Link {
+  label: string;
+  href: string;
+}
+
+interface Props {
+  pages?: Footer02Link[];
+  socialLinks?: Footer02Link[];
+  legalEntity?: string;
+  showConsentPreferences?: boolean;
+}
+
+const {
+  pages = [],
+  socialLinks = Object.entries(siteConfig.social).map(([label, href]) => ({ label, href })),
+  legalEntity = siteConfig.name,
+  showConsentPreferences = false,
+} = Astro.props;
+---
+
+<footer class="footer-02 section">
+  <div class="footer-02__wrapper wrapper">
+    <div class="footer-02__main">
+      <a class="footer-02__logo-link" href="/">
+        <img
+          class="footer-02__logo"
+          src={siteConfig.brand.logo}
+          width={siteConfig.brand.logoWidth}
+          height={siteConfig.brand.logoHeight}
+          alt={siteConfig.name}
+          loading="lazy"
+          decoding="async"
+        />
+      </a>
+
+      {pages.length > 0 && (
+        <nav class="footer-02__pages" aria-label="Páginas">
+          <ul class="footer-02__page-list">
+            {pages.map((page) => (
+              <li>
+                <a href={page.href}>{page.label}</a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      )}
+
+      {socialLinks.length > 0 && (
+        <nav class="footer-02__social" aria-label="Síguenos">
+          <ul class="footer-02__social-list">
+            {socialLinks.map((socialLink) => (
+              <li>
+                <a
+                  class="footer-02__social-link"
+                  href={socialLink.href}
+                  aria-label={socialLink.label}
+                >
+                  <Link class="footer-02__social-icon" size={24} aria-hidden="true" />
+                </a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      )}
+    </div>
+
+    <div class="footer-02__legal">
+      <nav aria-label={siteConfig.legal.navigationLabel}>
+        <ul class="footer-02__legal-list">
+          {siteConfig.legal.pages.map((page) => (
+            <li>
+              <a href={page.href}>{page.label}</a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+      {showConsentPreferences && (
+        <button class="footer-02__consent-button" type="button" data-open-consent>
+          Gestionar cookies
+        </button>
+      )}
+      <p class="footer-02__copyright">
+        © {new Date().getFullYear()} {legalEntity}
+      </p>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .footer-02 {
+    background: var(--color-surface-default);
+  }
+
+  .footer-02__wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xl);
+    text-align: center;
+  }
+
+  .footer-02__main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-xl);
+  }
+
+  .footer-02__logo-link {
+    width: 128px;
+  }
+
+  .footer-02__logo {
+    width: 100%;
+    height: auto;
+  }
+
+  .footer-02__page-list,
+  .footer-02__legal-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+  }
+
+  .footer-02__page-list {
+    font-size: var(--font-size-sm);
+    font-weight: var(--font-weight-bold);
+    line-height: var(--font-leading-md);
+  }
+
+  .footer-02__social-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--spacing-md);
+  }
+
+  .footer-02__social-link {
+    display: block;
+    color: var(--color-icon-default);
+  }
+
+  .footer-02__social-icon {
+    display: block;
+  }
+
+  .footer-02__legal {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-md);
+    padding-top: var(--spacing-xl);
+    border-top: var(--border-size-sm) solid var(--color-border-secondary);
+    color: var(--color-text-secondary);
+    font-size: var(--font-size-sm);
+    line-height: var(--font-leading-md);
+  }
+
+  .footer-02__legal-list {
+    text-decoration: underline;
+    text-underline-offset: 0.15em;
+  }
+
+  .footer-02__consent-button {
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: inherit;
+    cursor: pointer;
+    font: inherit;
+    text-decoration: underline;
+    text-underline-offset: 0.15em;
+  }
+
+  .footer-02__consent-button:focus-visible,
+  .footer-02__social-link:focus-visible {
+    outline: var(--border-size-sm) solid currentColor;
+    outline-offset: var(--spacing-xxs);
+  }
+
+  @media (--lg) {
+    .footer-02__wrapper {
+      gap: var(--spacing-lg);
+      text-align: initial;
+    }
+
+    .footer-02__main {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+      gap: var(--spacing-lg);
+    }
+
+    .footer-02__page-list,
+    .footer-02__legal-list,
+    .footer-02__legal {
+      flex-direction: row;
+    }
+
+    .footer-02__page-list {
+      justify-content: center;
+    }
+
+    .footer-02__social-list {
+      justify-content: flex-end;
+    }
+
+    .footer-02__legal {
+      justify-content: center;
+      padding-top: var(--spacing-lg);
+    }
+
+    .footer-02__copyright {
+      order: -1;
+    }
+  }
+</style>

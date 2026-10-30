@@ -530,7 +530,7 @@ test('design-system homepage is noindex, keyboard-accessible, and has no default
   await expect(page.locator('body > main#contenido')).toHaveCount(1);
   await expect(page.locator('body > footer')).toHaveCount(1);
   await expect(page.locator('.site-header > .site-header__wrapper.wrapper')).toHaveCount(1);
-  await expect(page.locator('.footer-01 > .footer-01__wrapper.wrapper')).toHaveCount(1);
+  await expect(page.locator('.footer-02 > .footer-02__wrapper.wrapper')).toHaveCount(1);
   await expect(page.locator('main > section > .wrapper')).toHaveCount(2);
   await expect(
     page.locator(
@@ -542,7 +542,7 @@ test('design-system homepage is noindex, keyboard-accessible, and has no default
   );
   await expect(page.locator('.site-header')).toHaveCSS('padding-top', '16px');
   await expect(page.locator('.site-header__logo')).toHaveCSS('height', '32px');
-  await expect(page.locator('.footer-01')).toHaveCSS('padding-top', '40px');
+  await expect(page.locator('.footer-02')).toHaveCSS('padding-top', '80px');
   await expect(page.locator('main > section').first()).toHaveCSS('padding-top', '80px');
   await expect(page.locator('html')).toHaveClass(/(?:^|\s)site(?:\s|$)/);
   await expect(page.locator('html')).toHaveClass(/site--sticky-header/);
@@ -582,8 +582,8 @@ test('design-system homepage is noindex, keyboard-accessible, and has no default
   await expect(page.locator('.site-header__wrapper')).toHaveCSS('border-width', '0px');
   await expect(page.locator('.design-system-preview__intro')).toHaveCSS('border-width', '0px');
   await expect(page.locator('.wrapper').first()).toHaveCSS('outline-style', 'none');
-  await expect(page.locator('.footer-01__wrapper')).toHaveCSS('display', 'grid');
-  const footerContactIcons = await page.locator('.footer-01__contact-icon').evaluateAll((icons) =>
+  await expect(page.locator('.footer-02__wrapper')).toHaveCSS('display', 'flex');
+  const footerSocialIcons = await page.locator('.footer-02__social-icon').evaluateAll((icons) =>
     icons.map((icon) => ({
       ariaHidden: icon.getAttribute('aria-hidden'),
       height: icon.getAttribute('height'),
@@ -591,7 +591,9 @@ test('design-system homepage is noindex, keyboard-accessible, and has no default
       width: icon.getAttribute('width'),
     })),
   );
-  expect(footerContactIcons).toEqual([
+  expect(footerSocialIcons).toEqual([
+    { ariaHidden: 'true', height: '24', tagName: 'svg', width: '24' },
+    { ariaHidden: 'true', height: '24', tagName: 'svg', width: '24' },
     { ariaHidden: 'true', height: '24', tagName: 'svg', width: '24' },
     { ariaHidden: 'true', height: '24', tagName: 'svg', width: '24' },
     { ariaHidden: 'true', height: '24', tagName: 'svg', width: '24' },
@@ -644,35 +646,20 @@ test('design-system homepage is noindex, keyboard-accessible, and has no default
   await expect(page.locator('.site-header')).toHaveCSS('position', 'relative');
   await page.setViewportSize({ width: 767, height: 900 });
   await expect(page.locator('.wrapper').first()).toHaveCSS('padding-left', '18px');
-  expect(
-    await page
-      .locator('.footer-01__wrapper')
-      .evaluate((element) => getComputedStyle(element).gridTemplateColumns.split(' ').length),
-  ).toBe(1);
-  expect(
-    await page
-      .locator('.footer-01__info')
-      .evaluate((element) => getComputedStyle(element).gridTemplateColumns.split(' ').length),
-  ).toBe(1);
+  await expect(page.locator('.footer-02__main')).toHaveCSS('flex-direction', 'column');
+  await expect(page.locator('.footer-02__page-list')).toHaveCSS('flex-direction', 'column');
+  await expect(page.locator('.footer-02__copyright')).toHaveCSS('order', '0');
   await page.setViewportSize({ width: 768, height: 900 });
   await expect(page.locator('.wrapper').first()).toHaveCSS('padding-left', '32px');
-  expect(
-    await page
-      .locator('.footer-01__wrapper')
-      .evaluate((element) => getComputedStyle(element).gridTemplateColumns.split(' ').length),
-  ).toBe(1);
-  await expect(page.locator('.footer-01__info')).toHaveCSS('display', 'grid');
-  await expect(page.locator('.footer-01__info')).toHaveCSS('grid-template-columns', /.+ .+ .+/);
-  await expect(page.locator('.footer-01__contact')).toHaveCSS('grid-column-start', 'auto');
+  await expect(page.locator('.footer-02__main')).toHaveCSS('flex-direction', 'column');
   await page.setViewportSize({ width: 991, height: 900 });
-  expect(
-    await page
-      .locator('.footer-01__wrapper')
-      .evaluate((element) => getComputedStyle(element).gridTemplateColumns.split(' ').length),
-  ).toBe(1);
-  await expect(page.locator('.footer-01__info')).toHaveCSS('grid-template-columns', /.+ .+ .+/);
-  await expect(page.locator('.footer-01__contact')).toHaveCSS('grid-column-start', 'auto');
+  await expect(page.locator('.footer-02__main')).toHaveCSS('flex-direction', 'column');
   await expect(page.locator('.wrapper').first()).toHaveCSS('padding-left', '32px');
+  await page.setViewportSize({ width: 992, height: 900 });
+  await expect(page.locator('.footer-02__main')).toHaveCSS('display', 'grid');
+  await expect(page.locator('.footer-02__main')).toHaveCSS('grid-template-columns', /.+ .+ .+/);
+  await expect(page.locator('.footer-02__page-list')).toHaveCSS('flex-direction', 'row');
+  await expect(page.locator('.footer-02__copyright')).toHaveCSS('order', '-1');
   await page.setViewportSize({ width: 576, height: 900 });
   await expect(page.locator('.wrapper').first()).toHaveCSS('padding-left', '18px');
   await page.setViewportSize({ width: 575, height: 900 });
@@ -688,19 +675,14 @@ test('design-system homepage is noindex, keyboard-accessible, and has no default
   await page.setViewportSize({ width: 1600, height: 900 });
   await expect(page.locator('.wrapper').first()).toHaveCSS('max-width', '1440px');
   await expect(page.locator('.wrapper').first()).toHaveCSS('padding-left', '64px');
-  expect(
-    await page
-      .locator('.footer-01__wrapper')
-      .evaluate((element) => getComputedStyle(element).gridTemplateColumns.split(' ').length),
-  ).toBe(2);
+  await expect(page.locator('.footer-02__main')).toHaveCSS('grid-template-columns', /.+ .+ .+/);
   const footerColumnWidths = await page
-    .locator('.footer-01__wrapper')
+    .locator('.footer-02__main')
     .evaluate((element) =>
       getComputedStyle(element).gridTemplateColumns.split(' ').map(Number.parseFloat),
     );
-  expect(footerColumnWidths[1] / footerColumnWidths[0]).toBeCloseTo(65 / 35, 2);
-  await expect(page.locator('.footer-01__info')).toHaveCSS('grid-template-columns', /.+ .+ .+/);
-  await expect(page.locator('.footer-01__contact')).toHaveCSS('grid-column-start', 'auto');
+  expect(footerColumnWidths[0]).toBeCloseTo(footerColumnWidths[2], 1);
+  await expect(page.locator('.footer-02__legal')).toHaveCSS('flex-direction', 'row');
   expect(thirdPartyRequests).toEqual([]);
   await page.goto('/aviso-legal/');
   await page.setViewportSize({ width: 991, height: 900 });
@@ -806,8 +788,8 @@ for (const route of legalRoutes)
         regions.every((region) => region.querySelector(':scope > .wrapper')),
       );
     expect(layoutRegionsHaveWrappers).toBe(true);
-    await expect(page.locator('body > footer address')).toHaveCount(1);
-    await expect(page.locator('body > footer .footer-01__legal nav ul > li')).toHaveCount(3);
+    await expect(page.locator('body > footer address')).toHaveCount(0);
+    await expect(page.locator('body > footer .footer-02__legal nav ul > li')).toHaveCount(3);
     await expect(page.locator('.legal-page__toc nav')).toHaveCount(1);
     await expect(page.locator('div.legal-page__toc')).toHaveCount(1);
     await expect(page.locator('.legal-page__toc a')).toHaveCount(4);
