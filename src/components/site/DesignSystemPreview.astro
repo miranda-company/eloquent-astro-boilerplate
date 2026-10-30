@@ -58,7 +58,7 @@ function formatValue(value: string | number, type: string, name: string): string
       This are the variables from the figma file and their corresponding css classes.
     </p>
     <h3 class="ds-tokens__group-title">Font sizes</h3>
-    <div class="ds-tokens__font-sizes-grid">
+    <div class="ds-tokens__font-sizes-grid grid">
       {fontSizeTokens.map((token) => (
         <div class="ds-tokens__card stack">
           <p class="ds-tokens__css-name">
@@ -94,7 +94,7 @@ function formatValue(value: string | number, type: string, name: string): string
       ))}
     </div>
     <h3 class="ds-tokens__group-title">Semantic colors</h3>
-    <div class="ds-tokens__semantic-colors-grid">
+    <div class="ds-tokens__semantic-colors-grid grid">
       {semanticColorTokens.map((token) => (
         <div class="ds-tokens__card stack">
           <p class="ds-tokens__css-name">
@@ -129,7 +129,7 @@ function formatValue(value: string | number, type: string, name: string): string
       ))}
     </div>
     <h3 class="ds-tokens__group-title">Primitive colors</h3>
-    <div class="ds-tokens__primitive-colors-grid">
+    <div class="ds-tokens__primitive-colors-grid grid">
       {primitiveColorTokens.map((token) => (
         <div class="ds-tokens__card stack">
           <p class="ds-tokens__css-name">
@@ -157,7 +157,7 @@ function formatValue(value: string | number, type: string, name: string): string
       ))}
     </div>
     <h3 class="ds-tokens__group-title">Spacing</h3>
-    <div class="ds-tokens__spacing-grid">
+    <div class="ds-tokens__spacing-grid grid">
       {spacingTokens.map((token) => (
         <div class="ds-tokens__card stack">
           <p class="ds-tokens__css-name">
@@ -193,7 +193,7 @@ function formatValue(value: string | number, type: string, name: string): string
       ))}
     </div>
     <h3 class="ds-tokens__group-title">Global size tokens</h3>
-    <div class="ds-tokens__global-size-grid">
+    <div class="ds-tokens__global-size-grid grid">
       {globalSizeTokens.map((token) => (
         <div class="ds-tokens__card stack">
           <p class="ds-tokens__css-name">
@@ -248,7 +248,6 @@ function formatValue(value: string | number, type: string, name: string): string
   .ds-tokens__primitive-colors-grid,
   .ds-tokens__spacing-grid,
   .ds-tokens__global-size-grid {
-    display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
     gap: var(--spacing-md);
     margin-top: var(--spacing-md);
