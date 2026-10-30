@@ -1,0 +1,22 @@
+---
+import { patternPreviews } from '../../config/pattern-previews';
+import PatternPreviewLayout from '../../layouts/PatternPreviewLayout.astro';
+---
+
+<PatternPreviewLayout
+  title="Pattern previews"
+  description="Internal visual previews for reusable website patterns."
+>
+  <section class="pattern-index section" aria-labelledby="pattern-index-title">
+    <div class="pattern-index__wrapper wrapper stack">
+      <h1 id="pattern-index-title">Pattern previews</h1>
+      <ul class="pattern-index__list stack">
+        {patternPreviews.map((pattern) => (
+          <li>
+            <a href={`/patterns/${pattern.slug}/`}>{pattern.name}</a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+</PatternPreviewLayout>

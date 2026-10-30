@@ -12,6 +12,7 @@ Its purpose is to make client-site delivery more consistent and easier to mainta
 - Generic Figma primitive names and semantic color, typography, spacing, radius, and size variables remain stable across client rebrands.
 - Google Fonts generated from the approved Figma font-family and normal font-weight tokens, with `display=swap` and a system fallback.
 - A no-index design-system preview shows font-size, semantic-color, primitive-color, spacing, and global-size token grids with their mode values and CSS properties.
+- Static, isolated no-index pattern previews at `/patterns/` support responsive visual checks of registered reusable components.
 - Shared responsive styles use the mobile-first custom-media aliases in `src/styles/breakpoints.css`; their thresholds are documented in `docs/design-system.md`.
 - Reusable Astro patterns with explicit typed interfaces, including Figma-backed Footer-01 and image-reference-backed Footer-02.
 - Spanish starter content and a configurable legal-page layout with a table of contents, optional status notice, and optional summary facts.
@@ -64,6 +65,7 @@ Then complete [the client setup checklist](docs/client-setup.md). Copy `.env.exa
 - [Client technical brief template](docs/templates/client-technical-brief.md)
 - [Content authoring](docs/content.md)
 - [Design system](docs/design-system.md)
+- [Pattern preview workflow](docs/pattern-previews.md)
 - [Footer-01 reusable pattern](docs/component-library/footer-01.md)
 - [Footer-02 reusable pattern](docs/component-library/footer-02.md)
 - [Semantic DOM, SEO, AEO, and GEO](docs/DOM_ARCHITECTURE.md)

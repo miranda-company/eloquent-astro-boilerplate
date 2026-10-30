@@ -4,7 +4,7 @@ This document is the repository contract for public HTML. It applies to people a
 
 ## Page contract
 
-`BaseLayout.astro` is the only document shell. It renders the skip link, site `<header>`, one `<main id="contenido">`, site `<footer>`, optional consent UI, and document metadata. Pages and content components render _inside_ that main landmark; they must not introduce another `<main>`.
+`BaseLayout.astro` is the public document shell. It renders the skip link, site `<header>`, one `<main id="contenido">`, site `<footer>`, optional consent UI, and document metadata. Pages and content components render _inside_ that main landmark; they must not introduce another `<main>`. `PatternPreviewLayout.astro` is the sole internal exception: it provides an isolated no-index main landmark for `/patterns/` visual testing and omits public shell components.
 
 Every public page must have:
 

@@ -4,6 +4,8 @@ The approved [Figma Design System](https://www.figma.com/design/56g1RP9hV1uVFigL
 
 The internal design-system preview is the root page while the boilerplate is being prepared. It is `noindex, nofollow` and excluded from the sitemap. Move it to `/design-system` when the client homepage is ready; the procedure is in [client setup](client-setup.md).
 
+Use the separate [pattern preview system](pattern-previews.md) for isolated visual testing of reusable components. Keep token inspection in the design-system preview.
+
 ## Token source and implementation
 
 | Concern                                                          | Source                                          | Responsibility                                                    |

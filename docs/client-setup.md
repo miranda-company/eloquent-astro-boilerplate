@@ -81,6 +81,8 @@ The boilerplate uses `/` as an internal, no-index preview. Once the public homep
 3. Set `siteConfig.features.designSystemHomepage` to `false`. The sitemap then includes `/` and continues to exclude `/design-system/`.
 4. Update or add route tests, then run the full verification commands again.
 
+The internal `/patterns/` routes remain available after this move. They are independently `noindex` and excluded from the sitemap; see [pattern previews](pattern-previews.md).
+
 ## Adding another language
 
 Add the locale to `supportedLocales`, extend the content schema deliberately, create matching collection content, and introduce localized routing as a separate implementation change. Do not add a locale code without adding its content and routing strategy.

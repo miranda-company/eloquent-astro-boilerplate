@@ -1,0 +1,19 @@
+---
+import Footer01 from '../../components/site/Footer-01.astro';
+import Footer02 from '../../components/site/Footer-02.astro';
+import { patternPreviews, type PatternPreview } from '../../config/pattern-previews';
+import PatternPreviewLayout from '../../layouts/PatternPreviewLayout.astro';
+
+export function getStaticPaths() {
+  return patternPreviews.map((pattern) => ({
+    params: { pattern: pattern.slug },
+    props: { pattern },
+  }));
+}
+
+const { pattern } = Astro.props as { pattern: PatternPreview };
+---
+
+<PatternPreviewLayout title={`${pattern.name} preview`} description={pattern.description}>
+  {pattern.slug === 'footer-01' ? <Footer01 {...pattern.props} /> : <Footer02 {...pattern.props} />}
+</PatternPreviewLayout>

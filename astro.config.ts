@@ -13,6 +13,7 @@ export default defineConfig({
         const pathname = new URL(page).pathname;
         return (
           pathname !== '/design-system/' &&
+          !pathname.startsWith('/patterns/') &&
           !(siteConfig.features.designSystemHomepage && pathname === '/')
         );
       },

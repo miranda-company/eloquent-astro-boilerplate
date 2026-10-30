@@ -18,6 +18,53 @@ const fontSizeSm = figmaTokens['font-tokens']['font-size-sm'] as {
   desktop: number;
 };
 
+const patternPreviews = [
+  { route: '/patterns/footer-01/', footerClass: 'footer-01' },
+  { route: '/patterns/footer-02/', footerClass: 'footer-02' },
+];
+
+test('pattern previews are isolated, noindex, and excluded from the sitemap', async ({ page }) => {
+  const thirdPartyRequests: string[] = [];
+  page.on('request', (request) => {
+    if (/googletagmanager|google-analytics/.test(request.url()))
+      thirdPartyRequests.push(request.url());
+  });
+
+  await page.goto('/patterns/');
+  await expect(page.locator('meta[name="robots"]')).toHaveAttribute('content', 'noindex, nofollow');
+  for (const pattern of patternPreviews)
+    await expect(page.locator(`a[href="${pattern.route}"]`)).toHaveCount(1);
+
+  for (const pattern of patternPreviews) {
+    await page.goto(pattern.route);
+    await expect(page.locator('meta[name="robots"]')).toHaveAttribute(
+      'content',
+      'noindex, nofollow',
+    );
+    await expect(page.locator('body > header, body > footer')).toHaveCount(0);
+    await expect(page.locator('main > footer')).toHaveClass(
+      new RegExp(`(^|\\s)${pattern.footerClass}(\\s|$)`),
+    );
+    await expect(
+      page.locator('.site-header, .consent-banner, .scroll-controls__container'),
+    ).toHaveCount(0);
+
+    for (const width of [390, 768, 1200, 1440]) {
+      await page.setViewportSize({ width, height: 900 });
+      await expect(page.locator(`main > footer.${pattern.footerClass}`)).toBeVisible();
+      expect(
+        await page.evaluate(
+          () => document.documentElement.scrollWidth <= document.documentElement.clientWidth,
+        ),
+      ).toBe(true);
+    }
+  }
+
+  const sitemap = await page.request.get('/sitemap-0.xml');
+  expect(await sitemap.text()).not.toContain('/patterns/');
+  expect(thirdPartyRequests).toEqual([]);
+});
+
 test('production wireframe aid stays off until the root modifier is applied', async ({ page }) => {
   await page.goto('/');
   await expect(page.locator('html')).not.toHaveClass(/site--wireframe/);
