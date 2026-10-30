@@ -12,11 +12,11 @@ Its purpose is to make client-site delivery more consistent and easier to mainta
 - Generic Figma primitive names and semantic color, typography, spacing, radius, and size variables remain stable across client rebrands.
 - A no-index design-system preview shows font-size, semantic-color, primitive-color, spacing, and global-size token grids with their mode values and CSS properties.
 - Shared responsive styles use the mobile-first custom-media aliases in `src/styles/breakpoints.css`; their thresholds are documented in `docs/design-system.md`.
-- Reusable Astro page patterns with typed MDX props, starting with a token-driven marketing hero linked to the Figma design reference.
+- Reusable Astro patterns with explicit typed interfaces, starting with Footer-01 linked to its Figma design reference.
 - Spanish starter content and a configurable legal-page layout with a table of contents, optional status notice, and optional summary facts.
 - A pre-optimised asset workflow: native responsive image markup with agency-prepared files copied unchanged from `public/images/`.
 - Configurable sticky-header and back-to-top controls with semantic, no-JavaScript fallbacks.
-- Optional integrations are disabled by default: enable approved feature flags and provide environment variables before consent-gated analytics or the provider-agnostic native contact form can run.
+- Optional integrations are disabled by default: enable approved feature flags and environment variables before consent-gated analytics can run. Form configuration remains a placeholder until an approved client-specific form pattern is added.
 - GSAP and ScrollTrigger available for isolated, reduced-motion-aware component animations.
 - ESLint, Prettier, Vitest, Playwright, axe accessibility checks, and GitHub Actions CI.
 
@@ -72,3 +72,5 @@ Then complete [the client setup checklist](docs/client-setup.md). Copy `.env.exa
 ## Package-manager policy
 
 Use pnpm only. Do not add `package-lock.json` or install dependencies with npm alongside `pnpm-lock.yaml`; a single lockfile keeps local and CI dependency resolution reproducible.
+
+During routine maintenance and before release, run `pnpm audit --prod` when network access is available. Review and resolve applicable findings manually; dependency updates are not automated by this starter.

@@ -1,6 +1,6 @@
 # Architecture
 
-This is a static-first Astro starter for content-led marketing sites. It ships static HTML, local content, and only the JavaScript needed for consent and an optionally enhanced contact form.
+This is a static-first Astro starter for content-led marketing sites. It ships static HTML, local content, and only the JavaScript needed for consent and other approved component-scoped enhancements.
 
 ## Directory map
 
@@ -43,13 +43,15 @@ Read [DOM architecture](DOM_ARCHITECTURE.md) before adding content-bearing compo
 
 ## Content flow
 
-Astro Content Collections load `src/content/pages/**/*.{md,mdx}`. The Zod schema validates frontmatter at check and build time. A page is public only when it is not a draft and supplies a `slug`; `es/home` is reserved for the sample homepage content.
+Astro Content Collections load `src/content/pages/**/*.{md,mdx}`. The Zod schema validates frontmatter at check and build time. A page is public only when it is not a draft and supplies a `slug`.
 
 Legal pages remain local MDX content. `LegalPageLayout.astro` owns their single `h1`, page metadata handoff, optional review notice, optional definition-list summary, responsive table of contents, and prose column. The content entry owns its approved legal copy and the stable IDs used by the contents navigation. Footer destinations come from `siteConfig.legal.pages` so the same links are not duplicated in a component. When enabled, the consent-preferences button is a separate in-page action placed beside the legal navigation in a shared wrapping layout.
 
 ## Client JavaScript boundary
 
-The starter does not include a client UI framework, global state store, scroll-jacking library, or transition runtime. GSAP and ScrollTrigger are available as an unreferenced component-scoped foundation; the default build emits neither until a component imports `src/scripts/animation/gsap.ts`. The consent manager and contact form each own their small client script. New browser JavaScript should stay local to the component that requires it and should preserve a usable non-JavaScript path where possible. Read [animation](animation.md) before adding motion.
+The starter does not include a client UI framework, global state store, scroll-jacking library, or transition runtime. GSAP and ScrollTrigger are available as an unreferenced component-scoped foundation; the default build emits neither until a component imports `src/scripts/animation/gsap.ts`. `ConsentManager.astro` owns its small client script. New browser JavaScript should stay local to the component that requires it and should preserve a usable non-JavaScript path where possible. Read [animation](animation.md) before adding motion.
+
+`siteConfig.features.contactForm` and `PUBLIC_FORM_ENDPOINT` are intentionally retained as disabled integration placeholders. No contact-form pattern ships today. Add one only after the client approves its provider, privacy disclosures, submission path, and non-JavaScript behavior.
 
 ## Static-hosting boundary
 

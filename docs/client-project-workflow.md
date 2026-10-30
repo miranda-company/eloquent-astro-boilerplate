@@ -167,13 +167,13 @@ cp .env.example .env
 
 Set public identifiers only:
 
-- `PUBLIC_FORM_ENDPOINT` for the approved form endpoint;
+- `PUBLIC_FORM_ENDPOINT` only when an approved client-specific form pattern has been added;
 - `PUBLIC_GA_MEASUREMENT_ID` for Google Analytics; or
 - `PUBLIC_GTM_CONTAINER_ID` for Google Tag Manager.
 
-Enable only the matching feature flag after its provider and privacy requirements are approved: `contactForm` for the form, and both `analytics` and `consentBanner` for consent-gated analytics. Keep unrelated flags `false` and their environment values empty.
+Enable both `analytics` and `consentBanner` only after their provider and privacy requirements are approved. Keep `contactForm` and `PUBLIC_FORM_ENDPOINT` disabled and empty until an approved client-specific form pattern is added. Keep unrelated flags `false` and their environment values empty.
 
-Never put secrets in a `PUBLIC_` variable. Read [integrations and privacy](integrations.md) before enabling a provider. Verify the form provider supports CORS for enhanced submissions and that legal/cookie copy describes the services actually used.
+Never put secrets in a `PUBLIC_` variable. Read [integrations and privacy](integrations.md) before enabling a provider. A future form pattern requires approval of its provider, privacy treatment, and usable non-JavaScript submission path; ensure legal/cookie copy describes the services actually used.
 
 ### 6. Configure legal-page structure
 
@@ -219,10 +219,10 @@ Do not add a library to solve a one-off visual task. Prefer the existing token s
 1. Move the approved design-system preview from `/` to `/design-system`; retain `noindex`.
 2. Replace `/` with the public homepage and set `siteConfig.features.designSystemHomepage` to `false` so the homepage enters the sitemap.
 3. Replace all sample content and legal placeholders with client-approved copy.
-4. Verify canonical URLs, metadata, social images, robots, sitemap, consent behavior, form fallback, and production analytics behavior.
+4. Verify canonical URLs, metadata, social images, robots, sitemap, consent behavior, and production analytics behavior. Verify any future form against its approved submission and fallback contract.
 5. Test integrations in both states:
-   - with features disabled, confirm there is no consent banner/control, contact-form enhancement script, analytics loader, or third-party request;
-   - with each approved feature enabled, confirm the consent flow, form fallback and enhancement, provider requests, and legal disclosures match the approved brief.
+   - with features disabled, confirm there is no consent banner/control, analytics loader, or third-party request;
+   - with each approved feature enabled, confirm the consent flow, provider requests, and legal disclosures match the approved brief; test any future form against its approved fallback contract.
 6. Run the complete verification suite:
 
 ```sh
@@ -235,3 +235,5 @@ pnpm run test:e2e
 ## Ongoing maintenance
 
 Keep the client repository's README and relevant guides current when architecture or integrations change. Use small, descriptive commits and review agent changes as you would a teammate's work: inspect the diff, run the relevant checks, and confirm that the change meets the approved scope.
+
+During routine maintenance and before release, run `pnpm audit --prod` when network access is available. Review dependency updates and applicable audit findings manually; the starter does not automate either process.

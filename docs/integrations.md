@@ -8,7 +8,7 @@ Copy `.env.example` to `.env` only when an approved integration needs it.
 
 | Variable                   | Purpose                                 | Required condition                                    |
 | -------------------------- | --------------------------------------- | ----------------------------------------------------- |
-| `PUBLIC_FORM_ENDPOINT`     | Native HTML form `POST` destination     | Contact form feature enabled                          |
+| `PUBLIC_FORM_ENDPOINT`     | Reserved future form-provider endpoint  | Approved client-specific form pattern                 |
 | `PUBLIC_GA_MEASUREMENT_ID` | Google Analytics identifier             | Analytics feature enabled and visitor accepts consent |
 | `PUBLIC_GTM_CONTAINER_ID`  | Google Tag Manager container identifier | Analytics feature enabled and visitor accepts consent |
 
@@ -25,21 +25,21 @@ These values are public by design. Never place API keys, secrets, provider priva
 
 When identifiers are absent, the generated page includes no analytics request. Configure either GA or GTM unless a reviewed implementation explicitly requires both. The untouched starter keeps analytics and consent disabled. When consent is enabled, the footer exposes “Gestionar cookies” beside the legal navigation as a button; it lets visitors reopen the consent choices without pretending to navigate to another document.
 
-## Contact form
+## Future contact form
 
-The contact form renders only when `siteConfig.features.contactForm` and `PUBLIC_FORM_ENDPOINT` are both present. It works as a normal HTML `POST` without JavaScript.
+The starter does not currently ship a contact-form component, HTML form, client-side `fetch()` enhancement, CORS integration, or email fallback. `siteConfig.features.contactForm` and `PUBLIC_FORM_ENDPOINT` remain disabled placeholders so an approved client-specific form pattern has a defined configuration seam.
 
-With JavaScript enabled, the form uses `fetch()` to show a semantic pending, success, or error status and exposes `aria-busy` while a submission is in progress. The provider endpoint must allow CORS and return a successful response for this enhancement to work. If enhancement fails, the user sees a message directing them to the configured email fallback; verify the endpoint and fallback manually before launch.
+Before adding that pattern, approve the provider, privacy and legal disclosures, data handling, email destination, and a usable non-JavaScript submission path. Add deterministic coverage for the configured and unconfigured states; introduce browser enhancement only when the provider contract requires it.
 
 ## Provider replacement
 
-To use another analytics, consent, or form provider, replace the related component rather than adding an unscoped global script. Preserve these guarantees:
+To use another analytics or consent provider, replace the related component rather than adding an unscoped global script. A future form pattern must use the same scoped approach. Preserve these guarantees:
 
 - Optional tracking never loads before consent.
 - Disabled or unconfigured integrations emit no unnecessary request.
-- Form submission has a meaningful fallback.
+- Any approved form submission has a meaningful fallback.
 - Legal pages accurately disclose the services in production.
 
 ## Launch review
 
-Before launch, inspect the production build and browser network panel with integrations unset and configured. Confirm the legal copy, consent language, actual cookies, analytics requests, and form provider behavior with the client’s privacy and legal owners.
+Before launch, inspect the production build and browser network panel with integrations unset and configured. Confirm the legal copy, consent language, actual cookies, analytics requests, and any approved form-provider behavior with the client’s privacy and legal owners.

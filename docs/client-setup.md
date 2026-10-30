@@ -41,13 +41,13 @@ Edit `src/config/client-config.ts` first.
 
 Copy `.env.example` to `.env` only when an integration is approved. Leave unrelated values empty.
 
-- `PUBLIC_FORM_ENDPOINT` enables the provider-agnostic contact form.
+- `PUBLIC_FORM_ENDPOINT` is reserved for a future approved client-specific form pattern; it does not enable a built-in form.
 - `PUBLIC_GA_MEASUREMENT_ID` enables Google Analytics after consent.
 - `PUBLIC_GTM_CONTAINER_ID` enables Google Tag Manager after consent.
 
-Enable the matching feature flag only after the provider and privacy requirements are approved: `contactForm` with `PUBLIC_FORM_ENDPOINT`, and both `analytics` and `consentBanner` with a GA or GTM identifier. Keep unrelated flags `false` and environment values empty.
+Enable both `analytics` and `consentBanner` only after the provider and privacy requirements are approved and a GA or GTM identifier is configured. Keep `contactForm` and `PUBLIC_FORM_ENDPOINT` disabled and empty until an approved client-specific form pattern exists.
 
-Read [integrations.md](integrations.md) before configuring a provider. In particular, enhanced form submission needs CORS support; the HTML form POST is the non-JavaScript fallback.
+Read [integrations.md](integrations.md) before configuring a provider. A future form pattern requires approval of its provider, privacy treatment, and non-JavaScript submission path before it is implemented.
 
 ## 6. Configure approved motion
 
@@ -68,8 +68,8 @@ Breakpoints are build-time custom-media aliases in `src/styles/breakpoints.css`,
 2. Run `pnpm run verify`.
 3. Run `pnpm run test:e2e`.
 4. Inspect the production output locally with `pnpm run preview`.
-5. Confirm the public homepage, legal routes, consent behavior, form fallback, metadata, sitemap, and `robots.txt`.
-6. Verify integrations in both states: with features disabled, confirm there is no consent UI, form-enhancement script, analytics loader, or third-party request; with an approved feature enabled, confirm its provider behavior and legal disclosures.
+5. Confirm the public homepage, legal routes, consent behavior, metadata, sitemap, and `robots.txt`.
+6. Verify integrations in both states: with features disabled, confirm there is no consent UI, analytics loader, or third-party request; with an approved feature enabled, confirm its provider behavior and legal disclosures. Test a future form pattern against its separately approved submission and fallback contract.
 7. For any GSAP or ScrollTrigger component, verify normal, reduced-motion, keyboard, and no-JavaScript states.
 
 ## Move the design-system preview at project kickoff

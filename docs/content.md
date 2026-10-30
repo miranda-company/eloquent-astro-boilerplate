@@ -9,7 +9,6 @@ All starter content is local and validated through Astro Content Collections. So
 Place page content under `src/content/pages/{locale}/`:
 
 ```text
-src/content/pages/es/home.mdx
 src/content/pages/es/legal-notice.md
 src/content/pages/es/privacy.md
 src/content/pages/es/cookies.md
@@ -35,7 +34,7 @@ draft: false
 template: standard
 ```
 
-`slug` creates a public route through `[...slug].astro`. Set `draft: true` to keep an entry out of generated routes. The `es/home` entry is reserved for homepage content and is not routed through the catch-all page.
+`slug` creates a public route through `[...slug].astro`. Set `draft: true` to keep an entry out of generated routes.
 
 ## Markdown or MDX
 

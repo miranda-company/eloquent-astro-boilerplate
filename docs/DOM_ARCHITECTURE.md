@@ -86,9 +86,9 @@ Use a list when item order is meaningful (`<ol>`) or when it is not (`<ul>`). Do
 
 An `<a href="…">` changes location. A `<button type="button">` performs an in-page action such as opening consent preferences. Do not attach JavaScript actions to an anchor, `div`, or `span`; do not use a button for ordinary navigation.
 
-Use native form controls with visible `<label>` elements. Keep a form submission usable without JavaScript. Client enhancement must expose pending, success, and error states through an appropriate live/status region without replacing the native form semantics.
+When a client-specific form pattern is approved, use native form controls with visible `<label>` elements and keep submission usable without JavaScript. Client enhancement must expose pending, success, and error states through an appropriate live/status region without replacing native form semantics. The starter does not currently ship a form pattern.
 
-Optional integrations begin disabled. Consent UI and its footer action render only when `siteConfig.features.consentBanner` is enabled; configured legal documents remain navigation links, while the consent action stays outside the legal `<nav>`. A form enhancement renders only when its feature flag and provider endpoint are configured; its static HTML `POST` remains the fallback.
+Optional integrations begin disabled. Consent UI and its footer action render only when `siteConfig.features.consentBanner` is enabled; configured legal documents remain navigation links, while the consent action stays outside the legal `<nav>`. `contactForm` and `PUBLIC_FORM_ENDPOINT` are configuration placeholders only until a client-specific form pattern is approved.
 
 `ScrollControls.astro` owns the optional sticky-header and back-to-top enhancements. The header stays present and usable without JavaScript. The control is an `<a href="#top">`, not a button, so it still returns a visitor to the top of the document without JavaScript. When JavaScript is available, a passive, animation-frame-throttled listener applies the `site-header--sticky` and `back-to-top--visible` BEM modifiers. Keep the `#top` target, visible focus state, and reduced-motion-safe scrolling behavior intact.
 
@@ -174,9 +174,9 @@ Before merging a public-page change, confirm:
 
 - [ ] One `h1`, a sequential heading outline, and no duplicate main landmark.
 - [ ] Sections, articles, navigation, lists, definitions, tables, and contact data use their native elements.
-- [ ] Links navigate and buttons act; forms retain native labels and a non-JavaScript path.
+- [ ] Links navigate and buttons act; any approved form retains native labels and a non-JavaScript path.
 - [ ] Sticky-header and back-to-top enhancements retain their usable static header and `#top` link fallback.
-- [ ] Optional consent, form, and motion enhancements remain absent or dormant until configured and preserve the static reading experience.
+- [ ] Optional consent and motion enhancements remain absent or dormant until configured and preserve the static reading experience; any future form follows the approved provider and fallback contract.
 - [ ] Metadata is supplied via `BaseLayout`; image dimensions and alt text are correct.
 - [ ] JSON-LD, if any, accurately reflects visible content and the page is indexable.
 - [ ] `pnpm run verify` and relevant `pnpm run test:e2e` tests pass.
