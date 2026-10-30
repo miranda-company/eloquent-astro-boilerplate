@@ -7,9 +7,9 @@ describe('site configuration', () => {
     expect(new URL(siteConfig.url).protocol).toMatch(/^https?:$/);
   });
 
-  it('defines SVG paths for the configurable brand assets', () => {
-    expect(siteConfig.brand.logo).toMatch(/\.svg$/);
-    expect(siteConfig.brand.icon).toMatch(/\.svg$/);
+  it('defines supported paths for the configurable brand assets', () => {
+    expect(siteConfig.brand.logo).toMatch(/\.(svg|png|jpe?g)$/);
+    expect(siteConfig.brand.icon).toMatch(/\.(svg|png|jpe?g)$/);
     expect(siteConfig.brand.logoWidth).toBeGreaterThan(0);
     expect(siteConfig.brand.logoHeight).toBeGreaterThan(0);
     expect(siteConfig.brand.iconWidth).toBeGreaterThan(0);

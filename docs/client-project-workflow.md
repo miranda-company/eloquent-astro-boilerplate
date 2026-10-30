@@ -13,7 +13,7 @@ Boilerplate repository
   → integration, QA, and launch
 ```
 
-Do not begin production-page implementation before stages 1 and 2 are complete. They establish the repository, client decisions, and visual language that every later page depends on.
+Do not begin production-page implementation before stages 1 and 2 are complete. They establish the repository and visual language that every later page depends on.
 
 ## Stage 1 — Create and prepare the client repository
 
@@ -24,24 +24,39 @@ Create a new repository from `eloquent-astro-boilerplate`; do not develop a clie
 In GitHub:
 
 1. Open [`miranda-company/eloquent-astro-boilerplate`](https://github.com/miranda-company/eloquent-astro-boilerplate).
-2. Select **Use this template**, then **Create a new repository**. If the button is unavailable, ask a repository administrator to enable template use or create the client repository from the boilerplate for you; do not fork it or copy files manually.
+2. Select **Use this template**, then **Create a new repository**.
 3. Select the approved GitHub owner (normally the agency organisation), enter the client repository name, and choose **Private**.
 4. Select **Create repository**. Do not initialise it with a README, `.gitignore`, or licence: the boilerplate already supplies those files.
 5. On the new repository page, select **Code**, copy the HTTPS clone URL, and use it in the commands below.
 
-Clone the newly created client repository and install the pinned dependencies:
+Keep **Include all branches** off so the client repository starts from the production-ready `main` branch only. Choose the agency organisation, use a clear client-specific repository name, and set visibility to **Private** before selecting **Create repository**.
+
+![GitHub's Create a new repository form, configured with the Eloquent Astro Boilerplate template, one client repository name, and the visibility selector.](images/github-create-client-repository.png)
+
+### 2. Clone and run the untouched starter locally
+
+1. In the agency projects folder, create a client workspace folder—for example, `Pixel Estudis`. Keep client-provided source material or internal working files outside the website repository.
+2. Inside that workspace, create an empty folder for the website repository—for example, `pixel-estudis-website`. It must contain no files, folders, or hidden files before cloning.
+3. Open that empty repository folder in VS Code: select **File → Open Folder…**, choose it, then select **Open**.
+4. Open VS Code’s integrated terminal: select **Terminal → New Terminal**. It opens at the repository folder’s path; confirm the terminal prompt ends with the folder name.
+5. On the new GitHub repository page, select **Code**, choose **HTTPS**, and copy the clone URL.
+
+Run the following commands in that VS Code terminal, one line at a time, pressing `Return` after each. Paste the complete HTTPS URL copied from GitHub between `git clone` and the final `.`—do not add angle brackets. The final `.` means “clone into the folder that is already open”; do not omit it.
 
 ```sh
-git clone <client-repository-url>
-cd <client-repository-directory>
+git clone https://github.com/miranda-company/example-client-website.git .
 corepack enable
 pnpm install --frozen-lockfile
 pnpm run dev
 ```
 
-Stop the local server with `Ctrl+C` in that terminal. Do not use npm or introduce `package-lock.json`.
+The URL above is only an example. Use the exact URL copied from the client repository.
 
-### 2. Preserve the baseline
+`git clone` downloads the repository into the folder open in VS Code. `corepack enable` makes the pinned pnpm version available, and `pnpm install --frozen-lockfile` installs exactly the dependency versions recorded in `pnpm-lock.yaml`.
+
+The last command starts the local development server. Open the local URL it prints in the terminal (normally `http://localhost:4321`) and confirm the untouched boilerplate loads. Stop the server with `Ctrl+C` in that terminal. Do not use npm or introduce `package-lock.json`.
+
+### 3. Preserve the baseline
 
 Before changing code, confirm the duplicate is healthy:
 
@@ -50,7 +65,7 @@ pnpm run verify
 pnpm run test:e2e
 ```
 
-### 3. Mark the boilerplate baseline
+### 4. Mark the boilerplate baseline
 
 Mark the exact starter state before client-specific work begins. Use an annotated Git tag so the team can compare a later client branch with the original boilerplate state.
 
@@ -83,23 +98,6 @@ git diff boilerplate-baseline-v0.1.0...HEAD
 
 This gives the team a clean comparison point and makes future boilerplate upgrades easier to review.
 
-### 4. Create a client input pack
-
-Start from the [client technical brief template](templates/client-technical-brief.md). Duplicate it into the client project's private documentation area (for example, `docs/client-brief.md`), complete it with the client, and keep it current as decisions are approved. A technical brief belongs in the repository only if the client permits it; otherwise store the approved location and a concise decision summary in the project documentation.
-
-| Input                 | Required decisions before implementation                                                                 |
-| --------------------- | -------------------------------------------------------------------------------------------------------- |
-| Business and audience | Primary audience, geography, language, conversion goal, differentiators                                  |
-| Sitemap               | Public routes, navigation hierarchy, redirects, page ownership                                           |
-| Content               | Approved copy status, content owner, image/video assets, legal-copy owner                                |
-| Brand system          | Logo/icon SVGs, font licences/files, full palette, component states, Figma file and approved frame links |
-| SEO                   | Canonical domain, page titles/descriptions, social-image approach, indexable routes, schema candidates   |
-| Integrations          | Form provider, analytics/consent decision, CRM, email destination, privacy constraints                   |
-| Motion                | Animation intent, affected routes, reduced-motion behavior, performance budget, approved GSAP plugins    |
-| Delivery              | Hosting, DNS owner, deployment access, launch date, maintenance owner                                    |
-
-Resolve unknown requirements with the client before adding a dependency, server runtime, CMS, animation package, or third-party script. GSAP and ScrollTrigger are already available in this starter, but each client still needs an approved animation scope and accessibility acceptance criteria. Read [animation](animation.md) before implementing them.
-
 ### 5. Start agent work with explicit scope
 
 Every coding-agent task should contain:
@@ -129,11 +127,11 @@ Edit `src/config/client-config.ts` first.
 
 ### 2. Replace brand assets
 
-1. Put the approved logo and icon in `public/brand/` as single-colour SVGs suitable for monochrome masking.
+1. Put the approved logo and icon in `public/brand/` as final `.svg`, `.png`, `.jpg`, or `.jpeg` files. Prefer SVG when available; use transparent PNG for raster logos that need to work over varied backgrounds.
 2. Update `brand.logo` and `brand.icon` if paths change.
-3. Read each SVG's `viewBox` or intrinsic dimensions, then set `logoWidth`, `logoHeight`, `iconWidth`, and `iconHeight` to matching positive values.
+3. Read each asset's intrinsic dimensions—its SVG `viewBox` for vectors or pixel dimensions for rasters—then set `logoWidth`, `logoHeight`, `iconWidth`, and `iconHeight` to matching positive values.
 4. Run the site and confirm the header logo has a useful alternative name, renders at the intended aspect ratio, and is legible at compact widths.
-5. Verify the design-system brand section displays each asset in black on white and white on black without adding brand colour to either treatment.
+5. Verify the design-system brand section displays each asset legibly on the backgrounds approved for that asset. Do not add an unapproved recolour or mask treatment.
 
 ### 3. Configure tokens from the approved design system
 
@@ -191,7 +189,7 @@ Read [content authoring](content.md) for the legal frontmatter and semantic MDX 
 Move to content and page work only when:
 
 - [ ] The canonical URL, contacts, navigation, and default metadata are configured.
-- [ ] SVG assets and intrinsic dimensions are configured and visually verified.
+- [ ] Brand assets and intrinsic dimensions are configured and visually verified.
 - [ ] The token system is approved in the internal preview.
 - [ ] Wireframe mode is off except during an active review.
 - [ ] Legal routes, footer labels, legal navigation IDs, and approved-copy status are aligned.

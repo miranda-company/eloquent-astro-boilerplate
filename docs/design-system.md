@@ -155,7 +155,7 @@ GSAP and ScrollTrigger are available for approved component-level motion, but th
 
 ## Brand assets
 
-Set `siteConfig.brand.logo` and `siteConfig.brand.icon` to public SVG paths, and keep their dimensions aligned with the SVG viewBox. Provide approved assets in `public/brand/` and confirm the header has meaningful alternative text through `siteConfig.name`. Brand assets are distinct from functional Lucide icons.
+Set `siteConfig.brand.logo` and `siteConfig.brand.icon` to approved public `.svg`, `.png`, `.jpg`, or `.jpeg` paths. Keep their intrinsic dimensions in `siteConfig.brand`; use the SVG viewBox dimensions for vector files and the pixel dimensions for raster files. Provide final assets in `public/brand/` and confirm the header has meaningful alternative text through `siteConfig.name`. Use an approved transparent PNG when a raster logo needs to sit on varied backgrounds; do not force a colour treatment that the supplied asset cannot support. Brand assets are distinct from functional Lucide icons.
 
 ## Review checklist
 

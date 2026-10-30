@@ -10,7 +10,7 @@
 ## Configuration and design system
 
 - Read `src/config/client-config.ts` before introducing client identity, URLs, contacts, feature flags, brand assets, or site metadata. Read `docs/design-system.md` before changing the Figma token snapshot or token usage.
-- Keep configured public SVG brand paths and their intrinsic dimensions together in `siteConfig.brand`. Put an approved default social image in `siteConfig.seo.defaultOgImage`, not in component markup.
+- Keep configured public brand asset paths (`.svg`, `.png`, `.jpg`, or `.jpeg`) and their intrinsic dimensions together in `siteConfig.brand`. Put an approved default social image in `siteConfig.seo.defaultOgImage`, not in component markup.
 - Use final, manually optimised assets from `public/images/` with native responsive image markup. Keep source files in the agency asset library; do not use Astro image transformations in this starter.
 - Use CSS custom properties derived from the approved Figma variables. Do not invent code-only design tokens or hard-code client colour, spacing, or radius values when a Figma token fits.
 - When building from supplied images, videos, or URLs, build mobile-first, fully responsive components with shared breakpoint aliases and approved Figma tokens, patterns, layout primitives, icons, and assets. Surface any needed token, style, animation, component variant, dependency, or asset treatment outside that system for human approval before proceeding.
@@ -34,7 +34,6 @@
 
 - Update Content Collection schemas before creating a new content type or frontmatter field.
 - Keep client configuration out of Markdown and MDX frontmatter.
-- Read `docs/client-brief.md` when it exists in a client project; treat approved decisions there as the source of truth and report `TBD` items instead of guessing.
 - Optional integrations must emit no external request when unconfigured. Optional tracking must never load before consent.
 - Preserve a usable non-JavaScript form submission path when changing the contact-form integration.
 - Keep the configured sticky header and back-to-top link as progressive enhancements: the header remains usable without JavaScript and the link must retain its `#top` destination.

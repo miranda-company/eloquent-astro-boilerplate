@@ -18,10 +18,9 @@ This is a static-first Astro starter for content-led marketing sites. It ships s
 | `src/styles/global.css`              | Reset/base rules, focus defaults, shared layout foundations, and responsive wrapper rules                                |
 | `src/styles/breakpoints.css`         | Shared build-time custom-media aliases for responsive viewport thresholds                                                |
 | `src/styles/button.css`              | Shared button base and variants imported by their consumers                                                              |
-| `public/brand/`                      | Public SVG logo and icon placeholders                                                                                    |
+| `public/brand/`                      | Public logo and icon placeholders (`.svg`, `.png`, `.jpg`, or `.jpeg`)                                                   |
 | `tests/`                             | Unit configuration tests and browser smoke/accessibility tests                                                           |
 | `docs/`                              | Architecture, semantic DOM, client workflow/handoff, content, design-system, integrations, and testing guidance          |
-| `docs/templates/`                    | Reusable documents, including the client technical-brief template                                                        |
 
 ## Route model
 

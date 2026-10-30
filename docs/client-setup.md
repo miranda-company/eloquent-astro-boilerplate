@@ -7,17 +7,17 @@ Use this checklist when duplicating the boilerplate for a client. The project de
 Edit `src/config/client-config.ts` first.
 
 - Set `name`, canonical `url`, contact details, social links, navigation, and SEO defaults. Add `seo.defaultOgImage` only when an approved default social image is available.
-- Set `brand.logo` and `brand.icon` to the public asset paths, and record each SVG's intrinsic `logoWidth`, `logoHeight`, `iconWidth`, and `iconHeight`.
+- Set `brand.logo` and `brand.icon` to approved public `.svg`, `.png`, `.jpg`, or `.jpeg` paths, and record their intrinsic `logoWidth`, `logoHeight`, `iconWidth`, and `iconHeight`.
 - Review feature flags. `analytics`, `contactForm`, and `consentBanner` are disabled in the untouched starter and control optional behavior only after approval. `stickyHeader` and `backToTop` are enabled by default; turn either off when the approved client design does not need it. `designSystemHomepage` keeps the temporary root preview out of the sitemap; `wireframe` is for temporary layout review only.
 - Keep feature flags explicit. A flag is not a substitute for required environment configuration.
 
 ## 2. Add assets and fonts
 
-1. Replace `public/brand/brand-logo.svg` and `public/brand/brand-icon.svg` with single-colour vector SVGs. Update `siteConfig.brand` if the names, paths, or intrinsic dimensions change.
+1. Replace the placeholder assets in `public/brand/` with approved final `.svg`, `.png`, `.jpg`, or `.jpeg` logo and icon files. Prefer SVG when available; use transparent PNG for raster logos that need to work over varied backgrounds. Update `siteConfig.brand` if the names, paths, or intrinsic dimensions change.
 2. Prepare final web-ready raster derivatives before adding them to the project: choose format, dimensions, crop, and compression. Store them in `public/images/`; Astro copies these assets unchanged.
 3. Keep original source assets in the agency asset library, not in the public build. When you prepare responsive variants, add deliberate `srcset` and `sizes` values in the native `<img>` or `<picture>` markup.
 4. Confirm every typography token has `mobile` and `desktop` values in the approved Figma file. Mobile is the base scale; desktop activates at `--lg`. Keep only approved available normal Google Font weights in that snapshot; italic loading requires a separate Figma token contract.
-5. Confirm the header logo, monochrome brand preview, loaded Google Fonts, and fallback typography render correctly.
+5. Confirm the header logo, approved-background brand preview, loaded Google Fonts, and fallback typography render correctly.
 6. Confirm the sticky header, back-to-top link, and in-page hash links work at the approved breakpoints. The back-to-top control must remain behind the cookie banner while consent is pending.
 
 ## 3. Configure tokens from Figma
@@ -51,7 +51,7 @@ Read [integrations.md](integrations.md) before configuring a provider. A future 
 
 ## 6. Configure approved motion
 
-Use GSAP or ScrollTrigger only when the client brief defines the motion intent, affected routes, reduced-motion behavior, and performance budget.
+Use GSAP or ScrollTrigger only when the client has approved the motion intent, affected routes, reduced-motion behavior, and performance budget.
 
 1. Read [animation.md](animation.md) before implementation.
 2. Import `src/scripts/animation/gsap.ts` only from the owning component or page script; do not add it to a global layout or site-wide script.

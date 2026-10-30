@@ -71,11 +71,11 @@ Use CSS for hover, focus, color, and short state transitions. Keep native scroll
 
 ## Licensed plugins and the legacy archive
 
-The supplied historical GSAP archive is not part of this repository and must not be copied into `src/`, `public/`, or Git history. It includes plugins whose licensing and distribution terms may differ from the public package. For a client project that needs a licensed plugin, confirm the current licence and redistribution rights, keep the original private distribution outside the shared boilerplate, document the decision in `docs/client-brief.md`, and add only the minimum approved files through the client project’s private dependency process.
+The supplied historical GSAP archive is not part of this repository and must not be copied into `src/`, `public/`, or Git history. It includes plugins whose licensing and distribution terms may differ from the public package. For a client project that needs a licensed plugin, confirm the current licence and redistribution rights, keep the original private distribution outside the shared boilerplate, and add only the minimum approved files through the client project’s private dependency process.
 
 ## Client-project checklist
 
-1. Record the animation intent, affected routes, performance budget, and accessibility acceptance criteria in the client brief.
+1. Confirm the animation intent, affected routes, performance budget, and accessibility acceptance criteria with the client.
 2. Keep the implementation within a named component or page-specific script.
 3. Use `createMotionContext()` and test both normal and reduced-motion states.
 4. Check compact and large layouts, keyboard behavior, scroll performance, and the page without JavaScript.

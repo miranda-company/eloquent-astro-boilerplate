@@ -62,7 +62,6 @@ Then complete [the client setup checklist](docs/client-setup.md). Copy `.env.exa
 - [Architecture](docs/architecture.md)
 - [Client setup](docs/client-setup.md)
 - [Client project workflow](docs/client-project-workflow.md)
-- [Client technical brief template](docs/templates/client-technical-brief.md)
 - [Content authoring](docs/content.md)
 - [Design system](docs/design-system.md)
 - [Pattern preview workflow](docs/pattern-previews.md)

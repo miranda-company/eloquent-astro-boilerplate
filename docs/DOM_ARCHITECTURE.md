@@ -134,7 +134,7 @@ The agency supplies final, web-optimised image derivatives. Store rendered site 
 
 Prepare each raster asset before it enters the repository: choose its final format, dimensions, crop, and compression. Commit web-ready derivatives only; retain originals in the agency asset library rather than shipping or committing them as public site files. When manually prepared responsive variants exist, supply deliberate `srcset` and `sizes` values with `<img>` or `<picture>`.
 
-Give every meaningful image concise alternative text that communicates its purpose; give decorative images `alt=""`. Always provide intrinsic `width` and `height`, use `decoding="async"`, and lazy-load below-the-fold media. Reserve eager loading and `fetchpriority="high"` for the one visible LCP image when warranted. The configured SVG brand assets follow this public-asset pattern in `Header.astro`.
+Give every meaningful image concise alternative text that communicates its purpose; give decorative images `alt=""`. Always provide intrinsic `width` and `height`, use `decoding="async"`, and lazy-load below-the-fold media. Reserve eager loading and `fetchpriority="high"` for the one visible LCP image when warranted. The configured brand assets follow this public-asset pattern in `Header.astro`.
 
 ## Metadata and JSON-LD
 
