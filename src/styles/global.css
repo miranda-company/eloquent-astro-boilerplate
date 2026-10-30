@@ -175,3 +175,39 @@ h2 {
     --spacing-xxs: var(--spacing-xxs-desktop);
   }
 }
+
+@media (--lg) {
+  :root {
+    --font-family-title: var(--font-family-title-desktop);
+    --font-family-body: var(--font-family-body-desktop);
+    --font-size-xs: var(--font-size-xs-desktop);
+    --font-size-sm: var(--font-size-sm-desktop);
+    --font-size-md: var(--font-size-md-desktop);
+    --font-size-lg: var(--font-size-lg-desktop);
+    --font-size-xl: var(--font-size-xl-desktop);
+    --font-size-2xl: var(--font-size-2xl-desktop);
+    --font-size-3xl: var(--font-size-3xl-desktop);
+    --font-size-4xl: var(--font-size-4xl-desktop);
+    --font-size-5xl: var(--font-size-5xl-desktop);
+    --font-size-6xl: var(--font-size-6xl-desktop);
+    --font-size-7xl: var(--font-size-7xl-desktop);
+    --font-leading-xs: var(--font-leading-xs-desktop);
+    --font-leading-sm: var(--font-leading-sm-desktop);
+    --font-leading-md: var(--font-leading-md-desktop);
+    --font-leading-lg: var(--font-leading-lg-desktop);
+    --font-leading-xl: var(--font-leading-xl-desktop);
+    --font-leading-2xl: var(--font-leading-2xl-desktop);
+    --font-leading-3xl: var(--font-leading-3xl-desktop);
+    --font-leading-4xl: var(--font-leading-4xl-desktop);
+    --font-leading-5xl: var(--font-leading-5xl-desktop);
+    --font-leading-6xl: var(--font-leading-6xl-desktop);
+    --font-leading-7xl: var(--font-leading-7xl-desktop);
+    --font-weight-thin: var(--font-weight-thin-desktop);
+    --font-weight-regular: var(--font-weight-regular-desktop);
+    --font-weight-bold: var(--font-weight-bold-desktop);
+    --font-weight-extra-bold: var(--font-weight-extra-bold-desktop);
+    --font-tracking-tight: var(--font-tracking-tight-desktop);
+    --font-tracking-normal: var(--font-tracking-normal-desktop);
+    --font-tracking-extended: var(--font-tracking-extended-desktop);
+  }
+}

@@ -6,8 +6,17 @@ import AxeBuilder from '@axe-core/playwright';
 const legalRoutes = ['/aviso-legal/', '/politica-de-privacidad/', '/politica-de-cookies/'];
 const figmaTokens = JSON.parse(
   readFileSync(resolve(process.cwd(), 'src/config/figma-tokens.json'), 'utf8'),
-) as { 'font-tokens': { 'font-family-body': { desktop: string } } };
+) as {
+  'font-tokens': {
+    'font-family-body': { desktop: string };
+    'font-size-sm': { mobile: number; desktop: number };
+  };
+};
 const bodyFontFamily = figmaTokens['font-tokens']['font-family-body'].desktop;
+const fontSizeSm = figmaTokens['font-tokens']['font-size-sm'] as {
+  mobile: number;
+  desktop: number;
+};
 
 test('production wireframe aid stays off until the root modifier is applied', async ({ page }) => {
   await page.goto('/');
@@ -83,6 +92,18 @@ test('stack layout uses the default responsive gutter token', async ({ page }) =
       ),
     ).toBe(true);
   }
+});
+
+test('Figma typography uses mobile values until the lg breakpoint', async ({ page }) => {
+  await page.setViewportSize({ width: 375, height: 812 });
+  await page.goto('/');
+  await expect(page.locator('html')).toHaveCSS('--font-size-sm', `${fontSizeSm.mobile}px`);
+
+  await page.setViewportSize({ width: 991, height: 812 });
+  await expect(page.locator('html')).toHaveCSS('--font-size-sm', `${fontSizeSm.mobile}px`);
+
+  await page.setViewportSize({ width: 992, height: 812 });
+  await expect(page.locator('html')).toHaveCSS('--font-size-sm', `${fontSizeSm.desktop}px`);
 });
 
 test('design-system homepage is noindex, keyboard-accessible, and has no default analytics requests', async ({

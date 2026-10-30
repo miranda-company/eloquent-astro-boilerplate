@@ -8,7 +8,9 @@ const tokenSnapshotSchema = z.record(
 );
 type TokenValue = z.infer<typeof tokenValueSchema>;
 type TokenCollection = Record<string, Record<string, TokenValue>>;
+type TokenSnapshot = Record<string, TokenCollection>;
 type FontRole = 'title' | 'body';
+type GoogleFontFamilies = Record<FontRole, string | readonly string[]>;
 
 const tokens = tokenSnapshotSchema.parse(tokenSnapshot);
 
@@ -91,7 +93,10 @@ function declarationsForMode(collection: TokenCollection, mode: string): string[
 
 function declarationsForCollections(): string[] {
   return Object.entries(tokens).flatMap(([name, collection]) => {
-    const mode = name === 'spacing-tokens' ? 'mobile' : collectionModes(collection)[0];
+    const mode =
+      name === 'spacing-tokens' || name === 'font-tokens'
+        ? 'mobile'
+        : collectionModes(collection)[0];
     if (!mode) throw new Error('Figma token collection must contain at least one mode');
     return declarationsForMode(collection, mode);
   });
@@ -109,6 +114,17 @@ function spacingDeclarationsForMode(mode: 'tablet' | 'desktop'): string[] {
   });
 }
 
+function fontDeclarationsForMode(mode: 'desktop'): string[] {
+  const fontCollection = tokens['font-tokens'];
+  if (!fontCollection) return [];
+
+  return Object.entries(fontCollection).map(([name, values]) => {
+    const value = values[mode];
+    if (value === undefined) throw new Error(`Missing ${mode} value for Figma font token: ${name}`);
+    return `${cssName(`${name}-${mode}`)}: ${cssValue(name, value)};`;
+  });
+}
+
 export function getFigmaTokenStyles(): string {
   validateFigmaTokenSnapshot();
 
@@ -116,6 +132,7 @@ export function getFigmaTokenStyles(): string {
     ...declarationsForCollections(),
     ...spacingDeclarationsForMode('tablet'),
     ...spacingDeclarationsForMode('desktop'),
+    ...fontDeclarationsForMode('desktop'),
   ].join('\n')}\n}`;
 }
 
@@ -142,19 +159,19 @@ export function getFigmaTokenCssName(name: string): string {
   return cssName(name);
 }
 
-function getFigmaFontFamilies(): Record<FontRole, string> {
+function getFigmaFontFamilies(): GoogleFontFamilies {
   const fontTokens = tokens['font-tokens'];
   if (!fontTokens) throw new Error('Missing Figma font tokens');
 
-  return Object.fromEntries(
-    (['title', 'body'] as FontRole[]).map((role) => {
-      const family = fontTokens[`font-family-${role}`]?.desktop;
-      if (typeof family !== 'string' || !family) {
-        throw new Error(`Missing Figma font family token: font-family-${role}`);
-      }
-      return [role, family];
-    }),
-  ) as Record<FontRole, string>;
+  const familiesForRole = (role: FontRole): string[] => {
+    const families = ['mobile', 'desktop'].map((mode) => fontTokens[`font-family-${role}`]?.[mode]);
+    if (families.some((family) => typeof family !== 'string' || !family)) {
+      throw new Error(`Missing Figma font family token: font-family-${role}`);
+    }
+    return families as string[];
+  };
+
+  return { title: familiesForRole('title'), body: familiesForRole('body') };
 }
 
 function getFigmaFontWeights(): number[] {
@@ -163,7 +180,7 @@ function getFigmaFontWeights(): number[] {
 
   const weights = Object.entries(fontTokens)
     .filter(([name]) => name.startsWith('font-weight-'))
-    .map(([, modes]) => modes.desktop)
+    .flatMap(([, modes]) => [modes.mobile, modes.desktop])
     .filter((value): value is number => typeof value === 'number');
   if (weights.length === 0) throw new Error('Missing Figma font weight tokens');
 
@@ -171,10 +188,10 @@ function getFigmaFontWeights(): number[] {
 }
 
 export function createGoogleFontsStylesheetUrl(
-  families: Record<FontRole, string>,
+  families: GoogleFontFamilies,
   weights: number[],
 ): string {
-  const uniqueFamilies = [...new Set(Object.values(families))];
+  const uniqueFamilies = [...new Set(Object.values(families).flatMap((family) => family))];
   const uniqueWeights = [...new Set(weights)].sort((left, right) => left - right);
 
   if (uniqueWeights.length === 0) throw new Error('Google Fonts requires at least one weight');
@@ -190,10 +207,10 @@ export function getGoogleFontsStylesheetUrl(): string {
   return createGoogleFontsStylesheetUrl(getFigmaFontFamilies(), getFigmaFontWeights());
 }
 
-export function validateFigmaTokenSnapshot(): void {
+export function validateFigmaTokenSnapshot(tokenSnapshot: TokenSnapshot = tokens): void {
   const cssNames = new Set<string>();
 
-  for (const [collectionName, collection] of Object.entries(tokens)) {
+  for (const [collectionName, collection] of Object.entries(tokenSnapshot)) {
     if (Object.keys(collection).length === 0) {
       throw new Error(`Figma token collection is empty: ${collectionName}`);
     }
@@ -215,6 +232,14 @@ export function validateFigmaTokenSnapshot(): void {
         for (const mode of ['mobile', 'tablet', 'desktop']) {
           if (values[mode] === undefined) {
             throw new Error(`Missing ${mode} value for Figma spacing token: ${name}`);
+          }
+        }
+      }
+
+      if (collectionName === 'font-tokens') {
+        for (const mode of ['mobile', 'desktop']) {
+          if (values[mode] === undefined) {
+            throw new Error(`Missing ${mode} value for Figma font token: ${name}`);
           }
         }
       }
