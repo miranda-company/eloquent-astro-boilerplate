@@ -19,16 +19,18 @@ Playwright builds the site and serves `dist/`, so browser tests exercise the sta
 
 ## Existing coverage
 
-Browser coverage verifies the current design-system homepage, legal routes and their table-of-contents targets, skip link, header brand link, configured logo dimensions, shell landmarks, single-page `h1` structure, canonical/social metadata, noindex JSON-LD suppression, token previews, BEM brand classes, responsive wrapper and stack gaps, inactive optional integrations, absence of default third-party analytics requests, and baseline accessibility through axe.
+Browser coverage verifies the current design-system homepage, legal routes and their table-of-contents targets, skip link, header brand link, configured logo dimensions, shell landmarks, single-page `h1` structure, canonical/social metadata, noindex JSON-LD suppression, token previews, BEM brand classes, responsive wrapper and stack gaps, inactive optional integrations, absence of default third-party analytics requests, and baseline accessibility through axe. Unit coverage renders Footer-01 through Astro’s container API to verify its enabled and disabled consent-control contract, and confirms the removed starter marketing sample remains absent.
 
 Unit coverage verifies site identity and brand configuration, the Figma token export and values, emitted CSS names and modes, wireframe feature configurability, and the GSAP/ScrollTrigger animation foundation.
 
 ## Contribution rules
 
-Add or update tests when changing public routes, shared interactions, content schemas, integrations, semantic token behavior, client-visible feature flags, document landmarks, headings, metadata, structured-data behavior, or motion. Keep tests deterministic: do not call live analytics, form providers, or third-party APIs. Motion tests must cover the final static state and reduced-motion behavior where a motion component is added.
+Add or update tests when changing public routes, shared interactions, content schemas, integrations, semantic token behavior, client-visible feature flags, document landmarks, headings, metadata, structured-data behavior, or motion. Keep tests deterministic: do not call live analytics, future form providers, or third-party APIs. Motion tests must cover the final static state and reduced-motion behavior where a motion component is added.
 
 For visual changes, inspect the design-system preview at the relevant responsive widths. For any breakpoint change, review compact, medium, expanded, large, and extra-large layouts.
 
 ## CI
 
 GitHub Actions installs the pinned pnpm version with the frozen lockfile, installs Chromium, then runs `verify` and `test:e2e` on pushes and pull requests. Do not introduce an npm lockfile alongside `pnpm-lock.yaml`.
+
+Dependency updates are reviewed manually. During routine maintenance and before release, run `pnpm audit --prod` when network access is available and address applicable findings before shipping.

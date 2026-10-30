@@ -15,6 +15,7 @@ interface Props {
   phone?: string;
   address?: string;
   legalEntity?: string;
+  showConsentPreferences?: boolean;
 }
 
 const {
@@ -25,6 +26,7 @@ const {
   phone = siteConfig.contact.phone,
   address,
   legalEntity = siteConfig.name,
+  showConsentPreferences = false,
 } = Astro.props;
 
 const contactItems = [
@@ -127,6 +129,11 @@ const contactItems = [
             ))}
           </ul>
         </nav>
+        {showConsentPreferences && (
+          <button class="footer-01__consent-button" type="button" data-open-consent>
+            Gestionar cookies
+          </button>
+        )}
         <p class="footer-01__copyright">
           © {new Date().getFullYear()} {legalEntity}
         </p>
@@ -244,6 +251,22 @@ const contactItems = [
     display: flex;
     flex-wrap: wrap;
     gap: var(--spacing-gutter-default);
+  }
+
+  .footer-01__consent-button {
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: inherit;
+    cursor: pointer;
+    font: inherit;
+    text-decoration: underline;
+    text-underline-offset: 0.15em;
+  }
+
+  .footer-01__consent-button:focus-visible {
+    outline: var(--border-size-sm) solid currentColor;
+    outline-offset: var(--spacing-xxs);
   }
 
   @media (--md) {

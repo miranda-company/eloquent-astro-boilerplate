@@ -4,10 +4,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import LegalPageLayout from '../layouts/LegalPageLayout.astro';
 
 export async function getStaticPaths() {
-  const pages = await getCollection(
-    'pages',
-    ({ data, id }) => !data.draft && id !== 'es/home' && Boolean(data.slug),
-  );
+  const pages = await getCollection('pages', ({ data }) => !data.draft && Boolean(data.slug));
   return pages.map((page) => ({ params: { slug: page.data.slug }, props: { page } }));
 }
 const { page } = Astro.props;

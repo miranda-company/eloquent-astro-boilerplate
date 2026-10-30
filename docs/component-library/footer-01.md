@@ -12,7 +12,7 @@ Footer 01 is a reusable responsive footer pattern for marketing sites. It groups
 
 ## Interface and defaults
 
-`Footer-01.astro` accepts optional `title`, `description`, `pages`, `socialLinks`, `phone`, `address`, and `legalEntity` props. `pages` and `socialLinks` use `{ label, href }` entries.
+`Footer-01.astro` accepts optional `title`, `description`, `pages`, `socialLinks`, `phone`, `address`, `legalEntity`, and `showConsentPreferences` props. `pages` and `socialLinks` use `{ label, href }` entries. `showConsentPreferences` defaults to `false`.
 
 The component reads the logo, email, legal navigation, and default legal entity from `siteConfig`. Social links default to `siteConfig.social`, and the phone defaults to `siteConfig.contact.phone`. Empty page and social-link groups are omitted rather than rendered as placeholders.
 
@@ -29,12 +29,15 @@ import Footer01 from '../components/site/Footer-01.astro';
   phone="+34 600 000 000"
   address="Calle de ejemplo, 123 · Madrid"
   legalEntity="Nombre del cliente S.L."
+  showConsentPreferences={siteConfig.features.consentBanner}
 />
 ```
 
 ## Implementation rules
 
 Keep the semantic `<footer>`, navigation lists, and contact `<address>` intact. The logo remains a configured local asset with intrinsic dimensions. Contact icons are decorative Lucide SVGs: retain their approved 24px geometry and keep the contact value as the accessible name. Keep visual labels in the configured site locale.
+
+When `showConsentPreferences` is true, render the Spanish “Gestionar cookies” control as a `type="button"` outside the legal navigation. It carries `data-open-consent`, the stable contract consumed by `ConsentManager.astro`, so it reopens preferences without behaving like a document link. `BaseLayout.astro` passes `siteConfig.features.consentBanner`; keep the control absent when consent is disabled.
 
 Use the component's scoped BEM styles and Figma-derived tokens. The outer footer uses `spacing-xl` and stacks through the shared `--xl` alias. Through the mobile and `--sm` ranges, the page, social, and contact groups form one column. From `--md` upward, they stay in three columns. At `--xl` and above, the wrapper becomes a 35% identity column and a 65% content column while retaining those three groups.
 
